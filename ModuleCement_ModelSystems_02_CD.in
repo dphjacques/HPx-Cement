@@ -1,0 +1,98 @@
+CALCULATE_VALUES 
+test
+-state definition 
+-mybasic 
+-start 
+class SolidSolutionModel
+    var EndMember = list()
+    ideal = true
+    x1 = 0 #Mole fraction comp 2 at one end of miscibility gap
+    x2 = 0 #Mole fraction comp 2 at other end of miscibility gap
+    
+    def WritePhreeqcSolidSolution()
+        txt = ""
+        if(ideal) then
+            for min in EndMember
+                txt = txt + " -comp " + min + " 0 " + eol
+            next
+        else
+            txt = txt + "-comp1 " + EndMember(0) + " " + eol
+            txt = txt + "-comp2 " + EndMember(0) + " " + eol
+            txt = txt + "-miscibility_gap " + str(x1) + " " + str(x2) + " " + eol
+        endif
+        return txt
+    enddef
+endclass
+
+class CementModel
+
+    var Elements = list()
+    var PurePhases = list()
+    var SolidSolution = dict()
+
+    def WritePhreeqcCementModel(entitynr)
+        txt = ""
+        txt = txt + "EQUILIBRIUM_PHASES " + str(entitynr) + eol
+        for min in PurePhases
+           txt = txt + min + " 0 " + eol
+        next      
+        if(len(SolidSolution)>0) then
+            txt = txt + "SOLID_SOLUTIONS " + str(entitynr) + eol
+            for ss in SolidSolution
+                txt = txt + ss + eol
+                ssmodel = SolidSolution(ss)
+                txt = txt + ssmodel.WritePhreeqcSolidSolution()
+            next
+        endif
+        return txt
+    enddef
+
+endclass 
+#definition CSHQ model
+cshq = new(SolidSolutionModel)
+push(cshq.EndMember,"CSHQ-JenD")
+push(cshq.EndMember,"CSHQ-JenH")
+push(cshq.EndMember,"CSHQ-TobD")
+push(cshq.EndMember,"CSHQ-TobH")
+
+#define AFt-SO4 AFT-CO3 model
+aft = new(SolidSolutionModel)
+push(aft.EndMember,"ettringite03_ss")
+push(aft.EndMember,"tricarboalu03")
+aft.ideal = false
+aft.x1 = 0.45
+aft.x2 = 0.90
+
+#definition system 07
+sys07 = new(CementModel)
+push(sys07.Elements,"Ca")
+push(sys07.Elements,"Si")
+push(sys07.Elements,"Al")
+push(sys07.Elements,"S")
+push(sys07.Elements,"Mg")
+push(sys07.Elements,"C")
+
+push(sys07.PurePhases,"Portlandite")
+push(sys07.PurePhases,"C3AH6")
+push(sys07.PurePhases,"C4AH19")
+push(sys07.PurePhases,"Stratelingite")
+push(sys07.PurePhases,"monocarbonate")
+push(sys07.PurePhases,"hemicarbonate")
+push(sys07.PurePhases,"monosulphate16")
+push(sys07.PurePhases,"")
+push(sys07.PurePhases,"")
+set(sys07.SolidSolution,"CSH",cshq)
+set(sys07.SolidSolution,"AFT",aft)
+
+
+CementModels = dict(7,sys07)
+
+cemsys = get(CementModels,7)
+
+for min in cemsys.PurePhases
+    write(min + " 0 " + eol)
+next
+
+write(cemsys.WritePhreeqcCementModel(1001)) 
+
+-end 
