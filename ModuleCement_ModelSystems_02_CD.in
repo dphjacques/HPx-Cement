@@ -2,7 +2,7 @@ CALCULATE_VALUES
 test
 -state definition 
 -mybasic 
--start 
+-start warom toch
 class SolidSolutionModel
     var EndMember = list()
     ideal = true
