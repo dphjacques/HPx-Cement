@@ -1,0 +1,94 @@
+USER_PUNCH 
+-mybasic
+-headings OPC GBFS SF
+-headings @Output::Oxides 
+-headings @Output::Lead 
+-headings water T pH mu
+-headings @Output::Elements
+-headings @Output::Phases
+-headings @Output::SolidSolutions
+-headings CSHCa CSHSi
+
+-start
+    
+    punch( get_var("Cement::Clinker::Mass") )
+    punch( get_var("GBFS::Amount") )
+    punch( get_var("SF::Amount") )
+    
+    db = "Db_Elements"
+    count = get_defnrrec(db)-1
+    for i = 0 to count 
+        ox=get_def(db,i)
+        am = sys(ox)
+        if(ox="Al") then am=am/2 endif
+        if(ox="Fe") then am=am/2 endif
+        if(ox="Na") then am=am/2 endif
+        if(ox="K") then am=am/2 endif
+        
+        punch(am)
+    next i 
+    
+    if(get_varexist("Cement::Leaching::Type$") = 0 ) then
+        if(get_varexist("Leaching::Run::AddedWater")=0) then
+            addedwater = get_var("Leaching::Run::TotalAmountAddedWater") + get_var("Leaching::Run::AddedWater")
+            punch(addedwater))
+            put_var("Leaching::Run::TotalAmountAddedWater",addedwater )
+        else
+          punch(0)
+        endif
+    elseif (get_varexist("Cement::Ingress::Type$") = 0 ) then
+        _step = sys("[_step]")
+        punch( _step)
+        if(get_var("Cement::Ingress::Type$") = "Components" ) then
+            if(get_Var("Cement::Ingress::Components::Type$" )  = "Relative Moles" ) then
+                punch( _step*get_var("Cement::Ingress::Components::CO2")) 
+                punch( _step*get_var("Cement::Ingress::Components::SO3")) 
+                punch( _step*get_var("Cement::Ingress::Components::MgCl2")) 
+                punch( _step*get_var("Cement::Ingress::Components::NaCl")) 
+            endif
+        endif
+    endif 
+    
+    punch(tot("water"))
+    punch(tc())
+    punch(-la("H+"), mu())
+    
+    db = "Db_Elements"
+    count = get_defnrrec(db)-1
+
+    for i = 0 to count 
+        punch(tot(get_def(db,i)))
+    next i
+    db = "Db_Minerals"
+    count = get_defnrrec(db)-1
+    for i = 0 to count 
+        punch(equi(get_def(db,i)))
+    next i
+    if(get_varexist("Output::Variables::SaturationIndex") = 0 ) then
+       if(get_var("Output::Variables::SaturationIndex") = 1 ) then   
+            for i = 0 to count 
+                punch(si(get_def(db,i)))
+            next i    
+       endif
+    endif
+    
+    
+    db = "Db_SolidSolutions"
+    #if(get_defexist(db)=0) then
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            punch(s_s(get_def(db,i)))
+        next i
+    #endif
+    ca = sum_s_s("CSH","Ca")
+    sil = sum_s_s("CSH","Si")
+    if(ca > 0 AND sil > 0) then
+        punch(sum_s_s("CSH","Ca"),sum_s_s("CSH","Si"))
+    else
+    ca =1.6* equi("CSH1.6") + 1.2* equi("CSH1.2") +0.8* equi("CSH0.8")
+    sil = equi("CSH1.6") + equi("CSH1.2") + equi("CSH0.8")
+    punch(ca,sil)
+    endif
+    
+-end
+END 

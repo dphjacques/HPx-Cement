@@ -1,0 +1,82 @@
+#DataBlocks
+DATABLOCK 
+Db_Elements
+-casesensitive false
+-headings Elements 
+-start
+Ca 
+-end
+Db_Minerals
+-casesensitive false
+-headings Minerals 
+-start
+Portlandite 
+-end
+Db_SolidSolutions
+-casesensitive false
+-headings Mineral 
+-start
+CSHQ-JenD 
+-end
+
+Db_ZeolitesNa
+-casesensitive false
+-headings Mineral Na K Ca Si Al
+-start
+zeol 0 0 0 0 0 
+-end
+Db_ZeolitesK
+-casesensitive false
+-headings Mineral Na K Ca Si Al
+-start
+zeol 0 0 0 0 0 
+-end
+Db_ZeolitesCa
+-casesensitive false
+-headings Mineral Na K Ca Si Al
+-start
+zeol 0 0 0 0 0 
+-end
+
+CALCULATE_VALUES
+VolumeGelPores
+-mybasic
+-start
+    ss_ca = calc_arg(1)
+    ss_si = calc_arg(2)
+    ca_si = ss_ca/ss_si
+    
+    a1 = -3.67474
+    a2 = 14.75335*ca_si
+    p= ca_si*ca_si
+    a3 = -19.00002*p
+    p = p*ca_si
+    a4 = 10.931594*p
+    p = p *ca_si
+    a5 = -2.266734*p
+    
+    gelwater = a1 + a2 + a3 + a4 +a5
+
+    save(gelwater)
+-end
+
+VolumeBulkPores
+-mybasic
+-start
+    ss_ca = calc_arg(1)
+    ss_si = calc_arg(2)
+    ca_si = ss_ca/ss_si
+    
+    a1 = -3.18553
+    a2 = 14.09635*ca_si
+    p= ca_si*ca_si
+    a3 = -15.24216*p
+    p = p*ca_si
+    a4 = 7.983487*p
+    p = p *ca_si
+    a5 = -1.542599*p
+    
+    bulkwater = a1 + a2 + a3 + a4 +a5
+
+    save(bulkwater)
+-end

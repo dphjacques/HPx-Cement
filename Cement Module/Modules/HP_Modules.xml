@@ -1,0 +1,6 @@
+<Modules>
+<Module>Cement
+	<Active>yes</Active>
+	<Definition>CementModule.xml</Definition>
+</Module>
+</Modules>

@@ -1,0 +1,7 @@
+
+<Module>Cement
+	<MetaData></MetaData>
+	<Templates>ModuleCementTemplates
+		<Template>Hydrates_00_General.xml</Template>
+	</Templates>
+</Module>

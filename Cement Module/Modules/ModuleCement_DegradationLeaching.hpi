@@ -1,0 +1,169 @@
+CALCULATE_VALUES
+Cement_Ingress
+-state definition 
+-mybasic
+-start 
+
+openf("Cement_degradation_leaching._in")
+writef("fail")
+closef()
+ 
+#make reactiondefinition
+
+def WriteReactionDefinition(leachingnr,nr)
+    textr = "USE SOLUTION " + str(leachingnr) + eol
+    textr = textr + get_var("Cement::Identity::_LastSavedUsed$") + eol + "END" + eol
+    openf("ReactionDefinition"+str(nr)+"._in")
+    writef(textr)
+    closef()
+    
+enddef
+
+ 
+if(get_varexist("Cement::Leaching::Type$") = 0) then    
+  
+txt = ""
+includesolution = 0 
+oxides = dict()
+
+#Make the list of components to add
+if(get_var("Cement::Leaching::Type$") = "Components" ) then
+    if (get_var("Cement::Leaching::Ca") > 0 ) then set(oxides,"Ca",get_var("Cement::Leaching::Ca")) endif
+    if (get_var("Cement::Leaching::Si") > 0 ) then set(oxides,"Si",get_var("Cement::Leaching::Si")) endif
+    if (get_var("Cement::Leaching::Al") > 0 ) then set(oxides,"Al",get_var("Cement::Leaching::Al")) endif
+    if (get_var("Cement::Leaching::S") > 0 ) then set(oxides,"S",get_var("Cement::Leaching::S")) endif
+    if (get_var("Cement::Leaching::Mg") > 0 ) then set(oxides,"Mg",get_var("Cement::Leaching::Mg")) endif
+    if (get_var("Cement::Leaching::C") > 0 ) then set(oxides,"C",get_var("Cement::Leaching::C")) endif
+    if (get_var("Cement::Leaching::Na") > 0 ) then set(oxides,"Na",get_var("Cement::Leaching::Na")) endif
+    if (get_var("Cement::Leaching::K") > 0 ) then set(oxides,"K",get_var("Cement::Leaching::K")) endif
+    if (get_var("Cement::Leaching::Cl") > 0 ) then set(oxides,"Cl",get_var("Cement::Leaching::Cl")) endif
+    if (get_var("Cement::Leaching::pH") > 0 ) then set(oxides,"pH",get_var("Cement::Leaching::pH")) endif
+elseif (get_var("Cement::Leaching::Type$") = "Solution") then
+
+    if (get_var("Cement::Leaching::Solution::Type$")= "Template") then
+       db = "LeachingSolution"
+       record = get_var("Cement::Leaching::Solution::Template$")
+    elseif (get_var("Cement::Leaching::Solution::Type$")= "File") then
+       includesolfile = get_var("Cement:::Leaching::Solution::Filename$") + ".in"
+       includesolution=1         
+    endif   
+endif
+
+#make SOLUTION
+if(includesolution=0) then
+    if(get_var("Cement::Leaching::Type$") = "Components" ) then
+        txtsol = "-units mol/kgw " + eol)
+        for ox in oxides
+          txtsol = txtsol + ox + " " + str(get(oxides,ox)) 
+          if(get_var("Cement::Leaching::Charge$") = ox ) then txtsol = txtsol + " charge " endif
+          txtsol = txtsol + eol  
+        next  
+    endif
+else
+    txtsol = "INCLUDE$ " + includesolfile + eol
+endif
+
+
+
+#make Leaching steps
+#to quote
+    def quote(txttoquote)
+      txtquote = chr(34) + txttoquote + chr(34)
+      return txtquote
+    enddef
+#Set up leaching solutions 
+    txt = "SELECTED_OUTPUT " + eol + "-active false " + eol 
+     __cemSolutionNr =  169898
+    
+    if(get_var("Cement::Leaching::Step0_01") > 0) then
+        txt = txt + "solution " + str(__cemSolutionNr) + eol
+        txt = txt + "-water 0.01 " + eol
+        #txt = txt + txtsol + "end" + eol
+    endif
+    if(get_var("Cement::Leaching::Step0_1") > 0) then
+        txt = txt + "solution " + str(__cemSolutionNr+1) + eol
+        txt = txt + "-water 0.1 " + eol
+        txt = txt + txtsol + "end" + eol
+    endif
+    if(get_var("Cement::Leaching::Step1") > 0) then
+        txt = txt + "solution " + str(__cemSolutionNr+2) + eol
+        txt = txt + "-water 1 " + eol
+        txt = txt + txtsol + "end" + eol
+    endif
+    if(get_var("Cement::Leaching::Step10") > 0) then
+        txt = txt + "solution " +  str(__cemSolutionNr+3)+eol
+        txt = txt + "-water 10 " + eol
+        txt = txt + txtsol + "end" + eol
+    endif
+    
+#Set up leaching
+    txt = txt + "SELECTED_OUTPUT " + eol + "-active true " + eol 
+    txt = txt + "PRINT " + eol + " -reset false " + eol + " -echo_input true" + eol
+    txt = txt + "GLOBAL_VARIABLE Leaching::Run::TotalAmountAddedWater 0" + eol
+    
+    if(get_var("Cement::Leaching::Step0_01") > 0) then
+        nrsteps =  get_var("Cement::Leaching::Step0_01") /0.01
+        WriteReactionDefinition(__cemSolutionNr,1)
+        txt = txt + "REPEAT " + quote("ReactionDefinition1._in") + " " + quote("leachingstep._in") + " " + str(nrsteps) + eol
+        txt = txt + "GLOBAL_VARIABLE Leaching::Run::AddedWater 0.01" + eol
+        txt = txt + "include$  leachingstep._in" + eol + "END" + eol
+    endif
+
+    if(get_var("Cement::Leaching::Step0_1") > 0) then
+        nrsteps =  get_var("Cement::Leaching::Step0_1") /0.1
+        WriteReactionDefinition(__cemSolutionNr+1,2)
+        txt = txt + "REPEAT " + quote("ReactionDefinition2._in") + " " + quote("leachingstep._in") + " " + str(nrsteps) + eol
+        txt = txt + "GLOBAL_VARIABLE Leaching::Run::AddedWater 0.1" + eol
+        txt = txt + "include$  leachingstep._in" + eol + "END" + eol
+    endif
+    if(get_var("Cement::Leaching::Step1") > 0) then
+        nrsteps =  get_var("Cement::Leaching::Step1")
+        WriteReactionDefinition(__cemSolutionNr+2,3)
+        txt = txt + "REPEAT " + quote("ReactionDefinition3._in") + " " + quote("leachingstep._in") + " " + str(nrsteps) + eol
+        txt = txt + "GLOBAL_VARIABLE Leaching::Run::AddedWater 1" + eol
+        txt = txt + "include$  leachingstep._in" + eol + "END" + eol
+    endif
+    
+    if(get_var("Cement::Leaching::Step10") > 0) then
+        nrsteps =  get_var("Cement::Leaching::Step10")/10
+        WriteReactionDefinition(__cemSolutionNr+3,4)
+        txt = txt + "REPEAT " + quote("ReactionDefinition4._in") + " " + quote("leachingstep._in") + " " + str(nrsteps) + eol
+        txt = txt + "GLOBAL_VARIABLE Leaching::Run::AddedWater 10" + eol
+        txt = txt + "include$  leachingstep._in" + eol + "END" + eol
+    endif
+ 
+
+openf("Cement_degradation_leaching._in")
+writef(txt)
+closef()
+
+put_var("Output::Lead","Lead") 
+
+endif 
+-end
+END
+#output
+selected_output
+-file CementDegradationLeachingResults.out
+-reset false
+-active true 
+
+INCLUDE$ ModuleCement_UserPunch.hps
+
+INCLUDE$ Cement_degradation_leaching._in
+
+CALCULATE_VALUES
+DeleteFiles
+-state Definition
+-mybasic 
+-start 
+    #deletef("leachingstep._in")
+    #deletef("ReactionDefinition1._in")
+    #deletef("ReactionDefinition2._in")
+    #deletef("ReactionDefinition3._in")
+    #deletef("ReactionDefinition4._in")
+    #deletef("Cement_degradation_leaching._in")
+    
+-end 
+
+

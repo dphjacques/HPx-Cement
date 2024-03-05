@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<DataBlocks>
+	<DataBlock>
+		<Name>OPC</Name>
+		<Description>Chemical composition of Ordinary Portland Cement</Description>
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
+\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+\par
+Default unit: \par
+%mass\tab\tab %mass of oxides (g/100g)\par
+\par
+\b\fs24 Origin of the data\b0\fs19\par
+\par
+\lang1033\b Lot06\b0\tab\f1 Lothenbach, B., and F. Winnefeld, 2006. Thermodynamic modelling of the hydration of Portland cement. Cement and Concrete Research 36:209-226.\lang2067\par
+\f0\par
+}
+]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<Type>1</Type>
+			<ExternalFile>False</ExternalFile>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
+		</Info>
+		<Export>false</Export>
+		<Headings>
+			<Heading>Name</Heading>
+			<Heading>Unit</Heading>
+			<Heading>CaO</Heading>
+			<Heading>SiO2</Heading>
+			<Heading>Al2O3</Heading>
+			<Heading>CO2</Heading>
+			<Heading>SO3</Heading>
+			<Heading>Fe2O3</Heading>
+			<Heading>MgO</Heading>
+			<Heading>Na2O</Heading>
+			<Heading>K2O</Heading>
+		</Headings>
+		<Origin>0</Origin>
+		<RowId>Name</RowId>
+		<InfoId></InfoId>
+		<CaseSensitive>false</CaseSensitive>
+		<Records>
+			<Record>
+				<Value>Lot06</Value>
+				<Value>%mass</Value>
+				<Value>63.66</Value>
+				<Value>19.7</Value>
+				<Value>4.7</Value>
+				<Value>1.93</Value>
+				<Value>3.35</Value>
+				<Value>2.67</Value>
+				<Value>1.85</Value>
+				<Value>0.08</Value>
+				<Value>1.12</Value>
+			</Record>
+		</Records>
+	</DataBlock>
+</DataBlocks>

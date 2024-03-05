@@ -1,0 +1,38 @@
+INCLUDE$ ModuleCement_Functions.hpi
+
+GLOBAL_VARIABLE Format::Exponential::Precision 2
+
+
+CALCULATE_VALUES
+CementHydration
+-state definition
+-mybasic
+-start
+    import "ModuleCement_CementHydration_Equilibrium_02_CD.hps"
+    put_var("Cement::Hydration::Output$", "Cement_Hydration_"+str(1001)+".out")
+    txt = ""
+
+    cementini = new(CementHydration)
+    cementini.WriteInput(1001,1001)
+    
+    
+    txt = txt + "GLOBAL_VARIABLE Cement::Hydration::Output$ " + chr(34) + "Cement_Hydration_"+str(1001)+".out" +  chr(34) + eol
+    txt = txt + "INCLUDE$ Cement1001_1001._in" + eol
+    #txt = txt + "CALCULATE_VALUES " + eol + "hydrout" + eol + "-state definition " + eol + "-mybasic " + eol + "-start " + eol
+    #txt = txt + "ni = calc_value(" + chr(34) + "OutputHydration" +  chr(34) + ")" + eol + "-end" + eol
+    
+    openf("RunCementModels._in")
+    writef(txt)
+    closef()
+-end 
+include$ ModuleCement_CementHydration_Output_02_CD.hpi
+Include$ RunCementModels._in
+
+#Mulitple
+
+
+selected_output
+-file CementHydrationResults.out
+-reset false
+
+INCLUDE$ ModuleCement_UserPunch.hps

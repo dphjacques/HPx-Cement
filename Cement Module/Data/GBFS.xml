@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<DataBlocks>
+	<DataBlock>
+		<Name>GBFS</Name>
+		<Description>Chemical composition of Granulated blast furnance slag</Description>
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
+\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+\par
+Default unit: \par
+%mass\tab\tab %mass of oxides (g/100g)\par
+\par
+\b\fs24 Origin of the data\b0\fs19\par
+\pard\fi-720\li720\par
+\lang1033\b\f1\fs22 Adu17\b0\tab Adu-Amankwah, S., M. Zajac, C. Stabler, B. Lothenbach, and L. Black, 2017. Influence of limestone on the hydration of ternary slag cements. Cement and Concrete Research 100:96-109.\par
+\par
+\pard\lang2067\f0\fs19\par
+}]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<Type>1</Type>
+			<ExternalFile>False</ExternalFile>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
+		</Info>
+		<Export>true</Export>
+		<Headings>
+			<Heading>Name</Heading>
+			<Heading>unit</Heading>
+			<Heading>CaO</Heading>
+			<Heading>SiO2</Heading>
+			<Heading>Al2O3</Heading>
+			<Heading>CO2</Heading>
+			<Heading>SO3</Heading>
+			<Heading>Fe2O3</Heading>
+			<Heading>MgO</Heading>
+			<Heading>K2O</Heading>
+			<Heading>Na2O</Heading>
+		</Headings>
+		<Origin>0</Origin>
+		<RowId>Name</RowId>
+		<InfoId></InfoId>
+		<CaseSensitive>false</CaseSensitive>
+		<Records>
+			<Record>
+				<Value>Adu17</Value>
+				<Value>%mass</Value>
+				<Value>41.82</Value>
+				<Value>34.87</Value>
+				<Value>11.62</Value>
+				<Value>0</Value>
+				<Value>3.13</Value>
+				<Value>0.45</Value>
+				<Value>5.82</Value>
+				<Value>0.07</Value>
+				<Value>0.47</Value>
+			</Record>
+		</Records>
+	</DataBlock>
+</DataBlocks>

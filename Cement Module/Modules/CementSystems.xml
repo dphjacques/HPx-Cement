@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Items>
+	<Item>Primary<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0>Contains only OPC</Tag0>
+	</Item>
+	<Item>Binary::GBFS<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0>OPC and GBFS</Tag0>
+	</Item>
+	<Item>Binary::SF<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0>OPC and SF</Tag0>
+	</Item>
+	<Item>Ternary<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0>OPC, GBFS, SF</Tag0>
+	</Item>
+</Items>
