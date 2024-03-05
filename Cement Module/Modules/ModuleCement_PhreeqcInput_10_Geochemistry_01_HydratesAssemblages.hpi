@@ -9,7 +9,7 @@ CementHydration
 -mybasic
 -start
     #Select database
-    if(string.find(get_var(),"CEMDATA") < 0 ) then
+    if(string.find(get_var("_DATABASE$"),"CEMDATA") < 0 ) then
         import "ModuleCement_CementHydration_Equilibrium_02_CD.hps"
         put_var("_Output$","ModuleCement_CementHydration_Output_02_CD.hpi")
     else
