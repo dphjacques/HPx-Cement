@@ -22,7 +22,7 @@ Default unit: \par
 			<RelativePath />
 			<ParentName />
 		</Info>
-		<Export>false</Export>
+		<Export>true</Export>
 		<Headings>
 			<Heading>Name</Heading>
 			<Heading>Unit</Heading>
