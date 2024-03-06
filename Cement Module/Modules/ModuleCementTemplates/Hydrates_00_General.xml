@@ -24,32 +24,50 @@
 	</InputTable>
 	<DataBlocks>
 		<DataBlock>
-				<Name>OPC</Name>
-				<Description>Chemical composition of Ordinary Portland Cement</Description>
-				<Use>true</Use>
-				<Import>true</Import>
-				<RelPath>true</RelPath>
-				<Folder>Data</Folder>
-				<File>OPC.xml</File>
-			</DataBlock>
+			<Name>OPC</Name>
+			<Description>Chemical composition of Ordinary Portland Cement</Description>
+			<Use>true</Use>
+			<Import>true</Import>
+			<RelPath>true</RelPath>
+			<Folder>Data</Folder>
+			<File>OPC.xml</File>
+		</DataBlock>
 		<DataBlock>
-				<Name>GBFS</Name>
-				<Description>Chemical composition of Granulated blast furnance slag</Description>
-				<Use>true</Use>
-				<Import>true</Import>
-				<RelPath>true</RelPath>
-				<Folder>Data</Folder>
-				<File>GBFS.xml</File>
-			</DataBlock>
+			<Name>GBFS</Name>
+			<Description>Chemical composition of Granulated blast furnance slag</Description>
+			<Use>true</Use>
+			<Import>true</Import>
+			<RelPath>true</RelPath>
+			<Folder>Data</Folder>
+			<File>GBFS.xml</File>
+		</DataBlock>
 		<DataBlock>
-				<Name>SF</Name>
-				<Description>Chemical composition of Silica Fume</Description>
-				<Use>true</Use>
-				<Import>true</Import>
-				<RelPath>true</RelPath>
-				<Folder>Data</Folder>
-				<File>SF.xml</File>
-			</DataBlock>
+			<Name>SF</Name>
+			<Description>Chemical composition of Silica Fume</Description>
+			<Use>true</Use>
+			<Import>true</Import>
+			<RelPath>true</RelPath>
+			<Folder>Data</Folder>
+			<File>SF.xml</File>
+		</DataBlock>
+		<DataBlock>
+			<Name>FA</Name>
+			<Description>Chemical composition of Fly-ash</Description>
+			<Use>true</Use>
+			<Import>true</Import>
+			<RelPath>true</RelPath>
+			<Folder>Data</Folder>
+			<File>FA.xml</File>
+		</DataBlock>
+		<DataBlock>
+			<Name>LS</Name>
+			<Description>Chemical composition of Limestone</Description>
+			<Use>true</Use>
+			<Import>true</Import>
+			<RelPath>true</RelPath>
+			<Folder>Data</Folder>
+			<File>LS.xml</File>
+		</DataBlock>
 	</DataBlocks>
 	<Transformation></Transformation>
 	<Additions><![CDATA[include$ ModuleCement_PhreeqcInput_01_AdditionsToDatabase.hpi]]></Additions>

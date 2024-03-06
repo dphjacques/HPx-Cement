@@ -111,7 +111,7 @@
 							<Text />
 							<Default />
 						</Cell>
-					</Record>	
+					</Record>
 				</Records>
 			</Group>
 			<Group>
@@ -180,7 +180,7 @@
 						<Note>True</Note>
 					</Column>
 				</Columns>
-				<Records>					
+				<Records>
 					<Record>
 						<ID><![CDATA[2024-01-18T7:15:2712]]></ID>
 						<Visible>True</Visible>
@@ -247,8 +247,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Model::Monosulfoaluminate]]></Cell>
 						<Cell>
-							<Check>True</Check>
-							<Default>True</Default>
+							<Check>False</Check>
+							<Default>False</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[Forced to be 0 (no precipitation during hydration)]]></Cell>
@@ -263,8 +263,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Model::Zeolites::Na]]></Cell>
 						<Cell>
-							<Check>True</Check>
-							<Default>True</Default>
+							<Check>False</Check>
+							<Default>False</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -279,8 +279,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Model::Zeolites::K]]></Cell>
 						<Cell>
-							<Check>True</Check>
-							<Default>True</Default>
+							<Check>False</Check>
+							<Default>False</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -295,8 +295,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Model::Zeolites::Ca]]></Cell>
 						<Cell>
-							<Check>True</Check>
-							<Default>True</Default>
+							<Check>False</Check>
+							<Default>False</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
