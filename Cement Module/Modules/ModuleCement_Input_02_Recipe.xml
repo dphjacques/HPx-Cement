@@ -218,7 +218,7 @@
 									<Folder>Data</Folder>
 									<File>OPC_list.xml</File>
 									<Default>0</Default>
-									<Dynamic>False</Dynamic>
+									<Dynamic>True</Dynamic>
 								</List>
 							</Text>
 						</Cell>
@@ -361,7 +361,7 @@
 									<Folder>Data</Folder>
 									<File>GBFS_list.xml</File>
 									<Default>0</Default>
-									<Dynamic>False</Dynamic>
+									<Dynamic>True</Dynamic>
 								</List>
 							</Text>
 						</Cell>
@@ -504,7 +504,7 @@
 									<Folder>Data</Folder>
 									<File>SF_list.xml</File>
 									<Default>0</Default>
-									<Dynamic>False</Dynamic>
+									<Dynamic>True</Dynamic>
 								</List>
 							</Text>
 						</Cell>
