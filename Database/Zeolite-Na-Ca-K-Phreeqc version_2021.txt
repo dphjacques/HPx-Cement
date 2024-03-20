@@ -1,0 +1,219 @@
+phases 
+
+LEU
+K2(Al2Si4O12) = 2AlO2- + 2K+ + 4SiO2
+-Vm 177.35  
+-analytical_expression 78.2009   0  -11008.30   -27.836181448   0   0   0
+-log_k -27.60
+    
+GIS-LSP(K)
+K2(Al2Si2O8)(H2O)2 = 2AlO2- + 2K+ + 2SiO2 + 2H2O
+-Vm 140.26  
+-analytical_expression  52.7144  0  -8192.90    -18.119410510   0   0   0
+-log_k -19.60   
+    
+GIS-P1(K)
+K1.67(Al1.67Si2.33O8)(H2O)1.9 = 1.67AlO2- + 1.67K+ + 2.33SiO2 + 1.9H2O
+-Vm 140.34  
+-analytical_expression  42.0401     0   -8198.40    -14.444737986   0   0   0
+-log_k -21.20   
+        
+PHI(K)
+K2.5(Al2.5Si5.5O16)(H2O)5 = 2.5AlO2- + 2.5K+ + 5.5SiO2 + 5H2O
+-Vm 312.19  
+-analytical_expression  49.8767     0   -16989  -14.344805793   0   0   0
+-log_k -42.60   
+    
+LTA(K)
+K2(Al2Si2O8)(H2O)3.3 = 2AlO2- + 2K+ + 2SiO2 + 3.3H2O
+-Vm 186.82  
+-analytical_expression  44.8272     0   -9301.14    -13.793474819   0   0   0
+-log_k -20.50   
+    
+CHA(K)
+K2(Al2Si4O12)(H2O)4 = 2AlO2- + 2K+ + 4SiO2 + 4H2O
+-Vm 252.91  
+-analytical_expression  57.0145     0   -11899.50   -19.965462057   0   0   0
+-log_k -32.30       
+    
+FAU-X(K)
+K2.03(Al2.03Si2.47O9)(H2O)6.04 = 2.03AlO2- + 2.03K+ + 2.47SiO2 + 6.04H2O
+-Vm 223.48  
+-analytical_expression  35.6902     0   -8962.67    -11.367954708   0   0   0
+-log_k -22.50   
+    
+FAU-Y(K)
+K2.18(Al2.18Si3.82O12)(H2O)7.72 = 2.18AlO2- + 2.18K+ + 3.82SiO2 + 7.72H2O
+-Vm 291.27  
+-analytical_expression  32.8665     0   -12169.90   -9.860221989    0   0   0
+-log_k -32.35   
+    
+Tetra-NAT(K)
+K2(Al2Si3O10)(H2O)2 = 2AlO2- + 2K+ + 3SiO2 + 2H2O
+-Vm 186.51
+-analytical_expression  57.9421     0   -9974.88    -20.108107204   0   0   0
+-log_k -25.27   
+                
+NAT(K)
+K2(Al2Si3O10)(H2O)2 = 2AlO2- + 2K+ + 3SiO2 + 2H2O
+-Vm 186.51
+-analytical_expression  57.9421     0   -10296.90   -20.108107204   0   0   0
+-log_k -26.35   
+                
+MOR(K)
+K0.65(Al0.65Si5.35O12)(H2O)2.3 = 0.65AlO2- + 0.65K+ + 5.35SiO2 + 2.3H2O
+-Vm 190.87
+-analytical_expression  5.4056   0  -7886.60    -0.385471165    0   0   0
+-log_k -22.00   
+                
+STI(K)
+K2.20(Al2.20Si6.80O18)(H2O)4.8 = 2.20AlO2- + 2.20K+ + 6.80SiO2 + 4.8H2O
+-Vm 316.67
+-analytical_expression  40.4510   0 -17165.80   -11.346678821   0   0   0
+-log_k -45.20
+                
+HEU(K)
+K2.22(Al2.22Si6.78O18)(H2O)4.7 = 2.22AlO2- + 2.22K+ + 6.78SiO2 + 4.7H2O
+-Vm 324.80
+-analytical_expression  44.2474   0 -17818.00   -11.976643077   0   0   0
+-log_k -45.15   
+                
+CLI(K)
+K1.01(Al1.01Si4.99O12)(H2O)2.3 = 1.01AlO2- + 1.01K+ + 4.99SiO2 + 2.3H2O
+-Vm 191.26
+-analytical_expression  17.4577   0 -9570.96    -4.912864632    0   0   0
+-log_k -26.80
+
+GIS-LS-P(Ca)                        
+Ca(Al2Si2)O8(H2O)4.5 = 2AlO2- + Ca+2 + 2SiO2 + 4.5H2O                       
+-Vm 157.58                      
+-analytical_expression  36.5626 0   -5844.44    -16.35130147    0   0   0
+-log_K  -23.5                       
+                            
+SCO                     
+Ca(Al2Si3)O10(H2O)3 = 2AlO2- + Ca+2 + 3SiO2 + 3H2O                      
+-Vm 172.421                     
+-analytical_expression  45.5192 0   -7372.02    -18.34492569    0   0   0
+-log_K  -24.7                       
+                            
+CHA(Ca)                     
+Ca(Al2Si4)O12(H2O)6 = 2AlO2- + Ca+2 + 4SiO2 + 6H2O                      
+-Vm 247.61                      
+-analytical_expression  34.6719 0   -9408.16    -13.94935983    0   0   0
+-log_K  -31.45                      
+                            
+MOR(Ca)                     
+Ca0.34(Al0.68Si5.32)O12(H2O)2.9 = 0.68AlO2- + 0.34Ca+2 + 5.32SiO2 + 2.9H2O                          
+-Vm 209.72                      
+-analytical_expression  -2.69189    0   -6292.51    0.870646568 0   0   0
+-log_K  -21.64                      
+                            
+HEU(Ca)-1                       
+Ca1.07(Al2.14Si6.86)O18(H2O)4.4 = 2.14AlO2- + 1.07Ca+2 + 6.86SiO2 + 4.4H2O                      
+-Vm 317.88                      
+-analytical_expression  35.4187 0   -12625.9    -13.52071059    0   0   0
+-log_K  -40.392857                      
+                            
+HEU(Ca)-2                       
+Ca1.07(Al2.14Si6.86)O18(H2O)4.5 = 2.14AlO2- + 1.07Ca+2 + 6.86SiO2 + 4.5H2O                          
+-Vm 317.88                      
+-analytical_expression  33.8569 0   -11802  -13.57650223    0   0   0
+-log_K  -39.321429                      
+                            
+NAT                     
+Na2(Al2Si3)O10(H2O)2 = 2AlO2- + 2Na+ + 3SiO2 + 2H2O                     
+-Vm 169.356                     
+-analytical_expression  31.7641 0   -8818.32    -11.63388026    0   0   0
+-log_K  -26.6                       
+                            
+CHA(Na)                     
+Na2(Al2Si4)O12(H2O)6 = 2AlO2- + 2Na+ + 4SiO2 + 6H2O                     
+-Vm 249.951                     
+-analytical_expression  -5.68421    0   -10493.9    3.629426727 0   0   0
+-log_K  -31.9                       
+                            
+PHI(Na)
+Na2.5(Al2.5Si5.5)O16(H2O)5 = 2.5AlO2- + 2.5Na+ + 5.5SiO2 + 5H2O                 
+-Vm 304.74                      
+-analytical_expression  6.7515  0   -11450.3    -3.120693577    0   0   0
+-log_K  -39.375                     
+                            
+GIS-LS-P(Na)                        
+Na2(Al2Si2)O8(H2O)3.8 = 2AlO2- + 2Na+ + 2SiO2 + 3.8H2O                      
+-Vm 153.49                      
+-analytical_expression  12.2944 0   -6798.85    -3.673935697    0   0   0
+-log_K  -19.6                       
+                                                
+FAU-X(Na)                       
+Na2(Al2Si2.5)O9(H2O)6.2 = 2AlO2- + 2Na+ + 2.5SiO2 + 6.2H2O                      
+-Vm 195.8                       
+-analytical_expression  11.7267 0   -7412.76    -3.541882442    0   0   0
+-log_K  -21.9                       
+                            
+ANA                     
+Na2(Al2Si4)O12(H2O)2 = 2AlO2- + 2Na+ + 4SiO2 + 2H2O                     
+-Vm 194.84                      
+-analytical_expression  35.7636 0   -8159.59    -14.22392008    0   0   0
+-log_K  -26.8                       
+                            
+FAU-Y(Na)                       
+Na2(Al2Si4)O12(H2O)8 = 2AlO2- + 2Na+ + 4SiO2 + 8H2O                     
+-Vm 282.94                      
+-analytical_expression  -4.499  0   -9219.61    2.393168791 0   0   0
+-log_K  -29.5                       
+                            
+SOD(Cl)                     
+Na8(Al6Si6)O24Cl2 = 6AlO2- + 8Na+ + 6SiO2 + 2Cl-                        
+-Vm 421.53                      
+-analytical_expression  262.224 0   -29708.7    -93.75113361    0   0   0
+-log_K  -69.4                       
+                            
+MOR(Na)                     
+Na0.72(Al0.72Si5.28)O12(H2O)2.71 = 0.72AlO2- + 0.72Na+ + 5.28SiO2 + 2.71H2O                         
+-Vm 706.576                     
+-analytical_expression  -7.05194    0   -6925.17    3.143788505 0   0   0
+-log_K  -22.5                       
+                            
+LTA(Na)                     
+Na1.98Al1.98Si2.02O8(H2O)5.31 = 1.98AlO2- + 1.98Na+ + 2.02SiO2 + 5.31H2O                        
+-Vm 186.95                      
+-analytical_expression  11.7858 0   -4978.97    -5.369398178    0   0   0
+-log_K  -18.2                       
+                            
+4A                      
+Na2(Al2Si2)O8(H2O)4.5 = 2AlO2- + 2Na+ + 2SiO2 + 4.5H2O                      
+-Vm 187                     
+-analytical_expression  19.7694 0   -5902.19    -8.273971118    0   0   0
+-log_K  -20.5                       
+                            
+CAN(NO3)                        
+Na8(Al6Si6)O24(NO3)2(H2O)4 = 6AlO2- + 8Na+ + 6SiO2 + 2NO3- + 4H2O                           
+-Vm 435.96                      
+-analytical_expression  233.517 0   -29167.2    -81.02451554    0   0   0
+-log_K  -64.8                       
+                            
+SOD(OH)                     
+Na8(Al6Si6)O24(OH)2(H2O)2 = 6AlO2- + 8Na+ + 6SiO2 + 2OH- + 2H2O                         
+-Vm 424.74                      
+-analytical_expression  243.518 0   -26430.9    -88.93711896    0   0   0
+-log_K  -65.2                       
+                            
+CLI(Ca)                     
+Ca0.52(Al1.04Si4.96)O12(H2O)3.1 = 1.04AlO2- + 0.52Ca+2 + 4.96SiO2 + 3.1H2O                      
+-Vm 210.91                      
+-analytical_expression  16.8037 0   -6563.58    -7.446859527    0   0   0
+-log_K  -23.637931                      
+                            
+STI(Ca)                     
+Ca1.11(Al2.22Si6.78)O18(H2O)6.8 = 2.22AlO2- + 1.11Ca+2 + 6.78SiO2 + 6.8H2O                      
+-Vm 327.43                      
+-analytical_expression  32.5533 0   -11887.1    -13.38262456    0   0   0
+-log_K  -40.43                      
+                            
+PHI(NaK)                        
+Na1.5K(Al2.5Si5.5)O16(H2O)5 = 2.5AlO2- + 1.5Na+ + K+ + 5.5SiO2 + 5H2O                       
+-Vm 304.74                      
+-analytical_expression  20.6943 0   -12586.2    -7.41786998 0   0   0
+-log_K  -39.875                     
+
+

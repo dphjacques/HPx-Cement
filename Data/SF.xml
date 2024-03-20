@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<DataBlocks>
+	<DataBlock>
+		<Name>SF</Name>
+		<Description>Chemical composition of Silica Fume</Description>
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
+\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+\par
+Default unit: \par
+%mass\tab\tab %mass of oxides (g/100g)\par
+\par
+\b\fs24 Origin of the data\b0\fs19\par
+\par
+\pard\fi-720\li720\lang1033\b Olson18\b0\tab Table 2c in \f1\fs22 1.\tab Olsson, N., et al., \i Unsaturated ion diffusion in cementitious materials - The effect of slag and silica fume.\i0  Cement and Concrete Research, 2018. \b 108\b0 : p. 31-37.\par
+\pard\lang2067\f0\fs19\par
+}
+]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<Type>1</Type>
+			<ExternalFile>False</ExternalFile>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
+		</Info>
+		<Export>true</Export>
+		<Headings>
+			<Heading>Name</Heading>
+			<Heading>Unit</Heading>
+			<Heading>CaO</Heading>
+			<Heading>SiO2</Heading>
+			<Heading>Al2O3</Heading>
+			<Heading>CO2</Heading>
+			<Heading>SO3</Heading>
+			<Heading>Fe2O3</Heading>
+			<Heading>MgO</Heading>
+			<Heading>Na2O</Heading>
+			<Heading>K2O</Heading>
+		</Headings>
+		<Origin>0</Origin>
+		<RowId>Name</RowId>
+		<InfoId></InfoId>
+		<CaseSensitive>false</CaseSensitive>
+		<Records>
+			<Record>
+				<Value>Ols18</Value>
+				<Value>%mass</Value>
+				<Value>0.15</Value>
+				<Value>98.7</Value>
+				<Value>0.3</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0.02</Value>
+				<Value>0.04</Value>
+				<Value>0.09</Value>
+				<Value>0.3</Value>
+			</Record>
+		</Records>
+	</DataBlock>
+</DataBlocks>

@@ -1,0 +1,91 @@
+SOLUTION_MASTER_SPECIES
+[_step] [_step] 0 1  1
+SOLUTION_SPECIES 
+[_step] = [_step] ; log_k 0
+
+CALCULATE_VALUES
+Cement_Ingress
+-state definition 
+-mybasic
+-start 
+
+openf("Cement_degradation_ingress._in")
+writef("fail")
+closef()
+    
+if(get_varexist("Cement::Ingress::Type$") = 0) then    
+    outvar = ""    
+
+
+oxides = dict()
+
+#Make the list of components to add
+if(get_var("Cement::Ingress::Type$") = "Components" ) then
+    if(get_Var("Cement::Ingress::Components::Type$" )  = "Relative Moles" ) then
+        if (get_var("Cement::Ingress::Components::CO2") > 0 ) then set(oxides,"CO2",get_var("Cement::Ingress::Components::CO2")) endif
+        if (get_var("Cement::Ingress::Components::SO3") > 0 ) then set(oxides,"SO3",get_var("Cement::Ingress::Components::SO3")) endif
+        if (get_var("Cement::Ingress::Components::MgCl2") > 0 ) then set(oxides,"MgCl2",get_var("Cement::Ingress::Components::MgCl2")) endif
+        if (get_var("Cement::Ingress::Components::NaCl") > 0 ) then set(oxides,"NaCl",get_var("Cement::Ingress::Components::NaCl")) endif
+        outvar = "Lead  AddedCO2 AddedSO3 AddedMgCl2 AddedNaCl "
+    endif
+endif
+
+
+txt = "INCREMENTAL_REACTIONS  true " + eol + "PRINT " + eol + "-reset false " + eol 
+txt = txt + get_var("Cement::Identity::_LastSaved$")
+txt = txt + "END " + eol 
+txt = txt + get_var("Cement::Identity::_LastSaved$")
+txt = txt +"REACTION " + eol
+
+for ox in oxides
+  txt = txt + ox + " " + str(get(oxides,ox)) + eol
+next
+  txt = txt + "[_step] 1 " + eol
+
+#calculate the amount
+amount = 1
+
+if (get_var("Cement::Ingress::Amount::Type$") = "Relative") then
+    gv= "Cement::Recipe::" + get_var("Cement::Ingress::Amount::Component$")
+    if(get_varexist(gv) = 0) then
+        amount = get_var("Cement::Ingress::Amount") * get_var(gv)
+    endif 
+endif
+st = get_var("Cement::Ingress::Steps")
+if( st < 1 ) then
+    st = 1
+endif  
+
+txt = txt + str(amount) + " in " + str(st) + " steps " + eol 
+
+openf("Cement_degradation_ingress._in")
+writef(txt)
+closef()
+
+
+put_var("Output::Lead",outvar) 
+
+endif 
+-end
+
+END
+#output
+selected_output
+-file CementDegradationIngressResults.out
+-reset false
+-active true 
+
+INCLUDE$ ModuleCement_UserPunch.hps
+
+
+INCLUDE$ Cement_degradation_ingress._in
+end
+CALCULATE_VALUES
+deletefile
+-state definition
+-mybasic
+-start
+    deletef("Cement_degradation_ingress._in")
+-end
+
+

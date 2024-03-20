@@ -1,0 +1,50 @@
+import "ModuleCement_ModelSystems_01_TC.hps"
+
+
+put_var("Output::Lead"," ") 
+
+class CementHydration
+    cemmodel = new(CementModelSystem)
+    
+    boutprintInitial = 0
+    boutpunchInitial = 0
+    boutputprintResult = 1 
+    boutputpunchResult = 0 
+
+    def WriteInput(entitynr,savenr)
+        txt = cemsys.WritePhreeqcSolution(entitynr,boutprintInitial,boutpunchInitial)
+        txt = txt + "USE SOLUTION " + str(entitynr) + eol
+        txt = txt + "INCLUDE$ CementModel" + str(entitynr) + "._in" + eol
+        openf("CementModel"+str(entitynr)+"._in")
+        writef(cemsys.WritePhreeqcCementModel(entitynr,boutputprintResult,boutputpunchResult))
+        closef()
+        txt = txt + "INCLUDE$ " + "CementReaction"+str(entitynr)+"._in" + eol
+        openf("CementReaction"+str(entitynr)+"._in"))
+        writef(cemsys.WritePhreeqcCementReaction(entitynr))
+        closef()
+        txt = txt + "save SOLUTION " + str(savenr) + eol
+        txt = txt + "save EQUILIBRIUM_PHASES " + str(savenr) + eol
+        txt = txt + "save SOLID_SOLUTIONS " + str(savenr) + eol
+        txt = txt + "END" + eol
+        openf("Cement" + str(entitynr) + "_" + str(savenr) + "._in")
+        writef(txt)
+        closef()
+        
+        txt = "use SOLUTION " + str(savenr) + eol
+        txt = txt + "use EQUILIBRIUM_PHASES " + str(savenr) + eol
+        put_var("Cement::Identity::_LastSaved$",txt)
+        
+        txt = "use EQUILIBRIUM_PHASES " + str(savenr) + eol
+        txt = txt + "save EQUILIBRIUM_PHASES " + str(savenr) + eol
+        put_var("Cement::Identity::_LastSavedUsed$",txt)
+        return txt
+    enddef
+
+
+    system = get_var("Cement::Model::System$") 
+    system = left(system,2)
+    systemnr = string.strtoint(system)
+
+    cemsys = cemmodel.GetCementModel(systemnr)
+    cemmodel.CreateHeadings(systemnr)
+    endclass

@@ -1,0 +1,48 @@
+INCLUDE$ ModuleCement_Functions.hpi
+
+GLOBAL_VARIABLE Format::Exponential::Precision 2
+
+
+CALCULATE_VALUES
+CementDatabase
+-state definition
+-mybasic
+-start  
+    #Select database
+    if(string.find(get_var("_DATABASE$"),"CEMDATA") >-1 ) then
+        put_var("_Equilibrium$","ModuleCement_CementHydration_Equilibrium_02_CD.hps")
+        put_var("_Output$","ModuleCement_CementHydration_Output_02_CD.hpi")
+    else
+        put_var("_Equilibrium$","ModuleCement_CementHydration_Equilibrium_01_TC.hps")
+       put_var("_Output$","ModuleCement_CementHydration_Output_01_TC.hpi")
+    endif
+-end
+CementHydration
+-state definition
+-mybasic
+-start
+    import "@_Equilibrium$"
+    put_var("Cement::Hydration::Output$", "Cement_Hydration_"+str(1001)+".out")
+    txt = ""
+
+    cementini = new(CementHydration)
+    cementini.WriteInput(1001,1001)
+        
+    txt = txt + "GLOBAL_VARIABLE Cement::Hydration::Output$ " + chr(34) + "Cement_Hydration_"+str(1001)+".out" +  chr(34) + eol
+    txt = txt + "INCLUDE$ Cement1001_1001._in" + eol
+   
+    openf("RunCementModels._in")
+    writef(txt)
+    closef()
+-end 
+include$ @_Output$
+Include$ RunCementModels._in
+
+#Mulitple
+
+
+selected_output
+-file CementHydrationResults.out
+-reset false
+
+INCLUDE$ ModuleCement_UserPunch.hps
