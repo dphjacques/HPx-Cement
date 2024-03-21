@@ -3,5 +3,8 @@
 	<MetaData></MetaData>
 	<Templates>ModuleCementTemplates
 		<Template>Hydrates_00_General.xml</Template>
+		<Template>Hydrates_10_Blending_General.xml</Template>
+		<Template>Hydrates_20_Ingress_General.xml</Template>
+		<Template>Hydrates_30_Leaching_General.xml</Template>
 	</Templates>
 </Module>
