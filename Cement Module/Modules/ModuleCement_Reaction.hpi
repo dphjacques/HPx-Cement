@@ -162,8 +162,8 @@ class CementModel
             txt = txt + str(am) + eol
             put_var("Cement::Recipe::"+oxide,am)
         wend        
-        
-    
+        txt = txt + str(get_var("Cement::Recipe::Amount") /100) #+ " in 10 steps" 
+
         return txt
     enddef
 
