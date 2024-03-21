@@ -78,7 +78,7 @@ endif
     if(get_var("Cement::Leaching::Step0_01") > 0) then
         txt = txt + "solution " + str(__cemSolutionNr) + eol
         txt = txt + "-water 0.01 " + eol
-        #txt = txt + txtsol + "end" + eol
+        txt = txt + txtsol + "end" + eol
     endif
     if(get_var("Cement::Leaching::Step0_1") > 0) then
         txt = txt + "solution " + str(__cemSolutionNr+1) + eol
