@@ -19,6 +19,13 @@ Db_SolidSolutions
 CSHQ-JenD 
 -end
 
+Db_SolidSolutions_Def
+-casesensitive false
+-headings S_S  nr
+-start
+CSHQ 1  
+-end
+
 Db_ZeolitesNa
 -casesensitive false
 -headings Mineral Na K Ca Si Al
