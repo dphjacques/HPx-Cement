@@ -95,29 +95,61 @@ class CementModelSystem
         put_var("Output::Elements",txt)  
         put_var("Output::Oxides",txto)
         txt = ""
+        txtv = ""
+        txtw = ""
         clear_def("Db_Minerals")
         for i in cemsys.PurePhases
             txt = txt + i + " "
+            txtv = txtv + "v" + i + " "
+            txtw = txtw + "w" + i + " "
             push_def("Db_Minerals",i)
         next i 
         put_var("Output::Phases",txt)
+        put_var("Output::Phasesv",txtv)
+        put_var("Output::Phasesw",txtw)
         txt = ""
+        txtv = ""
+        txtw = ""
+        txts = ""
+        txtsv = ""
+        txtsw = ""
         clear_def("Db_SolidSolutions")
+        clear_def("Db_SolidSolutions_Def")
+        if(get_defexist("Db_SolidSolutions_Comp",0,0)>-2) then 
+            clear_def("Db_SolidSolutions_Comp")
+        endif
+        nr = 0
         for solsol in cemsys.SolidSolution
             solsol1 = cemsys.SolidSolution(solsol)
+            nri=0
+            txts = txts + solsol + " "
+            txtsv = txtsv + "v" + solsol + " "
+            txtsw = txtsw + "w" + solsol + " "
             for i in solsol1.EndMember
                 txt = txt + i + " "
+                txtv = txtv + "v" + i + " "
+                txtw = txtw + "w" + i + " "
                 push_def("Db_SolidSolutions",i)
+                put_def("Db_SolidSolutions_Comp",i,nr,nri)
+                nri = nri+1
             next i
+            push_def("Db_SolidSolutions_Def",solsol,nri)
+            nr = nr+1
         next  
         put_var("Output::SolidSolutions",txt)
-        if(get_varexist("Output::Variables::SaturationIndex") = 0 ) then
-            if(get_var("Output::Variables::SaturationIndex") = 1 ) then
-                txt = get_var("Output::Phases")
+        put_var("Output::SolidSolutionsv",txtv)
+        put_var("Output::SolidSolutionsw",txtw)
+        put_var("Output::SolidSolutionsComp",txts)
+        put_var("Output::SolidSolutionsCompv",txtsv)
+        put_var("Output::SolidSolutionsCompw",txtsw)
+        
+        if(get_varexist("Cement::Output::Hydrates::SaturationIndex") = 0 ) then
+            if(get_var("Cement::Output::Hydrates::SaturationIndex") = 1 ) then
+                txt = " "
                 for i in cemsys.PurePhases
                     txt = txt + "si" + i + " "
                 next i 
-                put_var("Output::Phases",txt)
+                put_var("Output::Phasessi",txt)
             endif
         endif
         
