@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<DataBlocks>
+	<DataBlock>
+		<Name>LeachingSolution</Name>
+		<Description>Chemical composition of Leaching solutions</Description>
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
+\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+\par
+Default unit: \par
+%mass\tab\tab %mass of oxides (g/100g)\par
+\par
+\b\fs24 Origin of the data\b0\fs19\par
+\par
+\pard\fi-720\li720\lang1033\b Olson18\b0\tab Table 2c in \f1\fs22 1.\tab Olsson, N., et al., \i Unsaturated ion diffusion in cementitious materials - The effect of slag and silica fume.\i0  Cement and Concrete Research, 2018. \b 108\b0 : p. 31-37.\par
+\pard\lang2067\f0\fs19\par
+}]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<Type>1</Type>
+			<ExternalFile>False</ExternalFile>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
+		</Info>
+		<Export>false</Export>
+		<Headings>
+			<Heading>Name</Heading>
+			<Heading>Charge</Heading>
+			<Heading>pH</Heading>
+			<Heading>Cl</Heading>
+			<Heading>C</Heading>
+			<Heading>S(6)</Heading>
+			<Heading>Ca</Heading>
+			<Heading>Si</Heading>
+			<Heading>Al</Heading>
+			<Heading>Fe</Heading>
+			<Heading>Mg</Heading>
+			<Heading>Na</Heading>
+			<Heading>K</Heading>
+		</Headings>
+		<Origin>0</Origin>
+		<RowId>Name</RowId>
+		<InfoId></InfoId>
+		<CaseSensitive>false</CaseSensitive>
+		<Records>
+			<Record>
+				<Value>pH3_Cl</Value>
+				<Value>Cl</Value>
+				<Value>3</Value>
+				<Value>1E-3</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+			</Record>
+		</Records>
+	</DataBlock>
+</DataBlocks>

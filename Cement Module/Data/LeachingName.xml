@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<DataBlocks>
+	<DataBlock>
+		<Name>LeachingName</Name>
+		<Description></Description>
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}{\f2\fnil\fcharset0 Calibri;}}
+\viewkind4\uc1\pard\b\fs24 Format\b0\f1\par
+\lang1033\f0\fs22 The file contains standard PHREEQC instruction format to define a solution, i.e. the identifiers and elements in the key word SOLUTION. The keyword SOLUTION is not required.\lang2067\b\fs24\par
+\par
+Origin of the data\b0\fs19\par
+\par
+\pard\fi-720\li720\lang1033\b MAR2014\b0\tab\f2\fs22 .\par
+\pard\lang2067\f0\fs19\par
+}]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<Type>1</Type>
+			<ExternalFile>False</ExternalFile>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
+		</Info>
+		<Export>true</Export>
+		<Headings>
+			<Heading>Name</Heading>
+			<Heading>Reference</Heading>
+		</Headings>
+		<Origin>0</Origin>
+		<RowId>Name</RowId>
+		<InfoId></InfoId>
+		<CaseSensitive>false</CaseSensitive>
+		<Records>
+			<Record>
+				<Value>Distilled water</Value>
+				<Value></Value>
+			</Record>
+		</Records>
+	</DataBlock>
+</DataBlocks>
