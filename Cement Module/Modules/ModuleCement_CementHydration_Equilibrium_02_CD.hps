@@ -12,6 +12,11 @@ class CementHydration
 
     def WriteInput(entitynr,savenr)
         txt = cemsys.WritePhreeqcSolution(entitynr,boutprintInitial,boutpunchInitial)
+        
+        #txt = txt + "Print" + eol
+        #txt = txt + "-reset false" + eol
+        #txt = txt + "selected_output " + eol
+        txt = txt + "-active false " + eol
         txt = txt + "INCREMENTAL_REACTIONS true" + eol
         txt = txt + "USE SOLUTION " + str(entitynr) + eol
         txt = txt + "INCLUDE$ CementModel" + str(entitynr) + "._in" + eol
@@ -27,6 +32,17 @@ class CementHydration
         txt = txt + "save EQUILIBRIUM_PHASES " + str(savenr) + eol
         txt = txt + "save SOLID_SOLUTIONS " + str(savenr) + eol
         txt = txt + "END" + eol
+        
+        #txt = txt + "Print" + eol
+        #txt = txt + "-reset true" + eol
+        #txt = txt + "selected_output " + eol
+        #txt = txt + "-active true " + eol
+        #txt = txt + "use SOLUTION " + str(savenr) + eol
+        #txt = txt + "use EQUILIBRIUM_PHASES " + str(savenr) + eol
+        #txt = txt + "use SOLID_SOLUTIONS " + str(savenr) + eol
+        #txt = txt + "END" + eol
+        
+        
         openf("Cement" + str(entitynr) + "_" + str(savenr) + "._in")
         writef(txt)
         closef()
