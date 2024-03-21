@@ -1,0 +1,5 @@
+INCLUDE$ ModuleCement_PhreeqcInput_10_Geochemistry_00_HydratesAssemblagesBasis.hpi
+
+
+#Degradation
+INCLUDE$ ModuleCement_DegradationLeaching.hpi
