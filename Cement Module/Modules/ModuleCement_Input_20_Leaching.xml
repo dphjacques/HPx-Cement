@@ -16,7 +16,7 @@
 		<Export>True</Export>
 		<Groups>
 			<Group>
-				<Name>Variables<Visible>True</Visible>
+				<Name>Leaching amounts<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
 				<Heading>
@@ -120,8 +120,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::Step0_01]]></Cell>
 						<Cell>
-							<Text>10</Text>
-							<Default>10</Default>
+							<Text>1</Text>
+							<Default>1</Default>
 						</Cell>
 						<Cell><![CDATA[L]]></Cell>
 						<Cell><![CDATA[Volume of  0.01 l of the solution]]></Cell>
@@ -152,8 +152,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::Step1]]></Cell>
 						<Cell>
-							<Text>99</Text>
-							<Default>99</Default>
+							<Text>90</Text>
+							<Default>9</Default>
 						</Cell>
 						<Cell><![CDATA[L]]></Cell>
 						<Cell><![CDATA[Volume of 1 l of the solution]]></Cell>
@@ -168,8 +168,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::Step10]]></Cell>
 						<Cell>
-							<Text>90</Text>
-							<Default>90</Default>
+							<Text>0</Text>
+							<Default>0</Default>
 						</Cell>
 						<Cell><![CDATA[L]]></Cell>
 						<Cell><![CDATA[Volume of 10 liter of the solution]]></Cell>
@@ -257,8 +257,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::Ca]]></Cell>
 						<Cell>
-							<Text>0</Text>
-							<Default>0</Default>
+							<Text>1E-15</Text>
+							<Default>1E-15</Default>
 						</Cell>
 						<Cell><![CDATA[mol/l]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -273,8 +273,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::Si]]></Cell>
 						<Cell>
-							<Text>0</Text>
-							<Default>0</Default>
+							<Text>1E-15</Text>
+							<Default>1E-15</Default>
 						</Cell>
 						<Cell><![CDATA[mol/l]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -289,8 +289,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::Al]]></Cell>
 						<Cell>
-							<Text>0</Text>
-							<Default>0</Default>
+							<Text>1E-15</Text>
+							<Default>1E-15</Default>
 						</Cell>
 						<Cell><![CDATA[mol/l]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -305,8 +305,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::S]]></Cell>
 						<Cell>
-							<Text>0</Text>
-							<Default>0</Default>
+							<Text>1E-15</Text>
+							<Default>1E-15</Default>
 						</Cell>
 						<Cell><![CDATA[mol/l]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -321,8 +321,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::Mg]]></Cell>
 						<Cell>
-							<Text>0</Text>
-							<Default>0</Default>
+							<Text>1E-15</Text>
+							<Default>1E-15</Default>
 						</Cell>
 						<Cell><![CDATA[mol/l]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -337,8 +337,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::C]]></Cell>
 						<Cell>
-							<Text>0</Text>
-							<Default>0</Default>
+							<Text>1E-15</Text>
+							<Default>1E-15</Default>
 						</Cell>
 						<Cell><![CDATA[mol/l]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -353,8 +353,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::Na]]></Cell>
 						<Cell>
-							<Text>0</Text>
-							<Default>0</Default>
+							<Text>1E-15</Text>
+							<Default>1E-15</Default>
 						</Cell>
 						<Cell><![CDATA[mol/l]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -369,8 +369,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::K]]></Cell>
 						<Cell>
-							<Text>0</Text>
-							<Default>0</Default>
+							<Text>1E-15</Text>
+							<Default>1E-15</Default>
 						</Cell>
 						<Cell><![CDATA[mol/l]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -385,8 +385,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Leaching::Cl]]></Cell>
 						<Cell>
-							<Text>0</Text>
-							<Default>0</Default>
+							<Text>1E-15</Text>
+							<Default>1E-15</Default>
 						</Cell>
 						<Cell><![CDATA[mol/l]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -622,7 +622,7 @@
 						<ID><![CDATA[2024-01-24T18:10:2753]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>
-						<Cell><![CDATA[Cement:::Leaching::Solution::DataBlock::SolutionName$]]></Cell>
+						<Cell><![CDATA[Cement::Leaching::Solution::DataBlock::SolutionName$]]></Cell>
 						<Cell>
 							<Text>name</Text>
 							<Default>name</Default>
@@ -638,7 +638,7 @@
 						<ID><![CDATA[2024-01-24T18:24:2164]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>
-						<Cell><![CDATA[Cement:::Leaching::Solution::Filename$]]></Cell>
+						<Cell><![CDATA[Cement::Leaching::Solution::Filename$]]></Cell>
 						<Cell>
 							<Text>
 								<List>
