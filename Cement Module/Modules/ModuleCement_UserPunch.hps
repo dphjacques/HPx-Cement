@@ -1,24 +1,58 @@
+CALCULATE_VALUES
+ExtrOutputPunch
+-state Definition
+-mybasic
+-start 
+    txt = ""
+    if( get_var("Cement::Output::Hydrates::Moles") = 1 ) then
+        txt = txt + "-headings " + get_var("Output::Phases") + eol
+        txt = txt + "-headings " + get_var("Output::SolidSolutions") + eol
+        txt = txt + "-headings " + get_var("Output::SolidSolutionsComp") + eol
+    endif 
+    if(  get_var("Cement::Output::Hydrates::Volumes")  = 1 ) then
+        txt = txt + "-headings " + get_var("Output::Phasesv") + eol
+        txt = txt + "-headings " + get_var("Output::SolidSolutionsv") + eol
+        txt = txt + "-headings " + get_var("Output::SolidSolutionsCompv") + eol
+    endif 
+    if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+        txt = txt + "-headings " + get_var("Output::Phasesw") + eol
+        txt = txt + "-headings " + get_var("Output::SolidSolutionsw") + eol
+        txt = txt + "-headings " + get_var("Output::SolidSolutionsCompw") + eol
+    endif 
+    if(get_var("Cement::Output::Hydrates::SaturationIndex")  = 1 ) then
+        txt = txt + "-headings" + get_var("Output::Phasessi")
+    endif 
+    openf("_txtheading._in")
+    writef(txt)
+    closef()
+    put_var("_leadnr",0)
+    
+    
+    
+-end 
+
 USER_PUNCH 
 -mybasic
--headings OPC GBFS SF wc
+-headings Amount OPC GBFS SF FA LS wc
 -headings @Output::Oxides 
--headings @Output::Lead 
+-headings Lead
 -headings water T pH mu
 -headings @Output::Elements
--headings @Output::Phases
--headings @Output::SolidSolutions
--headings CSH_Ca CSH_Si
+include$ _txtheading._in
+-headings CSH_Ca CSH_Si GelPores
 -headings @Output::Zeolites
 
 -start
-    
-    
-    
-    punch( get_var("Cement::Clinker::Mass") )
+ 
+    punch(  get_var("Cement::Recipe::Amount") )
+    punch( get_var("Cement::Clinker::Amount") )
     punch( get_var("GBFS::Amount") )
     punch( get_var("SF::Amount") )
+    punch( get_var("FA::Amount") )
+    punch( get_var("LS::Amount") )
     punch( get_var("Cement::Recipe::w_c") )
     
+    #print oxides
     db = "Db_Elements"
     count = get_defnrrec(db)-1
     for i = 0 to count 
@@ -32,6 +66,7 @@ USER_PUNCH
         punch(am)
     next i 
     
+    #print lead
     if(get_varexist("Cement::Leaching::Type$") = 0 ) then
         if(get_varexist("Leaching::Run::AddedWater")=0) then
             addedwater = get_var("Leaching::Run::TotalAmountAddedWater") + get_var("Leaching::Run::AddedWater")
@@ -42,56 +77,159 @@ USER_PUNCH
         endif
     elseif (get_varexist("Cement::Ingress::Type$") = 0 ) then
         _step = sys("[_step]")
-        punch( _step)
+        if ( get_var("Cement::Figures::Lead$") <> "null" ) then
+            leadvar = get_var("Cement::Figures::Lead$")
+            if(get_varexist(leadvar) = 0) then
+                punch( _step*get_var(leadvar))
+            else
+                punch( _step)
+            endif
+        else
+            punch( _step)
+        endif
         if(get_var("Cement::Ingress::Type$") = "Components" ) then
             if(get_Var("Cement::Ingress::Components::Type$" )  = "Relative Moles" ) then
-                punch( _step*get_var("Cement::Ingress::Components::CO2")) 
-                punch( _step*get_var("Cement::Ingress::Components::SO3")) 
-                punch( _step*get_var("Cement::Ingress::Components::MgCl2")) 
-                punch( _step*get_var("Cement::Ingress::Components::NaCl")) 
+                #punch( _step*get_var("Cement::Ingress::Components::CO2")) 
+                #punch( _step*get_var("Cement::Ingress::Components::SO3")) 
+                #punch( _step*get_var("Cement::Ingress::Components::MgCl2")) 
+                #punch( _step*get_var("Cement::Ingress::Components::NaCl")) 
             endif
         endif
+    elseif ( get_var("Cement::Figures::Lead$") <> "null" ) then
+        leadvar = get_var("Cement::Figures::Lead$")
+        if(get_varexist(leadvar) = 0) then
+            punch(get_var(leadvar))
+        else
+            punch(get_var("_leadnr"))
+            put_var("_leadnr",get_var("_leadnr")+1)
+        endif 
+    else
+        punch(get_var("_leadnr"))
+        put_var("_leadnr",get_var("_leadnr")+1) 
     endif 
     
     punch(tot("water"))
     punch(tc())
     punch(-la("H+"), mu())
     
+    
+    #print solution
     db = "Db_Elements"
     count = get_defnrrec(db)-1
 
     for i = 0 to count 
         punch(tot(get_def(db,i)))
     next i
-    db = "Db_Minerals"
-    count = get_defnrrec(db)-1
-    for i = 0 to count 
-        punch(equi(get_def(db,i)))
-    next i
-    if(get_varexist("Output::Variables::SaturationIndex") = 0 ) then
-       if(get_var("Output::Variables::SaturationIndex") = 1 ) then   
-            for i = 0 to count 
-                punch(si(get_def(db,i)))
-            next i    
-       endif
-    endif
     
-    
-    db = "Db_SolidSolutions"
-    #if(get_defexist(db)=0) then
+    #print minerals & ss
+    if( get_var("Cement::Output::Hydrates::Moles") = 1 ) then
+        db = "Db_Minerals"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            punch(equi(get_def(db,i)))
+        next i
+        db = "Db_SolidSolutions"
         count = get_defnrrec(db)-1
         for i = 0 to count 
             punch(s_s(get_def(db,i)))
         next i
-    #endif
+        
+        db = "Db_SolidSolutions_Def"
+        dba = "Db_SolidSolutions_Comp"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            min = get_def(db,0,i)
+            nr = get_def(db,1,i)
+            am= 0
+            for j = 0 to nr-1
+                am = am + s_s(get_def(dba,i,j))
+            next j
+            punch(am)
+        next i      
+        
+    endif 
+    if(  get_var("Cement::Output::Hydrates::Volumes")  = 1 ) then
+        db = "Db_Minerals"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            punch(equi(get_def(db,i))*phase_vm(get_def(db,i)))
+        next i
+        db = "Db_SolidSolutions"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            punch(s_s(get_def(db,i))*phase_vm(get_def(db,i)))
+        next i
+        
+        db = "Db_SolidSolutions_Def"
+        dba = "Db_SolidSolutions_Comp"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            min = get_def(db,0,i)
+            nr = get_def(db,1,i)
+            am= 0
+            for j = 0 to nr-1
+            am = am + s_s(get_def(dba,i,j))*phase_vm(get_def(dba,i,j))
+            next j
+            punch(am)
+        next i 
+    endif 
+    if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+        db = "Db_Minerals"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            w= gfw(phase_formula(get_def(db,i)))
+            punch(equi(get_def(db,i))*w)
+        next i
+        db = "Db_SolidSolutions"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            w= gfw(phase_formula(get_def(db,i)))
+            punch(s_s(get_def(db,i))*w)
+        next i
+        
+        db = "Db_SolidSolutions_Def"
+        dba = "Db_SolidSolutions_Comp"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            min = get_def(db,0,i)
+            nr = get_def(db,1,i)
+            am= 0
+            for j = 0 to nr-1
+                w= gfw(phase_formula(get_def(dba,i,j)))
+                am = am + s_s(get_def(dba,i,j))*w
+            next j
+            punch(am)
+        next i 
+    endif 
+    
+    
+    #saturation Index
+    if(get_varexist("Cement::Output::Hydrates::SaturationIndex") = 0 ) then
+       if(get_var("Cement::Output::Hydrates::SaturationIndex") = 1 ) then   
+           db = "Db_Minerals"
+           count = get_defnrrec(db)-1
+            for i = 0 to count 
+                punch(si(get_def(db,i)))
+            next i  
+            #db = "Db_SolidSolutions"
+            #count = get_defnrrec(db)-1
+            #for i = 0 to count 
+            #  punch(si(get_def(db,i)))
+            #next i  
+       endif
+    endif
+    
+    
     ca = sum_s_s("CSH","Ca")
     sil = sum_s_s("CSH","Si")
     if(ca > 0 AND sil > 0) then
-        punch(sum_s_s("CSH","Ca"),sum_s_s("CSH","Si"))
+        punch(ca,sil)
+        punch(calc_value("VolumeGelPores",ca,sil))
     else
-    ca =1.6* equi("CSH1.6") + 1.2* equi("CSH1.2") +0.8* equi("CSH0.8")
-    sil = equi("CSH1.6") + equi("CSH1.2") + equi("CSH0.8")
-    punch(ca,sil)
+        ca =1.6* equi("CSH1.6") + 1.2* equi("CSH1.2") +0.8* equi("CSH0.8")
+        sil = equi("CSH1.6") + equi("CSH1.2") + equi("CSH0.8")
+        punch(ca,sil)
+        punch(0)
     endif
     
     #Zeolites
@@ -158,5 +296,390 @@ USER_PUNCH
        endif
     endif
     
+   
 -end
 END 
+INCLUDE$ ModuleCementFigures/00_Definitions_02_LineStyleNumbers.hpi
+
+CALCULATE_VALUES
+ExtrOutputPunch
+-state Definition
+-mybasic
+-start 
+  txt = ""
+  fignr = 1
+
+  belements = 0
+  belements_mg = 0
+  
+  bsolids = 0
+  bsolidvol = 0
+  bsolidgram = 0
+  bsolid100 = 0
+  convert =  get_var("Cement::Recipe::Amount") /100
+  convertstr = " t " + chr(34) + "_THIS/" + str(convert) + chr(34) + " " 
+  bylogscale = 0
+  
+  def WriteListElements()
+    #print solution
+    db = "Db_Elements"
+    count = get_defnrrec(db)-1
+    for i = 0 to count 
+
+        txt = txt + "-fig_y " + get_def(db,i) + " < k " +  chr(34) + get_def(db,i) + chr(34) + " "
+        if(belements_mg = 1 ) then
+            txt = txt + " t " + chr(34) + "_THIS * 1000 * " + str(gfw(get_def(db,i))) + chr(34) + " "  
+        endif
+        txt = txt + " > " + eol
+    next i
+
+  enddef
+  
+  def WriteListSolids()
+  #print s_s
+    db = "Db_SolidSolutions_Def"
+    count = get_defnrrec(db)-1
+    for i = 0 to count 
+        min = get_def(db,0,i)
+        vary = min
+        if(bsolidgram = 1 ) then
+            if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+                vary = "w"+vary
+            endif
+        endif
+        if(bsolidvol = 1 ) then
+            if( get_var("Cement::Output::Hydrates::Volumes") = 1 ) then
+                vary = "v"+vary
+            endif
+        endif 
+        txt = txt + "-fig_y " + vary + " < k " +  chr(34) + min + chr(34) + " "
+        strvar = "nr"+get_def(db,0,i)
+        if(get_varexist(strvar) = 0 ) then 
+            txt = txt +  " ls " + str(get_var(strvar)) + " "
+        endif
+        if(bsolid100 = 1) then
+            txt = txt + convertstr
+        endif
+        txt = txt + " > " + eol
+    next i
+  #prin solid
+    db = "Db_Minerals"
+    count = get_defnrrec(db)-1
+    for i = 0 to count 
+        min = get_def(db,i)
+        vary = min
+        if(bsolidgram = 1 ) then
+            if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+                vary = "w"+vary
+            endif
+        endif
+        if(bsolidvol = 1 ) then
+            if( get_var("Cement::Output::Hydrates::Volumes") = 1 ) then
+                vary = "v"+vary
+            endif
+        endif 
+        txt = txt + "-fig_y " + vary + " < k " +  chr(34) + min + chr(34) + " "
+        strvar = "nr"+get_def(db,i)
+        if(get_varexist(strvar) = 0 ) then 
+            txt = txt +  " ls " + str(get_var(strvar)) + " "
+        endif
+        if(bsolid100 = 1) then
+            txt = txt + convertstr
+        endif
+        txt = txt + " > " + eol
+    next i
+
+  enddef
+  
+  def WriteFigure(name, xtype)
+
+          txt = txt + "-fig_nr " + str(fignr) + eol
+          txt1 = "INCLUDE$ " + name + ".plt "
+          txt = txt + txt1  + eol
+          txt = txt + "-fig_variabletype " + chr(34) + xtype + chr(34)  + " " + eol
+          txt = txt + "-fig_xt " +  chr(34) + get_var("Cement::Figures::X::Title$") +  chr(34) + " " + eol
+          
+          if(belements = 1) then
+              WriteListElements()
+          endif
+          if(bsolids = 1) then
+              WriteListSolids()
+          endif
+          txt = txt + "-fig_start " + eol
+          bgrid = 0
+          if(xtype = "Logscale") then
+             txt = txt + "set logscale x " + eol
+             txt = txt + "set mxtics 10 " + eol
+             txt = txt + "set xtics format " + chr(34) + "10^{%T}" + chr(34) + " " + eol
+             txt = txt + "set xtics 10 logscale " + eol
+             txt = txt + "set grid "
+             if( get_var("Cement::Figures::X::Grid$") = "Both" or get_var("Cement::Figures::X::Grid$") = "Both log" ) then
+                 txt = txt + " xtics mxtics " 
+                 bgrid = 1
+             elseif (get_var("Cement::Figures::X::Grid$") = "Major" or get_var("Cement::Figures::X::Grid$") = "Major log") then
+                 txt = txt + " xtics nomxtics " 
+                 bgrid = 1
+             else
+                txt = txt + " noxtics nomxtics " 
+             endif
+          else
+             txt = txt + "set grid "
+             if( get_var("Cement::Figures::X::Grid$") = "Both" ) then
+                 txt = txt + " xtics mxtics " 
+                 bgrid = 1
+             elseif (get_var("Cement::Figures::X::Grid$") = "Major" ) then
+                 txt = txt + " xtics nomxtics " 
+                 bgrid = 1
+             else
+                txt = txt + " noxtics nomxtics " 
+             endif
+          endif
+          if(bylogscale = 1) then
+              if( get_var("Cement::Figures::Y::Grid$") = "Both" or get_var("Cement::Figures::Y::Grid$") = "Both Log" ) then
+                  txt = txt + " ytics mytics " 
+                  bgrid = 1
+              elseif (get_var("Cement::Figures::Y::Grid$") = "Major" or get_var("Cement::Figures::Y::Grid$") = "Major Log" ) then
+                  txt = txt + " ytics nomytics " 
+                  bgrid = 1
+              else
+                  txt = txt + " noytics nomytics " 
+              endif 
+          else 
+              if( get_var("Cement::Figures::Y::Grid$") = "Both" ) then
+                  txt = txt + " ytics mytics " 
+                  bgrid = 1
+              elseif (get_var("Cement::Figures::Y::Grid$") = "Major" ) then
+                  txt = txt + " ytics nomytics " 
+                  bgrid = 1
+              else
+                  txt = txt + " noytics nomytics " 
+              endif 
+          endif 
+          txt = txt + " lt 1001, lt 1002 " + eol
+          if (bgrid = 0) then
+              txt = txt + "unset grid " + eol
+          endif
+          if(bylogscale = 1) then
+              txt = txt + "set logscale y" + eol
+              txt = txt + "set mytics 10 " + eol
+              txt = txt + "set ytics format " + chr(34) + "10^{%T}" + chr(34) + " " + eol
+              txt = txt + "set ytics 10 logscale " + eol
+          endif
+          txt = txt + "-fig_end " + eol
+          
+          fignr = fignr+1
+  enddef
+  
+  def WriteFigures(xtype)
+
+    if( get_var("Cement::Figures::pH") = 1) then 
+        WriteFigure("Waterchemistry_pH",xtype)
+        txt = txt + eol
+    endif
+
+    if( get_var("Cement::Figures::Water::Elements") = 1) then 
+        belements = 1
+        if( get_var("Cement::Figures::Water::Elements::Y::Scale$") = "Linear") then
+            _is = 1
+            _ie = 1
+        elseif ( get_var("Cement::Figures::Water::Elements::Y::Scale$") = "Logscale") then
+            _is = 2
+            _ie = 2
+        else
+            _is = 1
+            _ie = 2
+        endif
+        for i = _is to _ie
+            bylogscale = i- 1
+            if( get_var("Cement::Figures::Water::Elements::Unit$") = "Moles" or  get_var("Cement::Figures::Water::Elements::Unit$") = "Both") then
+                belements_mg = 0
+                WriteFigure("Waterchemistry_Elements_M",xtype)
+                if(bylogscale = 0) then
+                    txt = txt + "-fig_name " + chr(34) + "Elements - M" + chr(34) + " " + eol
+                else
+                    txt = txt + "-fig_name " + chr(34) + "Elements - M - Log" + chr(34) + " " + eol
+                endif
+                if( get_var("Cement::Figures::Water::Elements::ShowZero") = 0 ) then
+                    txt = txt + "-fig_showzero false " + eol
+                endif
+                txt = txt + eol
+            endif    
+            if( get_var("Cement::Figures::Water::Elements::Unit$") = "Milligrams" or  get_var("Cement::Figures::Water::Elements::Unit$") = "Both") then
+                belements_mg = 1  
+                WriteFigure("Waterchemistry_Elements_mg",xtype) 
+                if(bylogscale = 0) then 
+                    txt = txt + "-fig_name " + chr(34) + "Elements - mg" + chr(34) + " " + eol
+                else
+                    txt = txt + "-fig_name " + chr(34) + "Elements - mg - Log" + chr(34) + " " + eol
+                endif 
+                if( get_var("Cement::Figures::Water::Elements::ShowZero") = 0 ) then
+                    txt = txt + "-fig_showzero false " + eol
+                endif
+                txt = txt + eol    
+            endif
+        next i
+        belements = 0
+        belements_mg = 0
+        bylogscale = 0
+    endif
+    
+    if( get_var("Cement::Figures::Solids") = 1 ) then
+       bsolids = 1
+       if(  get_var("Cement::Figures::Solids::Type$")  = "Lines") then
+           _is = 1
+           _ie = 1
+       elseif (  get_var("Cement::Figures::Solids::Type$")  = "stacked") then
+           _is = 2
+           _ie = 2
+       else
+           _is = 1
+           _ie = 2
+       endif 
+       if(  get_var("Cement::Figures::Solids::Unit$") = "Total") then
+           _js = 1
+           _je = 1
+       elseif (  get_var("Cement::Figures::Solids::Unit$")  = "Per100g") then
+           _js = 2
+           _je = 2
+       else
+           _js = 1
+           _je = 2
+       endif 
+   
+       for j = _js to _je
+           if( get_var("Cement::Figures::Solids::Detail$") = "Detail" or  get_var("Cement::Figures::Solids::Detail$") = "Both" ) then
+                  if (j = 1) then
+                     un = ""
+                     una = ""
+                     bsolid100 = 0
+                  else
+                     un = "_100g"
+                     una = " - per 100 g"
+                     bsolid100 = 1
+                  endif
+                  for i = _is to _ie
+                      if(  string.find(get_var("Cement::Figures::Soilds::Value$"),"Moles")>-1 or  get_var("Cement::Figures::Soilds::Value$") = "All") then  
+                          WriteFigure("Solids_Moles"+un,xtype)
+                          if(i=1) then
+                              txt = txt + "-fig_name " + chr(34) + "SolidsMoles - Lines" + una + chr(34) + " " + eol
+                          else 
+                              txt = txt + "-fig_name " + chr(34) + "SolidsMoles - Stacked" + una + chr(34) + " " + eol
+                              if( get_var("Cement::Figures::Solids::StackType$") = "Filled"  ) then
+                                  txt = txt + "-fig_type ST_F_X" + eol
+                              elseif ( get_var("Cement::Figures::Solids::StackType$") = "Lines" ) then
+                                  txt = txt + "-fig_type ST_L_X" + eol
+                              else
+                                    txt = txt + "-fig_type ST_FL_X" + eol
+                              endif
+                          endif                    
+                          if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
+                            txt = txt + "-fig_showzero false " + eol
+                          endif
+                          txt = txt + eol
+                      endif
+                      if(  string.find(get_var("Cement::Figures::Soilds::Value$"),"Grams")>-1 or  get_var("Cement::Figures::Soilds::Value$") = "All") then  
+                          bsolidgram = 1
+                          WriteFigure("Solids_Grams"+un,xtype)
+                          bsolidgram = 0
+                          if(i=1) then
+                              txt = txt + "-fig_name " + chr(34) + "SolidsGrams - Lines" + una + chr(34) + " " + eol
+                          else 
+                             txt = txt + "-fig_name " + chr(34) + "SolidsGrams - Stacked" + una + chr(34) + " " + eol
+                              if( get_var("Cement::Figures::Solids::StackType$") = "Filled"  ) then
+                                  txt = txt + "-fig_type ST_F_X" + eol
+                              elseif ( get_var("Cement::Figures::Solids::StackType$") = "Lines" ) then
+                                  txt = txt + "-fig_type ST_L_X" + eol
+                              else
+                                    txt = txt + "-fig_type ST_FL_X" + eol
+                              endif
+                          endif                    
+                          if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
+                            txt = txt + "-fig_showzero false " + eol
+                          endif
+                          txt = txt + eol
+                      endif
+                      if(  string.find(get_var("Cement::Figures::Soilds::Value$"),"Volumes")>-1 or  get_var("Cement::Figures::Soilds::Value$") = "All") then  
+                          bsolidvol = 1
+                          WriteFigure("Solids_Volume"+un,xtype)
+                          bsolidvol = 0
+                          if(i=1) then
+                              txt = txt + "-fig_name " + chr(34) + "SolidsVolume - Lines" + una + chr(34) + " " + eol
+                          else 
+                          txt = txt + "-fig_name " + chr(34) + "SolidsVolume - Stacked" + una + chr(34) + " " + eol
+                              if( get_var("Cement::Figures::Solids::StackType$") = "Filled"  ) then
+                                  txt = txt + "-fig_type ST_F_X" + eol
+                              elseif ( get_var("Cement::Figures::Solids::StackType$") = "Lines" ) then
+                                  txt = txt + "-fig_type ST_L_X" + eol
+                              else
+                                    txt = txt + "-fig_type ST_FL_X" + eol
+                              endif
+                          endif                    
+                          if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
+                            txt = txt + "-fig_showzero false " + eol
+                          endif
+                          
+                          txt = txt + eol
+                       endif
+                  next i
+            endif 
+            bsolid100 = 0 
+         next j
+         bsolids = 0        
+    endif 
+        
+  enddef
+  
+
+
+
+
+#Main
+  if( get_varexist("Cement::Figures") = 0 ) then
+      if( get_var("Cement::Figures") = 1 ) then
+          dir = get_var("_Managed$") + "12_modules/ModuleCementFigures"
+          txt = txt + "INCLUDEPATH " +  dir + eol
+
+
+          dir = dir + "\"
+          
+          txt = txt + "SELECTED_GRAPH " + eol 
+          
+          txt = txt + "-include " + dir + "00_Definitions_01_colors.plt"  + eol
+          
+          txt = txt + "-start " + eol
+          if (get_var("Cement::Figures::X::Reverse") = 1 ) then
+              txt = txt + " set xrange reverse " + eol
+          endif
+          txt = txt + "-end " + eol
+          
+          
+      if(  get_var("Cement::Figures::X::Scale$") = "Linear" or get_var("Cement::Figures::X::Scale$") = "Both") then
+              xtype = "Linear"
+              WriteFigures(xtype)
+          endif
+          if(  get_var("Cement::Figures::X::Scale$") = "Logscale" or get_var("Cement::Figures::X::Scale$") = "Both") then
+              xtype = "Logscale"
+              WriteFigures(xtype)
+          endif    
+              
+      endif
+  endif
+
+  openf("_graphs._in")
+  writef(txt)
+  closef()
+    
+-end
+
+
+include$ _graphs._in
+
+#
+#calculate_values
+#Erasefile
+#-state definition
+#-mybasic
+#-start
+#    deletef("_graphs._in")
+#-end  
+#
