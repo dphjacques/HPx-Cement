@@ -1,0 +1,86 @@
+INCLUDE$ ModuleCement_Functions.hpi
+
+CALCULATE_VALUES
+CementHydrationInitiate
+-mybasic
+-state definition
+-start
+    
+    import "ModuleCement_ModelSystems_02_CD.hps"
+
+    import "ModuleCement_PhreeqcInput_20_Hydration_01_hydration.hps"
+
+    entitynr = 1
+  
+    system = get_var("Cement::Model::System$") 
+    system = left(system,2)
+    systemnr = string.strtoint(system)
+    cemmodel = new(CementModelSystem)
+    cemsys = cemmodel.GetCementModel(systemnr)
+    cemmodel.CreateHeadings(systemnr)
+    
+    opckin = new(HydrationOPCmPK)
+    
+    put_var("Cement::_hydration",1)
+    clear_def("Db_Kinetics")
+    put_var("Cement::Figures::Lead$","time")
+    put_var("Cement::Figures::X::Title$","Time [d]")
+    
+    
+    ostr = opckin.WriteIncludeRates() + eol + "END" + eol 
+    ostr = ostr + cemsys.WritePhreeqcSolution(entitynr,false,false,0)
+    ostr = ostr + "USE SOLUTION " + str(entitynr) + eol
+    ostr = ostr + "INCLUDE$ CementModel" + str(entitynr) + "._in" + eol
+    openf("CementModel"+str(entitynr)+"._in")
+    writef(cemsys.WritePhreeqcCementModel(entitynr,false,true))
+    closef() 
+    #React water with equilibruim constituents
+    ostr = ostr + opckin.WriteEquilibriumReaction()
+    ostr = ostr + "save solution " + str(entitynr) + eol
+    ostr = ostr + "save equilibrium_phases " + str(entitynr) + eol
+    ostr = ostr + "save solid_solutions " + str(entitynr) + eol
+    ostr = ostr + "END " + eol
+    
+    ostr = ostr + "use solution " + str(entitynr) + eol
+    ostr = ostr + "use equilibrium_phases " + str(entitynr) + eol
+    ostr = ostr + "use solid_solutions " + str(entitynr) + eol
+    ostr = ostr + "Kinetics" + eol
+    ostr = ostr + opckin.WriteKinetics(cemsys)
+    ostr = ostr + opckin.WriteKineticSteps()
+    
+    #save options to be added
+    
+    openf("Hydration._in")
+    writef(ostr)
+    closef() 
+    
+    db = "Db_Kinetics"
+    count = get_defnrrec(db)-1
+    htxt = ""
+    hvtxt = ""
+    hwtxt = ""
+    for i = 0 to count 
+       htxt = htxt + get_def(db,"kin",i) + " "
+       hvtxt = hvtxt + "v" + get_def(db,"kin",i) + " "
+       hwtxt = hwtxt + "w" + get_def(db,"kin",i) + " "
+    next i
+    put_var("Output::Kinetics",htxt)
+    put_var("Output::Kineticsv",hvtxt)
+    put_var("Output::Kineticsw",hwtxt)
+    
+    vol = get_var("Cement::Composition::Clinker::Volume0")
+    put_var("Cement::Composition::Volume0",vol+get_var("AmountWater")*1000)
+-end
+
+#output
+selected_output
+-file CementHydrationResults.out
+-reset false
+-active true 
+
+INCLUDE$ ModuleCement_UserPunch.hps
+
+#Mulitple
+
+INCLUDE$ Hydration._in
+end

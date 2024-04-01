@@ -1,0 +1,43 @@
+class HydrationOPC(Hydration)
+           
+        var cemamount =  get_var("Cement::Recipe::Amount")*get_var("Cement::Clinker::Amount")/100
+        var cemrowindex =  get_var("Cement::Clinker::Mineral::Reference$")
+        var equilibriumreactants = list("Lime","Anhydrite","Calcite","Na2SO4","K2SO4","MgO")
+
+        def WriteKinetics(cemsys)
+            txt = ""
+            
+            return txt
+        enddef
+        
+        def WriteIncludeRates()
+            txt = ""
+            
+            return txt
+        enddef
+
+        def WriteEquilibriumReaction()
+            db = "OPC_min"
+            count = get_defnrel(db,cemrowindex)-1
+            
+            txt = "REACTION " + eol
+            for i = 6 to count 
+               am = get_def(db,i, cemrowindex)
+               if(am > 0) then
+                   am = cemamount * am /100  #in grams
+                   min = get_defheading(db,i)
+                   molarmass = gfw(min)
+                   txt = txt + min + " " + str(am/molarmass) + " " + eol
+               endif 
+            next i          
+            
+            txt = txt + "1 " + eol 
+            
+            return txt
+            
+        enddef
+        
+        
+endclass
+
+import "ModuleCement_PhreeqcInput_20_Hydration_10_OPC_01_mPK.hps"

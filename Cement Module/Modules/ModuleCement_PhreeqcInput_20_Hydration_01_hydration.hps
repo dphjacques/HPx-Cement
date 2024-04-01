@@ -1,0 +1,99 @@
+class Hydration
+
+
+    def WriteKineticSteps()
+
+        if(get_varexist("Cement::Hydration::Time")=0) then
+            mHydrationTime = get_var("Cement::Hydration::Time")
+        endif
+            
+        if(mHydrationTime > 0) then
+            if(get_varexist("Cement::Hydration::Steps")=0) then
+                mHydrationStep = get_var("Cement::Hydration::Steps")
+            endif
+            val1=0
+            
+            rstr = "-step 1E-3 "
+            for i = -3 to 0 step 0.1
+                if(mIncrementalReactions=0) then
+                    val2 = 10^i
+                    valincr = val2-val1
+                    val1=val2
+                else
+                    valincr = 10^i
+                endif
+                rstr = rstr + str(valincr) + " "
+            next i
+
+            mIncrementalReactions = 0 #incremental reactions is ture
+
+        
+            timemax = log10(mHydrationTime)
+            timeinterval = timemax/mHydrationStep
+            valincr = 0
+            for i = 1 to mHydrationStep
+                if(mIncrementalReactions=0) then
+                    val2 = 10^(i*timeinterval)
+                    valincr = val2-val1
+                    val1=val2
+                else
+                    valincr = 10^(i*timeinterval)
+                endif
+                rstr = rstr + str(valincr) + " "
+            next i
+            if(mIncrementalReactions=0) then
+                rstr = rstr + EOL + "incremental_reactions true" + EOL
+            else
+                rstr = rstr + EOL + "incremental_reactions false" + EOL
+            endif
+        else
+            rstr  = ""
+        endif
+        
+
+        
+        
+        return rstr
+    enddef
+    
+    def WriteKineticFormula(db,index,cemsys,molarmass)
+            txt = ""
+            
+            it = iterator(cemsys.Oxides)
+            while move_next(it) 
+                oxide = get(it)
+                if(get_defexist(db,oxide,index)=0) then
+                    toich = get_def(db,oxide,index) / gfw(oxide) /100 * molarmass  #check units !!!!
+                    txt = txt + " " + oxide + " " + str(toich)
+                endif
+            wend
+
+            return txt
+     enddef
+        
+     def WriteKineticParameters(db,index,param)
+         txt = ""
+         
+         it = iterator(param)
+         while move_next(it)
+             txt = txt + str(get_def(db,get(it),index)) + " "
+         wend
+
+         return txt
+     enddef
+     
+     def WriteKinetics(cemsys)
+        txt = ""
+        
+        return txt
+     enddef
+     
+     def WriteIncludeRates()
+       txt = ""
+        
+        return txt
+     enddef
+
+endclass
+
+import "ModuleCement_PhreeqcInput_20_Hydration_10_OPC_00_General.hps"

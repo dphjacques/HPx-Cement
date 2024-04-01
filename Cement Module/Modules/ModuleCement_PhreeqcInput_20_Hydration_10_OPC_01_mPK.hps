@@ -1,0 +1,89 @@
+class HydrationOPCmPK(HydrationOPC)
+
+        def WriteKinetics(cemsys)
+            txt = "" 
+            
+            
+            #parameters
+            var param = list("K1","N1","K2","K3","N3","Hx","Ea","EaT")
+            
+            molesclinker = 0
+            molesclinkerv = 0
+            molesclinkerw = 0
+            #alite
+            txt = "OPCAlite" + eol
+            clinindex =  get_var("Cement::Clinker::Alite$")   
+            molarmass = get_def("OPC_alite","MolarMass",clinindex)
+            molvolume = get_def("OPC_alite","MolarVolume",clinindex)
+            molentalphy = get_def("OPC_alite","MolarEnthalpy",clinindex)   
+            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_alite",index,cemsys,molarmass) + eol
+            clinamount = cemamount * get_def("OPC_min","Alite", cemrowindex)/100
+            txt = txt + "-m0 " + str(clinamount/molarmass) + eol
+            molesclinker = molesclinker + clinamount/molarmass
+            molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
+            molesclinkerw = molesclinkerw + molarmass
+            clinindex =  get_var("Cement::Hydration::Alite::Par$") 
+            txt = txt + "-parms " + WriteKineticParameters("OPC_alite_PK",clinindex,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol            
+            push_def("Db_Kinetics","OPCAlite",molarmass,molvolume,molenthalpy)
+            #belite
+            txt = txt + "OPCBelite" + eol
+            clinindex =  get_var("Cement::Clinker::Belite$")   
+            molarmass = get_def("OPC_belite","MolarMass",clinindex) 
+            molvolume = get_def("OPC_belite","MolarVolume",clinindex)
+            molentalphy = get_def("OPC_belite","MolarEnthalpy",clinindex) 
+            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_belite",index,cemsys,molarmass) + eol
+            clinamount = cemamount * get_def("OPC_min","Belite", cemrowindex)/100
+            txt = txt + "-m0 " + str(clinamount/molarmass) + eol
+            molesclinker = molesclinker + clinamount/molarmass
+            molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
+            molesclinkerw = molesclinkerw + molarmass
+            clinindex =  get_var("Cement::Hydration::Belite::Par$")   
+            txt = txt + "-parms " + WriteKineticParameters("OPC_belite_PK",clinindex,param)  + " " +  str(get_var("Cement::Recipe::w_c"))  + eol
+            push_def("Db_Kinetics","OPCBelite",molarmass,molvolume,molenthalpy)
+            #aluminate
+            txt = txt + "OPCAluminate" + eol
+            clinindex =  get_var("Cement::Clinker::Aluminate$")   
+            molarmass = get_def("OPC_aluminate","MolarMass",clinindex)  
+            molvolume = get_def("OPC_aluminate","MolarVolume",clinindex)
+            molentalphy = get_def("OPC_aluminate","MolarEnthalpy",clinindex)
+            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_aluminate",index,cemsys,molarmass) + eol
+            clinamount = cemamount * get_def("OPC_min","Aluminate", cemrowindex)/100
+            txt = txt + "-m0 " + str(clinamount/molarmass) + eol
+            molesclinker = molesclinker + clinamount/molarmass
+            molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
+            molesclinkerw = molesclinkerw + molarmass
+            clinindex =  get_var("Cement::Hydration::Aluminate::Par$")   
+            txt = txt + "-parms " + WriteKineticParameters("OPC_aluminate_PK",clinindex,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol
+            push_def("Db_Kinetics","OPCAluminate",molarmass,molvolume,molenthalpy)
+            ##alite
+            txt = txt + "OPCFerrite" + eol
+            clinindex =  get_var("Cement::Clinker::Ferrite$")   
+            molarmass = get_def("OPC_ferrite","MolarMass",clinindex)  
+            molvolume = get_def("OPC_ferrite","MolarVolume",clinindex)
+            molentalphy = get_def("OPC_ferrite","MolarEnthalpy",clinindex)
+            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_ferrite",index,cemsys,molarmass) + eol
+            clinamount = cemamount * get_def("OPC_min","Ferrite", cemrowindex)/100
+            txt = txt + "-m0 " + str(clinamount/molarmass) + eol
+            molesclinker = molesclinker + clinamount/molarmass
+            molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
+            molesclinkerw = molesclinkerw + molarmass
+            clinindex =  get_var("Cement::Hydration::Ferrite::Par$")   
+            txt = txt + "-parms " + WriteKineticParameters("OPC_ferrite_PK",clinindex,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol
+            push_def("Db_Kinetics","OPCFerrite",molarmass,molvolume,molenthalpy)
+            
+            put_var("Cement::Composition::Clinker::Moles0", molesclinker)
+            put_var("Cement::Composition::Clinker::Volume0", cemamount/ get_var("Cement::Clinker::BulkDensity") )
+            put_var("Cement::Composition::Clinker::Weight0", molesclinkerw)
+            return txt
+            
+            
+        enddef
+        
+       def WriteIncludeRates()
+            txt = "INCLUDE$ "
+            txt = txt + "ModuleCement_PhreeqcInput_20_Hydration_10_OPC_01_mPKrates.hps"
+            
+            return txt
+        enddef
+
+endclass
