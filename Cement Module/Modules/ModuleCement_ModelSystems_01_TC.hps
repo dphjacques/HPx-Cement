@@ -42,7 +42,7 @@ class CementModel
         if(exists(Elements,"K")) then push(Oxides,"K2O")
     enddef
     
-    def WritePhreeqcSolution(entitynr,boutprint, boutpunch)
+    def WritePhreeqcSolution(entitynr,boutprint, boutpunch,belement)
 
         txt = "SOLUTION " + str(entitynr) + eol
         amountwater = get_Var("Cement::Recipe::Amount")*get_var("Cement::Recipe::w_c")/1000
