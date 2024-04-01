@@ -4,20 +4,30 @@ ExtrOutputPunch
 -mybasic
 -start 
     txt = ""
+    ktxt = ""
     if( get_var("Cement::Output::Hydrates::Moles") = 1 ) then
         txt = txt + "-headings " + get_var("Output::Phases") + eol
         txt = txt + "-headings " + get_var("Output::SolidSolutions") + eol
         txt = txt + "-headings " + get_var("Output::SolidSolutionsComp") + eol
+        if(get_varexist("Output::Kinetics") > -1 ) then
+            ktxt = ktxt + get_var("Output::Kinetics") + " "
+        endif   
     endif 
     if(  get_var("Cement::Output::Hydrates::Volumes")  = 1 ) then
         txt = txt + "-headings " + get_var("Output::Phasesv") + eol
         txt = txt + "-headings " + get_var("Output::SolidSolutionsv") + eol
         txt = txt + "-headings " + get_var("Output::SolidSolutionsCompv") + eol
+        if(get_varexist("Output::Kineticsv") > -1 ) then
+            ktxt = ktxt + get_var("Output::Kineticsv") + " "
+        endif  
     endif 
     if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
         txt = txt + "-headings " + get_var("Output::Phasesw") + eol
         txt = txt + "-headings " + get_var("Output::SolidSolutionsw") + eol
         txt = txt + "-headings " + get_var("Output::SolidSolutionsCompw") + eol
+        if(get_varexist("Output::Kineticsw") > -1 ) then
+            ktxt = ktxt + get_var("Output::Kineticsw") + " "
+        endif  
     endif 
     if(get_var("Cement::Output::Hydrates::SaturationIndex")  = 1 ) then
         txt = txt + "-headings" + get_var("Output::Phasessi")
@@ -27,7 +37,7 @@ ExtrOutputPunch
     closef()
     put_var("_leadnr",0)
     
-    
+    put_var("Output::Kineticsh",ktxt)
     
 -end 
 
@@ -35,21 +45,39 @@ USER_PUNCH
 -mybasic
 -headings Amount OPC GBFS SF FA LS wc
 -headings @Output::Oxides 
+
 -headings Lead
 -headings water T pH mu
 -headings @Output::Elements
 include$ _txtheading._in
 -headings CSH_Ca CSH_Si GelPores
 -headings @Output::Zeolites
+-headings @Output::Kineticsh
 
 -start
  
     punch(  get_var("Cement::Recipe::Amount") )
     punch( get_var("Cement::Clinker::Amount") )
-    punch( get_var("GBFS::Amount") )
-    punch( get_var("SF::Amount") )
-    punch( get_var("FA::Amount") )
-    punch( get_var("LS::Amount") )
+    if(get_varexist("GBFS::Amount") > -1) then
+        punch( get_var("GBFS::Amount") )
+    else
+        punch(0)
+    endif 
+        if(get_varexist("SF::Amount") > -1) then
+        punch( get_var("SF::Amount") )
+    else
+        punch(0)
+    endif 
+        if(get_varexist("FA::Amount") > -1) then
+        punch( get_var("FA::Amount") )
+    else
+        punch(0)
+    endif 
+        if(get_varexist("LS::Amount") > -1) then
+        punch( get_var("LS::Amount") )
+    else
+        punch(0)
+    endif 
     punch( get_var("Cement::Recipe::w_c") )
     
     #print oxides
@@ -97,7 +125,9 @@ include$ _txtheading._in
         endif
     elseif ( get_var("Cement::Figures::Lead$") <> "null" ) then
         leadvar = get_var("Cement::Figures::Lead$")
-        if(get_varexist(leadvar) = 0) then
+        if(string.comparenocase(leadvar,"time") = 0) then
+            punch(total_time())
+        elseif(get_varexist(leadvar) = 0) then
             punch(get_var(leadvar))
         else
             punch(get_var("_leadnr"))
@@ -296,6 +326,24 @@ include$ _txtheading._in
        endif
     endif
     
+    #Kinetics
+    if (get_varexist("Cement::_hydration") = 0) then
+        db = "Db_Kinetics"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            punch(kin(get_def(db,"kin",i)))
+        next i
+        if(  get_var("Cement::Output::Hydrates::Volumes")  = 1 ) then
+            for i = 0 to count 
+                punch(kin(get_def(db,"kin",i))*get_def(db,"volume",i))
+            next i            
+        endif
+        if(  get_var("Cement::Output::Hydrates::Weights")  = 1 ) then
+            for i = 0 to count 
+                punch(kin(get_def(db,"kin",i))*get_def(db,"gfw",i))
+            next i            
+        endif
+    endif
    
 -end
 END 
@@ -336,6 +384,32 @@ ExtrOutputPunch
   enddef
   
   def WriteListSolids()
+  #print kinetics - typically clinkers
+   db = "Db_Kinetics"
+    count = get_defnrrec(db)-1
+    for i = 0 to count 
+        min = get_def(db,"kin",i)
+        vary = min
+        if(bsolidgram = 1 ) then
+            if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+                vary = "w"+vary
+            endif
+        endif
+        if(bsolidvol = 1 ) then
+            if( get_var("Cement::Output::Hydrates::Volumes") = 1 ) then
+                vary = "v"+vary
+            endif
+        endif 
+        txt = txt + "-fig_y " + vary + " < k " +  chr(34) + min + chr(34) + " "
+        strvar = "nr"+get_def(db,"kin",i)
+        if(get_varexist(strvar) = 0 ) then 
+            txt = txt +  " ls " + str(get_var(strvar)) + " "
+        endif
+        if(bsolid100 = 1) then
+            txt = txt + convertstr
+        endif
+        txt = txt + " > " + eol
+    next i
   #print s_s
     db = "Db_SolidSolutions_Def"
     count = get_defnrrec(db)-1
@@ -617,7 +691,18 @@ ExtrOutputPunch
                           if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
                             txt = txt + "-fig_showzero false " + eol
                           endif
-                          
+                          txt = txt + "-fig_y water < k " +  chr(34) + "Capillary water" + chr(34) + " ls " + str(get_var("nrCapWat")) + " t " + chr(34) + "_THIS*1000" + chr(34) + " > " + eol
+                          if(get_varexist("Cement::_hydration") = 0) then
+                              vola = get_var("Cement::Composition::Volume0")
+                              vol = str(vola)
+                              vola = floor(vola/10)
+                              vol1 = str(10*(vola+1))
+                               txt = txt + "-fig_start " + eol
+                               txt = txt + "set arrow 901 from graph 0, first " + vol + " to graph 1, first " + vol + " lt 1003 nohead front " + eol
+                               txt = txt + "set yrange [0:" + vol1 + "] " + eol
+                               txt = txt + "-fig_end " + eol
+                               put_var("Output::InitialVolume",901)
+                          endif
                           txt = txt + eol
                        endif
                   next i
