@@ -17,13 +17,20 @@ class CementModel
         if(exists(Elements,"K")) then push(Oxides,"K2O")
     enddef
     
-    def WritePhreeqcSolution(entitynr,boutprint, boutpunch)
+    def WritePhreeqcSolution(entitynr,boutprint, boutpunch,belement)
 
         txt = "SOLUTION " + str(entitynr) + eol
         amountwater = get_Var("Cement::Recipe::Amount")*get_var("Cement::Recipe::w_c")/1000
         put_var("AmountWater",amountwater)
         txt= txt + "-water " + str(amountwater) + eol
         txt = txt + "-temperature " + str(get_var("Cement::Recipe::T")) + eol)
+        if(belement = 1) then 
+            db = "Db_Elements"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                txt = txt + get_def(db,i) + " 1E-12 " + eol
+            next i  
+        endif
         txt = txt + "PRINT "+ eol + "-reset   "
         if(boutprint = 0) then 
            txt = txt + "false" + eol 
