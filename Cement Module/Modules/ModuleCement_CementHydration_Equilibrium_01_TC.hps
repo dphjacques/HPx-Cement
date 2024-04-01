@@ -12,7 +12,7 @@ class CementHydration
     boutputpunchResult = 0 
 
     def WriteInput(entitynr,savenr)
-        txt = cemsys.WritePhreeqcSolution(entitynr,boutprintInitial,boutpunchInitial)
+        txt = cemsys.WritePhreeqcSolution(entitynr,boutprintInitial,boutpunchInitial,0)
         txt = txt + "USE SOLUTION " + str(entitynr) + eol
         txt = txt + "INCLUDE$ CementModel" + str(entitynr) + "._in" + eol
         openf("CementModel"+str(entitynr)+"._in")
