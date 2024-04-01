@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<DataBlocks>
+	<DataBlock>
+		<Name>OPC_alite</Name>
+		<Description>Oxide composition of alite</Description>
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}{\f2\fnil\fcharset0 Calibri;}}
+\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+\par
+MolEnthalpy: Molar Enthalpy: J/mol\par
+\par
+\b\fs24 Origin of the data\b0\f1\par
+\par
+\lang1033\f0\fs20 Taylor1998 - Taylor, H.F.W.  1989.  Modification of the Bogue calculation. Advances in Cement Research 2(6), 73-77.\lang2067\f1\fs24\par
+\par
+\lang1033\f0\fs20 Volume\par
+CEM18\par
+\par
+Entalpy\par
+\pard\fi-720\li720 Bentz DP. A review of early-age properties of cement-based materials. Cem Concr Res. 2008;38 (2):196-204.\f2\fs22\par
+\pard\lang2067\f0\fs19\par
+}]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<Type>1</Type>
+			<ExternalFile>False</ExternalFile>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
+		</Info>
+		<Export>true</Export>
+		<Headings>
+			<Heading>Name</Heading>
+			<Heading>MolarMass</Heading>
+			<Heading>MolarVolume</Heading>
+			<Heading>MolarEnthalpy</Heading>
+			<Heading>Unit</Heading>
+			<Heading>CaO</Heading>
+			<Heading>SiO2</Heading>
+			<Heading>Al2O3</Heading>
+			<Heading> Fe2O3</Heading>
+			<Heading>MgO</Heading>
+			<Heading>SO3</Heading>
+			<Heading>Na2O</Heading>
+			<Heading>K2O</Heading>
+			<Heading>P2O5</Heading>
+			<Heading>TiO2</Heading>
+			<Heading>MnO3</Heading>
+		</Headings>
+		<Origin>0</Origin>
+		<RowId>Name</RowId>
+		<InfoId></InfoId>
+		<CaseSensitive>false</CaseSensitive>
+		<Records>
+			<Record>
+				<Value>Taylor1989</Value>
+				<Value>228</Value>
+				<Value>73.18</Value>
+				<Value>117876</Value>
+				<Value>%mass</Value>
+				<Value>71.6</Value>
+				<Value>25.2</Value>
+				<Value>1.0</Value>
+				<Value>0.7</Value>
+				<Value>1.1</Value>
+				<Value>0</Value>
+				<Value>0.1</Value>
+				<Value>0.1</Value>
+				<Value>0.2</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+			</Record>
+		</Records>
+	</DataBlock>
+</DataBlocks>
