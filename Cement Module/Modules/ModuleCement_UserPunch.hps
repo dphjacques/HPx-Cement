@@ -5,33 +5,49 @@ ExtrOutputPunch
 -start 
     txt = ""
     ktxt = ""
-    if( get_var("Cement::Output::Hydrates::Moles") = 1 ) then
-        txt = txt + "-headings " + get_var("Output::Phases") + eol
-        txt = txt + "-headings " + get_var("Output::SolidSolutions") + eol
-        txt = txt + "-headings " + get_var("Output::SolidSolutionsComp") + eol
-        if(get_varexist("Output::Kinetics") > -1 ) then
-            ktxt = ktxt + get_var("Output::Kinetics") + " "
-        endif   
+    if( get_varexist("Cement::Output::Hydrates::Moles") > -1 ) then
+        if( get_var("Cement::Output::Hydrates::Moles") = 1 ) then
+            txt = txt + "-headings " + get_var("Output::Phases") + eol
+            txt = txt + "-headings " + get_var("Output::SolidSolutions") + eol
+            txt = txt + "-headings " + get_var("Output::SolidSolutionsComp") + eol
+            if(get_varexist("Output::Kinetics") > -1 ) then
+                ktxt = ktxt + get_var("Output::Kinetics") + " "
+            endif   
+        endif 
+    else
+        put_var("Cement::Output::Hydrates::Moles",0)
+    endif
+    if(  get_varexist("Cement::Output::Hydrates::Volumes") > -1 ) then
+        if(  get_var("Cement::Output::Hydrates::Volumes")  = 1 ) then
+            txt = txt + "-headings " + get_var("Output::Phasesv") + eol
+            txt = txt + "-headings " + get_var("Output::SolidSolutionsv") + eol
+            txt = txt + "-headings " + get_var("Output::SolidSolutionsCompv") + eol
+            if(get_varexist("Output::Kineticsv") > -1 ) then
+                ktxt = ktxt + get_var("Output::Kineticsv") + " "
+            endif  
+        endif 
+    else
+        put_var("Cement::Output::Hydrates::Volumes",0)
     endif 
-    if(  get_var("Cement::Output::Hydrates::Volumes")  = 1 ) then
-        txt = txt + "-headings " + get_var("Output::Phasesv") + eol
-        txt = txt + "-headings " + get_var("Output::SolidSolutionsv") + eol
-        txt = txt + "-headings " + get_var("Output::SolidSolutionsCompv") + eol
-        if(get_varexist("Output::Kineticsv") > -1 ) then
-            ktxt = ktxt + get_var("Output::Kineticsv") + " "
-        endif  
-    endif 
-    if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
-        txt = txt + "-headings " + get_var("Output::Phasesw") + eol
-        txt = txt + "-headings " + get_var("Output::SolidSolutionsw") + eol
-        txt = txt + "-headings " + get_var("Output::SolidSolutionsCompw") + eol
-        if(get_varexist("Output::Kineticsw") > -1 ) then
-            ktxt = ktxt + get_var("Output::Kineticsw") + " "
-        endif  
-    endif 
-    if(get_var("Cement::Output::Hydrates::SaturationIndex")  = 1 ) then
-        txt = txt + "-headings" + get_var("Output::Phasessi")
-    endif 
+    if( get_varexist("Cement::Output::Hydrates::Weights") > -1 ) then
+        if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+            txt = txt + "-headings " + get_var("Output::Phasesw") + eol
+            txt = txt + "-headings " + get_var("Output::SolidSolutionsw") + eol
+            txt = txt + "-headings " + get_var("Output::SolidSolutionsCompw") + eol
+            if(get_varexist("Output::Kineticsw") > -1 ) then
+                ktxt = ktxt + get_var("Output::Kineticsw") + " "
+            endif  
+        endif 
+    else
+        put_var("Cement::Output::Hydrates::Weights",0) 
+    endif
+    if( get_varexist("Cement::Output::Hydrates::SaturationIndex") > -1 ) then
+        if(get_var("Cement::Output::Hydrates::SaturationIndex")  = 1 ) then
+            txt = txt + "-headings" + get_var("Output::Phasessi")
+        endif 
+    else
+        put_var("Cement::Output::Hydrates::SaturationIndex",0) 
+    endif
     openf("_txtheading._in")
     writef(txt)
     closef()
