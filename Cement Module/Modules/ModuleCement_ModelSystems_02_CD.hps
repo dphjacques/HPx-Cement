@@ -653,4 +653,116 @@ class CementModelSystem
     endif
     
     set(CementModels,17,sys17)
+    
+    
+    
+    #definition system 19
+    sys19 = new(CementModel)
+    push(sys19.Elements,"Ca")
+    push(sys19.Elements,"Si")
+    push(sys19.Elements,"Al")
+    push(sys19.Elements,"S")
+    push(sys19.Elements,"Mg")
+    push(sys19.Elements,"C")  
+    push(sys19.Elements,"Fe")    
+    push(sys19.Elements,"Na")  
+    push(sys19.Elements,"K")
+    push(sys19.Elements,"Cl")
+    push(sys19.Elements,"N")
+    sys19.SetOxides()
+
+    push(sys19.PurePhases,"Portlandite")
+    push(sys19.PurePhases,"Amor-Sl")
+    push(sys19.PurePhases,"Cal")
+    push(sys19.PurePhases,"Gp")
+    push(sys19.PurePhases,"C3AH6")
+    push(sys19.PurePhases,"C3FH6")
+    push(sys19.PurePhases,"C4AH19")
+    push(sys19.PurePhases,"C4FH13")
+    push(sys19.PurePhases,"Straetlingite")
+    push(sys19.PurePhases,"Monocarbonate")
+    push(sys19.PurePhases,"Femonocarbonate")
+    push(sys19.PurePhases,"Hemicarbonate")
+    push(sys19.PurePhases,"Fe-hemicarbonate")
+    push(sys19.PurePhases,"Monosulphate16")
+    push(sys19.PurePhases,"Fe-monosulphate") 
+    push(sys19.PurePhases,"Brc")
+    push(sys19.PurePhases,"Hydrotalcite")
+    push(sys19.PurePhases,"C4AClH10")
+    push(sys19.PurePhases,"C4AsClH12") 
+    if (get_varexist("Cement::Model::MSH$")=0) then
+        if( get_var("Cement::Model::MSH$") = "s_s_no") then
+            push(sys19.PurePhases,"M075SH")
+            push(sys19.PurePhases,"M15SH")
+        endif 
+    endif
+    push(sys19.PurePhases,"Fe(OH)3(mic)")
+    if( get_var("Cement::Model::AFT_s_s$") = "s_s_no") then
+        push(sys19.PurePhases,"Ettringite")
+        push(sys19.PurePhases,"Tricarboalu03")
+    endif 
+    push(sys19.PurePhases,"Fe-ettringite")
+    push(sys19.PurePhases,"mononitrate")
+    push(sys19.PurePhases,"mononitrite")
+    if (get_varexist("Cement::Model::Zeolites::Na") = 0) then
+        if (get_var("Cement::Model::Zeolites::Na") = 1) then
+            push(sys19.PurePhases,"ANA")
+            push(sys19.PurePhases,"PHI(Na)")
+            push(sys19.PurePhases,"LTA(Na)")
+            push(sys19.PurePhases,"4A")
+            push(sys19.PurePhases,"SOD(OH)")
+            push(sys19.PurePhases,"CHA(Na)")
+            push(sys19.PurePhases,"FAU-X(Na)")
+            push(sys19.PurePhases,"FAU-Y(Na)")
+            push(sys19.PurePhases,"NAT")
+            push(sys19.PurePhases,"MOR(Na)")
+            if(get_var("Cement::Model::Zeolites::K") = 1) then
+                push(sys19.PurePhases,"PHI(NaK)") 
+            endif 
+        endif 
+    endif
+    if (get_varexist("Cement::Model::Zeolites::K") = 0) then
+        if (get_var("Cement::Model::Zeolites::K") = 1) then
+            push(sys19.PurePhases,"CHA(K)")
+            push(sys19.PurePhases,"CLI(K)")
+            push(sys19.PurePhases,"FAU-X(K)")
+            push(sys19.PurePhases,"FAU-Y(K)")
+            push(sys19.PurePhases,"GIS-LSP(K)")
+            push(sys19.PurePhases,"GIS-P1(K)")
+            push(sys19.PurePhases,"HEU(K)")
+            push(sys19.PurePhases,"LEU")
+            push(sys19.PurePhases,"LTA(K)")
+            push(sys19.PurePhases,"MOR(K)")
+            push(sys19.PurePhases,"NAT(K)")
+            push(sys19.PurePhases,"PHI(K)")
+            push(sys19.PurePhases,"STI(K)")
+            push(sys19.PurePhases,"Tetra-NAT(K) ")
+        endif 
+    endif
+    if (get_varexist("Cement::Model::Zeolites::Ca") = 0) then
+        if (get_var("Cement::Model::Zeolites::Ca") = 1) then
+            push(sys19.PurePhases,"CHA(Ca)")
+            push(sys19.PurePhases,"CLI(Ca)")
+            push(sys19.PurePhases,"HEU(Ca)-1")
+            push(sys19.PurePhases,"HEU(Ca)-2")
+            push(sys19.PurePhases,"MOR(Ca)")
+            push(sys19.PurePhases,"SCO")
+            push(sys19.PurePhases,"STI(Ca)")
+            push(sys19.PurePhases,"GIS-LS-P(Ca)")
+        endif 
+    endif
+
+#    
+    set(sys19.SolidSolution,"CSH",cshqnk)
+    if (get_varexist("Cement::Model::MSH$")=0) then
+        if( get_var("Cement::Model::MSH$") <> "s_s_no") then
+            set(sys19.SolidSolution,"MSH",msh)
+        endif 
+    endif
+    set(sys19.SolidSolution,"HydrogarnetFe",HydrogarnetFe)
+    if( get_var("Cement::Model::AFT_s_s$") <> "s_s_no") then
+        set(sys19.SolidSolution,"AFT",aft)
+    endif
+    
+    set(CementModels,19,sys19)
 endclass 
