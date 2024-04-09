@@ -1,27 +1,31 @@
 <?xml version="1.0"?>
 <Items>
-	<Item>07-Ca Si Al S Mg C<Visible>False</Visible>
-		<ReadOnly>False</ReadOnly>
-		<Tag0></Tag0>
-	</Item>
-	<Item>09-Ca Si Al S Mg C Cl<Visible>False</Visible>
-		<ReadOnly>False</ReadOnly>
-		<Tag0></Tag0>
-	</Item>
-	<Item>11-Ca Si Al Fe S Mg C<Visible>False</Visible>
-		<ReadOnly>False</ReadOnly>
-		<Tag0></Tag0>
-	</Item>
-	<Item>13-Ca Si Al S Mg C Na K<Visible>False</Visible>
-		<ReadOnly>False</ReadOnly>
-		<Tag0></Tag0>
-	</Item>
-	<Item>15-Ca Si Al S Mg C Na K Cl<Visible>False</Visible>
-		<ReadOnly>False</ReadOnly>
-		<Tag0></Tag0>
-	</Item>
-	<Item>17-Ca Si Al Fe S Mg C Na K Cl<Visible>False</Visible>
-		<ReadOnly>False</ReadOnly>
-		<Tag0></Tag0>
-	</Item>
+    <Item>07-Ca Si Al S Mg C<Visible>False</Visible>
+        <ReadOnly>False</ReadOnly>
+        <Tag0></Tag0>
+    </Item>
+    <Item>09-Ca Si Al S Mg C Cl<Visible>False</Visible>
+        <ReadOnly>False</ReadOnly>
+        <Tag0></Tag0>
+    </Item>
+    <Item>11-Ca Si Al Fe S Mg C<Visible>False</Visible>
+        <ReadOnly>False</ReadOnly>
+        <Tag0></Tag0>
+    </Item>
+    <Item>13-Ca Si Al S Mg C Na K<Visible>False</Visible>
+        <ReadOnly>False</ReadOnly>
+        <Tag0></Tag0>
+    </Item>
+    <Item>15-Ca Si Al S Mg C Na K Cl<Visible>False</Visible>
+        <ReadOnly>False</ReadOnly>
+        <Tag0></Tag0>
+    </Item>
+    <Item>17-Ca Si Al Fe S Mg C Na K Cl<Visible>False</Visible>
+        <ReadOnly>False</ReadOnly>
+        <Tag0></Tag0>
+    </Item>
+    <Item>19-Ca Si Al Fe S Mg C Na K Cl N<Visible>False</Visible>
+        <ReadOnly>False</ReadOnly>
+        <Tag0></Tag0>
+    </Item>
 </Items>
