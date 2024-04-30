@@ -1,0 +1,87 @@
+
+calculate_values
+CalculateHydrationDegree
+#Calculation of hydration degree
+-mybasic
+-start
+'[
+Parameters:
+1   m0 
+2   m
+']
+    hydrationdegree = (calc_arg(1)-calc_arg(2))/calc_arg(1)
+    save(hydrationdegree)
+-end
+RateHydrationParrotKillohNucleation
+#Calculation of rate 1 : rate following Nucleation and Growth
+-mybasic
+-start
+# 1 hydrationdegree
+# 2 K1 
+# 3 N1 
+    hd = calc_arg(1)
+    rate = (calc_arg(2)/calc_arg(3))*(1-hd)
+    if(hd<1E-10) then
+    rate=rate*(-log(1E-10))^(1-calc_arg(3))
+    else
+    rate = rate*(-log(1-hd))^(1-calc_arg(3))
+    endif
+    save(rate)
+-end
+RateHydrationParrotKillohDiffusion
+#Calculation of rate 2 : rate following Diffusion
+-mybasic
+-start
+# 1 hydrationdegree
+# 2 K2 
+    hd=calc_arg(1)
+    rate = calc_arg(2)*(1-hd)^(2/3)
+    rate = rate / (1-(1-hd)^(1/3))
+    save(rate)
+    'writes("diff " + str(rate))
+-end
+RateHydrationParrotKillohShellFormation
+#Calculation of rate 3 : rate following Shell formation
+-mybasic
+-start
+# 1 hydrationdegree
+# 2 K3 
+# 3 N3
+    hd = calc_arg(1)
+    rate = calc_arg(2)*(1-hd)^(calc_arg(3))
+    save(rate)
+    'writes("shell " + str(rate))
+-end
+RateHydrationParrotKillohWaterCement
+#Calculation of the influence of w/c on the hydration rate
+-mybasic
+-start
+# 1 hydrationdegree
+# 2 Hx
+# 3 w/c
+    hd = calc_arg(1)
+    value = calc_arg(2)*calc_arg(3)
+    if hd<value then 
+        factor = 1
+    else
+      factor = (1+3.333*(value-hd))^4
+    endif
+    save(factor)
+    'writes("fac " + str(factor))
+-end
+RateHydrationParrotKillohTemperature
+-mybasic 
+-start 
+ if(calc_arg(1) < 0 ) then
+    save(1)
+ else
+     tsample = tk()
+     tref = calc_arg(2) + 273.15
+     sl = calc_arg(1) / 8.314
+     dif = (1/tsample - 1/tref)
+     dif = sl*dif
+     dif = exp(dif)
+     save(1/dif)
+ endif
+-end 
+
