@@ -24,7 +24,11 @@
         <ReadOnly>False</ReadOnly>
         <Tag0></Tag0>
     </Item>
-    <Item>19-Ca Si Al Fe S Mg C Na K Cl N<Visible>False</Visible>
+    <Item>43-Ca Si Al S Mg C Na K N<Visible>False</Visible>
+        <ReadOnly>False</ReadOnly>
+        <Tag0></Tag0>
+    </Item>
+    <Item>47-Ca Si Al Fe S Mg C Na K Cl N<Visible>False</Visible>
         <ReadOnly>False</ReadOnly>
         <Tag0></Tag0>
     </Item>
