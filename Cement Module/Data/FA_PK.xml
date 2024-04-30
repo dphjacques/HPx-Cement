@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<DataBlocks>
+	<DataBlock>
+		<Name>FA_PK</Name>
+		<Description>Parameters for the Parrot-Illoch model for the hydration of FA</Description>
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Segoe UI;}{\f2\fnil\fcharset0 Calibri;}}
+\viewkind4\uc1\pard\fi-720\li720\b\fs24\par
+\lang1033\b0\f1\fs22 GLO2020 - Glosser, D., Suraneni, P., Isgor, O.B. and Weiss, W.J.  2020.  Estimating reaction kinetics of cementitious pastes containing fly ash. Cement and Concrete Composites 112, 103655.\f2\par
+\pard\lang2067\f0\fs19\par
+}
+]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<Type>1</Type>
+			<ExternalFile>False</ExternalFile>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
+		</Info>
+		<Export>true</Export>
+		<Headings>
+			<Heading>Name</Heading>
+			<Heading>Unit</Heading>
+			<Heading>Oxide</Heading>
+			<Heading>K1</Heading>
+			<Heading>N1</Heading>
+			<Heading>K2</Heading>
+			<Heading>K3</Heading>
+			<Heading>N3</Heading>
+			<Heading>Hx</Heading>
+			<Heading>Ea</Heading>
+			<Heading>EaT</Heading>
+		</Headings>
+		<Origin>0</Origin>
+		<RowId>Name</RowId>
+		<InfoId></InfoId>
+		<CaseSensitive>false</CaseSensitive>
+		<Records>
+			<Record>
+				<Value>GLO2020</Value>
+				<Value>day</Value>
+				<Value>CaO</Value>
+				<Value>1.000</Value>
+				<Value>1.700</Value>
+				<Value>2</Value>
+				<Value>0.239</Value>
+				<Value>0.980</Value>
+				<Value>0.01</Value>
+				<Value>-1</Value>
+				<Value>25</Value>
+			</Record>
+			<Record>
+				<Value>GLO2020</Value>
+				<Value>day </Value>
+				<Value>SiO2</Value>
+				<Value>0.490</Value>
+				<Value>0.626</Value>
+				<Value>0.047</Value>
+				<Value>0.362</Value>
+				<Value>3.988</Value>
+				<Value>1.04</Value>
+				<Value>-1</Value>
+				<Value>25</Value>
+			</Record>
+			<Record>
+				<Value>GLO2020</Value>
+				<Value>day </Value>
+				<Value>Al2O3</Value>
+				<Value>0.5</Value>
+				<Value>0.702</Value>
+				<Value>0.05</Value>
+				<Value>0.393</Value>
+				<Value>2</Value>
+				<Value>0.090</Value>
+				<Value>-1</Value>
+				<Value>25</Value>
+			</Record>
+		</Records>
+	</DataBlock>
+</DataBlocks>
