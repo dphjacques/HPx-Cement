@@ -1,0 +1,93 @@
+class HydrationFAmPK(HydrationFA)
+
+
+    def FindIndex(parindex,oxide)
+        db = "FA_PK"
+        nrrec = get_defnrrec(db)
+        for i = 0 to nrrec-1
+            if(get_def("FA_PK","Name",i)=parindex) then
+                if(get_def("FA_PK","Oxide",i)=oxide) then
+                    return i
+                endif
+            endif
+        
+        next i
+        return -999
+    
+    enddef
+
+    def WriteKinetics(cemsys)
+            txt = "" 
+            
+            
+            
+            #parameters
+            var param = list("K1","N1","K2","K3","N3","Hx","Ea","EaT")
+            
+            #molesclinker = 0
+            #molesclinkerv = 0
+            #molesclinkerw = 0
+            
+            parindex = get_var("Cement::Hydration::FA::Parameters$")
+            
+            #SiO2
+            txt = "FASiO2" + eol
+            rowindex =  FindIndex(parindex,"SiO2")  
+            molarmass = gfw("SiO2")
+            #molvolume = get_def("OPC_alite","MolarVolume",clinindex)
+            #molentalphy = get_def("OPC_alite","MolarEnthalpy",clinindex) 
+            
+            txt = txt + "-formula H 0 SiO2 1" + eol
+            caoamount = faamount * get_def("FA","SiO2", farowindex)/100
+            txt = txt + "-m0 " + str(caoamount/molarmass) + eol
+            
+            #molesclinker = molesclinker + clinamount/molarmass
+            #molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
+            #molesclinkerw = molesclinkerw + molarmass    
+            txt = txt + "-parms " + WriteKineticParameters("FA_PK",rowindex,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol        
+            push_def("Db_Kinetics","FASiO2",molarmass,-999,-999)  
+  
+            #Al2O3
+            txt = txt + "FAAl2O3" + eol
+            rowindex =  FindIndex(parindex,"Al2O3")  
+            molarmass = gfw("Al2O3")
+            #molvolume = get_def("OPC_alite","MolarVolume",clinindex)
+            #molentalphy = get_def("OPC_alite","MolarEnthalpy",clinindex) 
+            
+            txt = txt + "-formula H 0 Al2O3 1" + eol
+            caoamount = faamount * get_def("FA","Al2O3", farowindex)/100
+            txt = txt + "-m0 " + str(caoamount/molarmass) + eol
+            
+            #molesclinker = molesclinker + clinamount/molarmass
+            #molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
+            #molesclinkerw = molesclinkerw + molarmass    
+            txt = txt + "-parms " + WriteKineticParameters("FA_PK",rowindex,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol        
+            push_def("Db_Kinetics","FAAl2O3",molarmass,-999,-999)   
+   
+            #CaO
+            txt = txt + "FACaO" + eol
+            rowindex =  FindIndex(parindex,"CaO")  
+            molarmass = gfw("CaO")
+            #molvolume = get_def("","MolarVolume",clinindex)
+            #molentalphy = get_def("OPC_alite","MolarEnthalpy",clinindex) 
+            
+            txt = txt + "-formula H 0 CaO 1" + eol
+            caoamount = faamount * get_def("FA","CaO", farowindex)/100
+            txt = txt + "-m0 " + str(caoamount/molarmass) + eol
+            
+            #molesclinker = molesclinker + clinamount/molarmass
+            #molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
+            #molesclinkerw = molesclinkerw + molarmass    
+            txt = txt + "-parms " + WriteKineticParameters("FA_PK",rowindex,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol        
+            push_def("Db_Kinetics","FACaO",molarmass,-999,-999)          
+            
+            return txt
+    enddef
+
+    def WriteIncludeRates()
+            txt = "INCLUDE$ "
+            txt = txt + "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_10_FA_01_mPKrates.hps"
+            
+            return txt
+    enddef
+endclass 

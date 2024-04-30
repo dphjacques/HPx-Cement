@@ -1,0 +1,80 @@
+#include$ ModuleCement_PhreeqcInput_20_Hydration_00_general_01_mPK.hps
+
+RATES
+FACaO
+-mybasic 
+-start 
+# Parameters
+# 1 K1 1.5
+# 2 N1 0.7
+# 3 K2 0.05
+# 4 K3 1.1
+# 5 N3 3.3
+# 6 Hx
+# 7 EA
+# 8 EAT
+# 9 w/c
+
+#calculation degree of hydration of parameters for all clinkers
+    #hda = calc_value("CalculateHydrationDegreeTotalOPC") #used in wc correction
+    hd  = calc_value("CalculateHydrationDegree",m0(),m()) #used in mpK rates
+    hda = hd  #used in wc correction
+    
+    import "ModuleCement_PhreeqcInput_20_Hydration_00_general_01_mPK_00_rate.hps"
+    #997 put(rate1*wc,101)
+    #998 put(wc,102)
+    #999 put(hd,103)
+-end
+
+FAAl2O3
+-mybasic 
+-start 
+# Parameters
+# 1 K1 1.5
+# 2 N1 0.7
+# 3 K2 0.05
+# 4 K3 1.1
+# 5 N3 3.3
+# 6 Hx
+# 7 EA
+# 8 EAT
+# 9 w/c
+
+#calculation degree of hydration of parameters for all clinkers
+    #hda = calc_value("CalculateHydrationDegreeTotalOPC") #used in wc correction
+    hd  = calc_value("CalculateHydrationDegree",m0(),m()) #used in mpK rates
+    hda = hd  #used in wc correction
+    
+    import "ModuleCement_PhreeqcInput_20_Hydration_00_general_01_mPK_00_rate.hps"
+    #997 put(rate1*wc,101)
+    #998 put(wc,102)
+    #999 put(hd,103)
+-end
+
+
+FASiO2
+-mybasic 
+-start 
+# Parameters
+# 1 K1 1.5
+# 2 N1 0.7
+# 3 K2 0.05
+# 4 K3 1.1
+# 5 N3 3.3
+# 6 Hx
+# 7 EA
+# 8 EAT
+# 9 w/c
+
+#calculation degree of hydration of parameters for all clinkers
+    #hda = calc_value("CalculateHydrationDegreeTotalOPC") #used in wc correction
+    hd  = calc_value("CalculateHydrationDegree",m0(),m()) #used in mpK rates
+    hda = hd  #used in wc correction
+    
+    import "ModuleCement_PhreeqcInput_20_Hydration_00_general_01_mPK_00_rate.hps"
+    #997 put(rate1*wc,101)
+    #998 put(wc,102)
+    #999 put(hd,103)
+-end
+
+
