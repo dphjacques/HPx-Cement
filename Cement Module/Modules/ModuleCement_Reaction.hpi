@@ -15,7 +15,7 @@ class CementModel
         if(exists(Elements,"Fe")) then push(Oxides,"Fe2O3")
         if(exists(Elements,"Na")) then push(Oxides,"Na2O")
         if(exists(Elements,"K")) then push(Oxides,"K2O")
-        if(exists(Elements,"N")) then push(Oxides,"NO2")
+        if(exists(Elements,"N")) then push(Oxides,"NO2")              
     enddef
     
     def WritePhreeqcSolution(entitynr,boutprint, boutpunch,belement)
