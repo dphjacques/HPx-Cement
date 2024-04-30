@@ -7,8 +7,17 @@ CementHydrationInitiate
 -start
     
     import "ModuleCement_ModelSystems_02_CD.hps"
-
     import "ModuleCement_PhreeqcInput_20_Hydration_01_hydration.hps"
+    
+    import "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_00_General.hps"
+    import "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_10_FA.hps"
+    
+    bFA = 0
+    if(get_varexist("FA::Amount")>-1) then
+        if(get_var("FA::Amount")>0) then
+            bFA = 1
+        endif
+    endif
 
     entitynr = 1
   
@@ -20,6 +29,10 @@ CementHydrationInitiate
     cemmodel.CreateHeadings(systemnr)
     
     opckin = new(HydrationOPCmPK)
+    if(bFA = 1) then         
+            fakin = new(HydrationFAmPK)
+    endif
+    
     
     put_var("Cement::_hydration",1)
     clear_def("Db_Kinetics")
@@ -27,7 +40,14 @@ CementHydrationInitiate
     put_var("Cement::Figures::X::Title$","Time [d]")
     
     
+    #rates
     ostr = opckin.WriteIncludeRates() + eol + "END" + eol 
+    if (bFA=1) then
+        ostr = ostr + fakin.WriteIncludeRates() + eol + "END" + eol 
+    endif
+    
+    
+    
     ostr = ostr + cemsys.WritePhreeqcSolution(entitynr,false,false,0)
     ostr = ostr + "USE SOLUTION " + str(entitynr) + eol
     ostr = ostr + "INCLUDE$ CementModel" + str(entitynr) + "._in" + eol
@@ -45,7 +65,12 @@ CementHydrationInitiate
     ostr = ostr + "use equilibrium_phases " + str(entitynr) + eol
     ostr = ostr + "use solid_solutions " + str(entitynr) + eol
     ostr = ostr + "Kinetics" + eol
-    ostr = ostr + opckin.WriteKinetics(cemsys)
+    ostr = ostr + opckin.WriteKinetics(cemsys) + eol
+    if (bFA=1) then
+        ostr = ostr + fakin.WriteKinetics(cemsys) + eol  
+    endif    
+    
+    
     ostr = ostr + opckin.WriteKineticSteps()
     
     #save options to be added
@@ -70,6 +95,8 @@ CementHydrationInitiate
     
     vol = get_var("Cement::Composition::Clinker::Volume0")
     put_var("Cement::Composition::Volume0",vol+get_var("AmountWater")*1000)
+    
+
 -end
 
 #output
