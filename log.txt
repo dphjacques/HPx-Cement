@@ -1,1 +1,6 @@
+2024-04-30 Add hydration of FA modified Parrot and Killoch equations
+           Add instructions for ThermoChimie
+           Improve definition of cement systems
+           Improve colors for some phases
+
 2024-04-01 Add hydration OPC CEM-I modified Parrot and Killoch equations
