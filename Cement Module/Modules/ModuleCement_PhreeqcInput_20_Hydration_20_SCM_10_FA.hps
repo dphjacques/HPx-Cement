@@ -1,0 +1,9 @@
+class HydrationFA(HydrationSCM)
+        
+        var faamount =  get_var("Cement::Recipe::Amount")*get_var("FA::Amount")/100
+        var farowindex =  get_var("FA::Reference$")
+
+
+endclass 
+
+import "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_10_FA_01_mPK.hps"
