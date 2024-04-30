@@ -64,7 +64,6 @@ class CementHydration
     system = get_var("Cement::Model::System$") 
     system = left(system,2)
     systemnr = string.strtoint(system)
-
     cemsys = cemmodel.GetCementModel(systemnr)
     cemmodel.CreateHeadings(systemnr)
 endclass
