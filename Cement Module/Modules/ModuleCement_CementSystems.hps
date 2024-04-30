@@ -1,0 +1,131 @@
+CALCULATE_VALUES
+CementDatabase
+-state definition
+-mybasic
+-start  
+    #Select database
+    if(string.find(get_var("_DATABASE$"),"CEMDATA") >-1 ) then
+        put_var("_Equilibrium$","ModuleCement_CementHydration_Equilibrium_02_CD.hps")
+        put_var("_Output$","ModuleCement_CementHydration_Output_02_CD.hpi")
+        put_var("_PhaseName$","Phases_CD")
+    else
+        put_var("_Equilibrium$","ModuleCement_CementHydration_Equilibrium_01_TC.hps")
+       put_var("_Output$","ModuleCement_CementHydration_Output_01_TC.hpi")
+       put_var("_PhaseName$","Phases_TC")
+    endif
+-end
+
+
+DATABLOCK 
+CementSystem
+-casesensitive false
+-headings Nr Ca Si Al Fe S Mg C Na K Cl N 
+-rowid Nr
+    #Ca Si Al Fe S Mg C Na K Cl N 
+-start
+   7 1  1  1  0  1 1  1 0  0 0  0
+   9 1  1  1  0  1 1  1 0  0 1  0
+  11 1  1  1  1  1 1  1 0  0 0  0
+  13 1  1  1  0  1 1  1 1  1 0  0
+  15 1  1  1  0  1 1  1 1  1 1  0
+  17 1  1  1  1  1 1  1 1  1 1  0 
+  43 1  1  1  0  1 1  1 1  1 0  1
+  47 1  1  1  1  1 1  1 1  1 1  1 
+-end
+
+
+Phases_CD
+-casesensitive false
+-headings Mineral Name sys07 sys09 sys11 sys13 sys15 sys17 sys43 sys47 
+-rowid Mineral
+-start
+Portlandite        Portlandite         1 1 1 1 1 1 1 1
+Amor-Sl            none                1 1 1 1 1 1 1 1
+Anh                none                1 1 1 1 1 1 1 1
+Brc                none                1 1 1 1 1 1 1 1
+C3AH6              none                1 1 1 1 1 1 1 1
+C4AClH10           none                0 1 0 0 1 1 0 1
+C4AH19             none                1 1 1 1 1 1 1 1
+C4AsClH12          none                0 1 0 0 1 1 0 1
+Cal                Calcite             1 1 1 1 1 1 1 1
+Fe(OH)3(am)        Fe(OH)3(am)         0 0 1 0 0 1 0 1
+Fe-ettringite      none                0 0 1 0 0 1 0 1
+Fe-hemicarbonate   none                0 0 1 0 0 1 0 1
+Femonocarbonate    none                0 0 1 0 0 1 0 1
+Fe-monosulphate    none                0 0 1 0 0 1 0 1
+Gp                 Gypsum              1 1 1 1 1 1 1 1
+Hemicarbonate      none                1 1 1 1 1 1 1 1
+hemihydrate        none                1 1 1 1 1 1 1 1
+Hydrotalcite       Hydrotalcite        1 1 1 1 1 1 1 1
+Monocarbonate      AFmCO3              1 1 1 1 1 1 1 1
+mononitrate        AFmNO3              0 0 0 0 0 0 1 1 
+mononitrite        none                0 0 0 0 0 0 1 1
+Monosulphate16     none                1 1 1 1 1 1 1 1
+Straetlingite      Stratlingite        1 1 1 1 1 1 1 1
+-end
+
+SS_CD
+-casesensitive false
+-headings S_S name sys07 sys09 sys11 sys13 sys15 sys17 sys43 sys47 
+-rowid S_S
+-start
+    #7 9 11 13 15 17 43 47
+cshq          CSH               1 1 1  0  0  0  0  0
+cshqnk        CSH               0 0 0  1  1  1  1  1
+msh           MSH               1 1 1  1  1  1  1  1
+aft           AFT               1 1 1  1  1  1  1  1
+HydrogarnetFe HydrogarnetFe     0 0 1  0  0  1  0  1
+afm           AFM_S_OH          0 0 0  0  0  0  0  0 
+-end 
+
+Phases_TC
+-casesensitive false
+-headings Mineral Name sys07 sys09 sys11 sys13 sys15 sys17 sys43 sys47 
+-rowid Mineral
+-start
+CSH1.6              CSH                 1 1 1 1 1 1 1 1 
+CSH1.2              none                1 1 1 1 1 1 1 1 
+CSH0.8              none                1 1 1 1 1 1 1 1
+Ettringite          AFT                 1 1 1 1 1 1 1 1
+Portlandite         Portlandite         1 1 1 1 1 1 1 1
+SiO2(am)            none                1 1 1 1 1 1 1 1
+#Anh                none                1 1 1 1 1 1 1 1
+Brucite             none                1 1 1 1 1 1 1 1
+C3AH6               none                1 1 1 1 1 1 1 1
+C3FH6               none                0 0 1 0 0 1 0 1
+#C4AClH10           none                0 1 0 0 1 1 0 1
+C4AH13              none                1 1 1 1 1 1 1 1
+C4FH13              none                0 0 1 0 0 1 0 1
+Friedel-salt        none                0 1 0 0 1 1 0 1
+Calcite             Calcite             1 1 1 1 1 1 1 1
+Ferrihydrite(am)    Fe(OH)3(am)         0 0 1 0 0 1 0 1
+Ettringite-Fe       none                0 0 1 0 0 1 0 1
+#Fe-hemicarbonate   none                0 0 1 0 0 1 0 1
+#Femonocarbonate    none                0 0 1 0 0 1 0 1
+Monosulfate-Fe      none                0 0 1 0 0 1 0 1
+Gypsum              Gypsum              1 1 1 1 1 1 1 1
+Hemicarboaluminate  none                1 1 1 1 1 1 1 1
+#hemihydrate        none                1 1 1 1 1 1 1 1
+Hydrotalcite        Hydrotalcite        1 1 1 1 1 1 1 1
+Hydrotalcite-CO3    none                1 1 1 1 1 1 1 1
+Monocarboaluminate  AFmCO3              1 1 1 1 1 1 1 1
+mononitrate         AFmNO3              0 0 0 0 0 0 1 1 
+#mononitrite        none                0 0 0 0 0 0 1 1
+Monosulfoaluminate  none                1 1 1 1 1 1 1 1
+Stratlingite        Stratlingite        1 1 1 1 1 1 1 1 
+MSH0.8              none                1 1 1 1 1 1 1 1 
+MSH1.1              none                1 1 1 1 1 1 1 1
+  
+-end 
+
+
+
+
+SS_TC
+-casesensitive false
+-headings S_S name sys07 sys09 sys11 sys13 sys15 sys17 sys43 sys47 
+-rowid S_S
+-start
+    #7 9 11 13 15 17 43 47
+none          none               0 0 0  0  0  0  0  0
+-end 
