@@ -11,7 +11,7 @@ USER_PUNCH
 
 -start
     
-    punch( get_var("Cement::Clinker::Mass") )
+    punch( get_var("Cement::Clinker::Amount") )
     punch( get_var("GBFS::Amount") )
     punch( get_var("SF::Amount") )
     
