@@ -1,5 +1,6 @@
 INCLUDE$ ModuleCement_Functions.hpi
 
+
 GLOBAL_VARIABLE Format::Exponential::Precision 2
 
 
@@ -12,9 +13,11 @@ CementDatabase
     if(string.find(get_var("_DATABASE$"),"CEMDATA") >-1 ) then
         put_var("_Equilibrium$","ModuleCement_CementHydration_Equilibrium_02_CD.hps")
         put_var("_Output$","ModuleCement_CementHydration_Output_02_CD.hpi")
+        put_var("_PhaseName$","Phases_CD")
     else
         put_var("_Equilibrium$","ModuleCement_CementHydration_Equilibrium_01_TC.hps")
        put_var("_Output$","ModuleCement_CementHydration_Output_01_TC.hpi")
+       put_var("_PhaseName$","Phases_TC")
     endif
 -end
 CementHydration
