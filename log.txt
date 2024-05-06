@@ -1,3 +1,6 @@
+2024-05-06 Add Reactivity for SCM (FA)
+           Add plotting with or without capillary water
+           
 2024-04-30 Add hydration of FA modified Parrot and Killoch equations
            Add instructions for ThermoChimie
            Improve definition of cement systems
