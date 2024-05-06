@@ -229,7 +229,6 @@ class CementModelSystem
     for i = 0 to get_defnrrec("Phases_TC")-1
         if(get_def("Phases_TC",colindex,i)=1) then
             push(sysnr.PurePhases,get_def("Phases_TC",minindex,i))
-            writes(get_def("Phases_TC",minindex,i))
         endif 
     next i
     
