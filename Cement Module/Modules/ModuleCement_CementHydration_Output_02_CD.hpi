@@ -18,7 +18,7 @@ if (get_varexist("Cement::Hydration::Output$")   = 0) then
     res = SYS("elements", "countel" , "nameel$" , "typeel$" , "moles" )
 
     #Set System
-    bopc = 0
+        bopc = 0
         bgbfs = 0
         bsf = 0
         bfa = 0
@@ -143,7 +143,8 @@ if(bsf = 1) then
 endif
 if(bfa = 1) then
     writef(string.format("%35s","FA") + string.format("%15i",  get_var("FA::Amount")  ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted SF") + string.format("%15i", get_var("FA::ReactedAmount") ) + " % reacted" +eol+eol)
+    writef(string.format("%35s","Reacted FA") + string.format("%15i", get_var("FA::ReactedAmount") ) + " % reacted" +eol)
+    writef(string.format("%35s","Reactivity") + string.format("%25s", get_var("FA::Reactivity$") ) +eol+eol)
 endif
 if(bls = 1) then
     writef(string.format("%35s","LS") + string.format("%15i",  get_var("LS::Amount")  ) + " weight%" +eol)
@@ -154,18 +155,24 @@ writef(string.format("%35s","Amount of cement") + string.format("%15i",  get_var
 writef(string.format("%35s","w/c ratio") + string.format("%15.2f", get_var("Cement::Recipe::w_c") ) + eol)
 writef(string.format("%35s","Temperature") + string.format("%15i", get_var("Cement::Recipe::T") ) + eol +eol)
 
-writef("CONTENT" + eol)
+writef("OXIDE CONTENT" + eol)
 writef(string.format("%15s","Name"))
-writef(string.format("%15s","Moles") + eol)
-writef(string.format("%15s","CaO") + "    " + string.format("%11."+expprec,sys("Ca"))+ eol)
-writef(string.format("%15s","SiO2") + "    " + string.format("%11."+expprec,sys("Si"))+ eol)
-writef(string.format("%15s","Al2O3") + "    " + string.format("%11."+expprec,sys("Al")/2)+ eol)
-writef(string.format("%15s","SO3") + "    " + string.format("%11."+expprec,sys("S"))+ eol)
-writef(string.format("%15s","CO2") + "    " + string.format("%11."+expprec,sys("C"))+ eol)
-writef(string.format("%15s","MgO") + "    " + string.format("%11."+expprec,sys("Mg"))+ eol)
-writef(string.format("%15s","Fe2O3") + "    " + string.format("%11."+expprec,sys("Fe")/2)+ eol)
-writef(string.format("%15s","Na2O") + "    " + string.format("%11."+expprec,sys("Na")/2)+ eol)
-writef(string.format("%15s","K2O") + "    " + string.format("%11."+expprec,sys("K")/2)+ eol)
+writef(string.format("%15s","Moles Reacted"))
+writef(string.format("%15s","Moles UnReacted"))
+writef(string.format("%15s","Moles Total") + eol)
+
+lio = list("CaO","SiO2","Al2O3","SO3","CO2","MgO","Fe2O3","Na2O","K2O")
+for ox in lio
+ if(get_varexist("Cement::Recipe::"+ox) = 0) then
+     reacted = get_var("Cement::Recipe::"+ox)
+     total = get_var("Cement::Recipe::"+ox+"::Total")
+     unreacted = total - reacted
+     rstring = string.format("%11."+expprec,reacted)
+     ustring = string.format("%11."+expprec,unreacted)
+     tstring = string.format("%11."+expprec,total)
+     writef(string.format("%15s",ox)   + "    " + rstring  + "    " + ustring   + "    " + tstring + eol)
+ endif
+next ox
 
 
 writef(eol+"HYDRATED PHASES" + eol + eol) #no phreeqc (replace print)
