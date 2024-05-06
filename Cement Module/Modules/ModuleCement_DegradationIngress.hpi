@@ -51,6 +51,7 @@ if (get_var("Cement::Ingress::Amount::Type$") = "Relative") then
         amount = get_var("Cement::Ingress::Amount") * get_var(gv)
     endif 
 endif
+writes(amount)
 st = get_var("Cement::Ingress::Steps")
 if( st < 1 ) then
     st = 1
