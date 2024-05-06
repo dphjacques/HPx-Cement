@@ -41,8 +41,8 @@ Phases_CD
 -start
 Portlandite        Portlandite         1 1 1 1 1 1 1 1
 Amor-Sl            none                1 1 1 1 1 1 1 1
-Anh                none                1 1 1 1 1 1 1 1
-Brc                none                1 1 1 1 1 1 1 1
+#Anh                none                1 1 1 1 1 1 1 1
+Brc                Brucite             1 1 1 1 1 1 1 1
 C3AH6              none                1 1 1 1 1 1 1 1
 C4AClH10           none                0 1 0 0 1 1 0 1
 C4AH19             none                1 1 1 1 1 1 1 1
@@ -54,13 +54,13 @@ Fe-hemicarbonate   none                0 0 1 0 0 1 0 1
 Femonocarbonate    none                0 0 1 0 0 1 0 1
 Fe-monosulphate    none                0 0 1 0 0 1 0 1
 Gp                 Gypsum              1 1 1 1 1 1 1 1
-Hemicarbonate      none                1 1 1 1 1 1 1 1
+Hemicarbonate      AFmhemiCO3          1 1 1 1 1 1 1 1
 hemihydrate        none                1 1 1 1 1 1 1 1
 Hydrotalcite       Hydrotalcite        1 1 1 1 1 1 1 1
-Monocarbonate      AFmCO3              1 1 1 1 1 1 1 1
+Monocarbonate      AFmmonoCO3          1 1 1 1 1 1 1 1
 mononitrate        AFmNO3              0 0 0 0 0 0 1 1 
 mononitrite        none                0 0 0 0 0 0 1 1
-Monosulphate16     none                1 1 1 1 1 1 1 1
+Monosulphate16     AFmSO4              1 1 1 1 1 1 1 1
 Straetlingite      Stratlingite        1 1 1 1 1 1 1 1
 -end
 
@@ -74,7 +74,7 @@ cshq          CSH               1 1 1  0  0  0  0  0
 cshqnk        CSH               0 0 0  1  1  1  1  1
 msh           MSH               1 1 1  1  1  1  1  1
 aft           AFT               1 1 1  1  1  1  1  1
-HydrogarnetFe HydrogarnetFe     0 0 1  0  0  1  0  1
+HydrogarnetFe HG                0 0 1  0  0  1  0  1
 afm           AFM_S_OH          0 0 0  0  0  0  0  0 
 -end 
 
