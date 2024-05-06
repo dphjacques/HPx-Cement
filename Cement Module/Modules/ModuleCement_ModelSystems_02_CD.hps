@@ -307,7 +307,6 @@ class CementModelSystem
     for i = 0 to get_defnrrec("Phases_CD")-1
         if(get_def("Phases_CD",colindex,i)=1) then
             push(sysnr.PurePhases,get_def("Phases_CD",minindex,i))
-            writes(get_def("Phases_CD",minindex,i))
         endif 
     next i
     
@@ -338,7 +337,6 @@ class CementModelSystem
                              set(sysnr.SolidSolution,"AFT",aft)
                         endif                     
                 else
-                    writes(get_def("SS_CD",1,i)+ " " +get_def("SS_CD",0,i) )
                     set(sysnr.SolidSolution,get_def("SS_CD",1,i),get(s_sModels,get_def("SS_CD",0,i)))
                 endif
         endif 
