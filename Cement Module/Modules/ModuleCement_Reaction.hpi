@@ -80,15 +80,38 @@ class CementModel
         return txt
     enddef
     
+    def Reactivity(react)
+        write(react + eol)
+        if(react = "Full Reactivity") then
+            write("ful")
+            return -1
+        elseif(react = "Bulk Reactivity") then
+            write("buke")
+            return -2
+        elseif(react = "Oxide Specific") then
+            write("ox")
+            return -3
+        else
+        write("no")
+            return -1
+        endif
+        return -1
+    enddef
+    
     def WritePhreeqcCementReaction(entitynr)
 
 
         #Set System
+        #b... if constituent is present
+        #r... Reactivity model - -1:Full -2:Bulk -3:Oxide-specific
         bopc = 0
         bgbfs = 0
         bsf = 0
         bfa = 0
+        rfa = -1
         bls = 0
+        
+        
 
         if( get_varexist("Cement::Clinker::Amount") = 0 ) then
             if(  get_var("Cement::Clinker::Amount") > 0) then
@@ -103,11 +126,18 @@ class CementModel
         if( get_varexist("SF::Amount") = 0 ) then
             if(  get_var("SF::Amount") > 0) then
                 bsf = 1
+                
             endif
         endif
         if( get_varexist("FA::Amount") = 0 ) then
             if(  get_var("FA::Amount") > 0) then
                 bfa = 1
+                if(get_varexist("FA::Reactivity$") = 0) then
+                     write("herehere"+eol)
+                     rfa = Reactivity(get_var("FA::Reactivity$"))
+                endif
+               
+                write(rfa)
             endif
         endif
         if( get_varexist("LS::Amount") = 0 ) then
@@ -129,6 +159,11 @@ class CementModel
         endif
         if(bfa=1) then
             rowlabelfa = get_var("FA::Reference$")
+            if(rfa = -1) then
+                rfa = 1
+            elseif (rfa = -2) then
+                rfa = get_def("FA","Rtot",rowlabelfa)/100
+            endif
         endif
         if(bls=1) then
             rowlabells = get_var("LS::Reference$")
@@ -140,10 +175,16 @@ class CementModel
         while move_next(it) 
             oxide = get(it)
             txt = txt + oxide + " " 
+            amt = 0
+            amR = 0
             am = 0
             if(bopc = 1) then
                 if(get_defexist("OPC",oxide,rowlabelcement)=0) then
-                    am = am + (get_def("OPC",oxide,rowlabelcement)* get_var("Cement::Clinker::Amount") /100 *  get_var("Cement::Clinker::ReactedAmount") /100 ) 
+                    amopc = get_def("OPC",oxide,rowlabelcement)* get_var("Cement::Clinker::Amount") /100 
+                    amt = amt + amopc
+                    amopc =amopc * get_var("Cement::Clinker::ReactedAmount") /100 
+                    amR = amR + amopc
+                    am = am +  amopc
                 endif
             endif
             if(bgbfs = 1) then
@@ -158,7 +199,16 @@ class CementModel
             endif
             if(bfa = 1) then
                 if(get_defexist("FA",oxide,rowlabelfa)=0) then
-                    am = am + (get_def("FA",oxide,rowlabelfa)*  get_var("FA::Amount")  /100 *  get_var("FA::ReactedAmount") /100) 
+                    amfa = get_def("FA",oxide,rowlabelfa)*  get_var("FA::Amount")  /100
+                    amt = amt + amfa
+                    amfa = amfa*  get_var("FA::ReactedAmount") /100) 
+                    amR = amR + amfa
+                    if(rfa>0) then
+                        amfa = amfa*rfa
+                    else
+                        amfa = amfa*get_def("FA","R"+oxide,rowlabelfa)/100
+                    endif
+                    am = am + amfa 
                 endif
             endif
             if(bls = 1) then
@@ -168,7 +218,9 @@ class CementModel
             endif
             am = am /gfw(oxide)
             txt = txt + str(am) + eol
-            put_var("Cement::Recipe::"+oxide,am)
+            put_var("Cement::Recipe::"+oxide+"::Total",amt*get_var("Cement::Recipe::Amount") /100/gfw(oxide))
+            put_var("Cement::Recipe::"+oxide+"::Hydrated",amR*get_var("Cement::Recipe::Amount") /100/gfw(oxide))
+            put_var("Cement::Recipe::"+oxide,am*get_var("Cement::Recipe::Amount") /100)
         wend        
         txt = txt + str(get_var("Cement::Recipe::Amount") /100) #+ " in 10 steps" 
 
