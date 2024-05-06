@@ -2,7 +2,7 @@
 <DataBlocks>
 	<DataBlock>
 		<Name>FA</Name>
-		<Description>Chemical compositino of Fly Ash</Description>
+		<Description>Chemical composition of Fly-ash</Description>
 		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Segoe UI;}{\f2\fnil\fcharset0 Calibri;}}
 \viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
 \par
@@ -11,10 +11,9 @@ Default unit: \par
 \par
 \b\fs24 Origin of the data\b0\fs19\par
 \par
-\pard\fi-720\li720\lang1033\b Weerdt11\b0\tab Table 1 in \f1\fs22 De Weerdt, K., Haha, M.B., Le Saout, G., Kjellsen, K.O., Justnes, H. and Lothenbach, B.  2011.  Hydration mechanisms of ternary Portland cements containing limestone powder and fly ash. Cement and Concrete Research 41(3), 279-291\f2\par
-\pard\lang2067\f0\fs19\par
-}
-]]><Visible>False</Visible>
+\pard\fi-720\li720\lang1033\b Weerdt11\b0\tab Table 1 in \f1\fs22 De Weerdt, K., Haha, M.B., Le Saout, G., Kjellsen, K.O., Justnes, H. and Lothenbach, B.  2011.  Hydration mechanisms of ternary Portland cements containing limestone powder and fly ash. Cement and Concrete Research 41(3), 279-291\par
+\par\pard\lang2067\f0\fs19\par
+}]]><Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 			<Type>1</Type>
 			<ExternalFile>False</ExternalFile>
@@ -35,6 +34,16 @@ Default unit: \par
 			<Heading>Fe2O3</Heading>
 			<Heading>Na2O</Heading>
 			<Heading>K2O</Heading>
+			<Heading>Rtot</Heading>
+			<Heading>RCaO</Heading>
+			<Heading>RSiO2</Heading>
+			<Heading>RAl2O3</Heading>
+			<Heading>RCO2</Heading>
+			<Heading>RSO3</Heading>
+			<Heading>RMgO</Heading>
+			<Heading>RFe2O3</Heading>
+			<Heading>RNa2O</Heading>
+			<Heading>RK2O</Heading>
 		</Headings>
 		<Origin>0</Origin>
 		<RowId>Name</RowId>
@@ -53,6 +62,16 @@ Default unit: \par
 				<Value>6.0</Value>
 				<Value>0.6</Value>
 				<Value>1.4</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
 			</Record>
 		</Records>
 	</DataBlock>
