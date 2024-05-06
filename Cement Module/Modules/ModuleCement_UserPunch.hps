@@ -775,20 +775,16 @@ ExtrOutputPunch
        endif 
    
        for j = _js to _je
-           if( get_var("Cement::Figures::Solids::Detail$") = "Detail" or  get_var("Cement::Figures::Solids::Detail$") = "Both" ) then
-               
-               write(" 001 ")         
-               WriteSolidFigures(j, _is, _ie, 1, xtype )
-               
-               write(" 002 ")         
-           endif 
-           if( get_var("Cement::Figures::Solids::Detail$") = "Detail - No Water" ) then
-               WriteSolidFigures(j, _is, _ie, 0, xtype )
-           endif
-           if( get_var("Cement::Figures::Solids::Detail$") = "Detail - Both" ) then
-               WriteSolidFigures(j, _is, _ie, 1, xtype )
-               WriteSolidFigures(j, _is, _ie, 0, xtype )
-           endif  
+           if(get_varexist("Cement::Figures::Solids::Water$") = 0) then
+               if( get_var("Cement::Figures::Solids::Water$") = "Water" or  get_var("Cement::Figures::Solids::Water$") = "Both" ) then         
+                   WriteSolidFigures(j, _is, _ie, 1, xtype )        
+               endif 
+               if( get_var("Cement::Figures::Solids::Water$") = "No water" or  get_var("Cement::Figures::Solids::Water$") = "Both" ) then
+                   WriteSolidFigures(j, _is, _ie, 0, xtype )
+               endif 
+            else
+                WriteSolidFigures(j, _is, _ie, 0, xtype )
+            endif
             bsolid100 = 0 
          next j
          bsolids = 0        
@@ -823,11 +819,11 @@ ExtrOutputPunch
       if(  get_var("Cement::Figures::X::Scale$") = "Linear" or get_var("Cement::Figures::X::Scale$") = "Both") then
               xtype = "Linear"
               WriteFigures(xtype)
-          endif
-          if(  get_var("Cement::Figures::X::Scale$") = "Logscale" or get_var("Cement::Figures::X::Scale$") = "Both") then
-              xtype = "Logscale"
-              WriteFigures(xtype)
-          endif    
+      endif
+      if(  get_var("Cement::Figures::X::Scale$") = "Logscale" or get_var("Cement::Figures::X::Scale$") = "Both") then
+          xtype = "Logscale"
+          WriteFigures(xtype)
+      endif    
               
       endif
   endif
