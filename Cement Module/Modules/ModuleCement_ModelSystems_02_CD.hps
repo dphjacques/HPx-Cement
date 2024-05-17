@@ -62,6 +62,8 @@ class CementModelSystem
     push(ZeolitesCa,"SCO")
     push(ZeolitesCa,"STI(Ca)")
     push(ZeolitesCa,"GIS-LS-P(Ca)")
+	
+	clear_def("Db_Kinetics")
     
     def GetSystemPhreeqc(nr)
     cemsys = get(CementModels,nr)
