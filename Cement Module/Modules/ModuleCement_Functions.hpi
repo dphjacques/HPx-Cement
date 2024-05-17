@@ -107,7 +107,17 @@ VolumeSolidsEquilibrium
    next i
    db = "Db_SolidSolutions"
    count = get_defnrrec(db)-1
+   ssvol = 0
    for i = 0 to count 
-       vol = vol + s_s(get_def(db,i))*phase_vm(get_def(db,i))
+    ssvol = ssvol + s_s(get_def(db,i))*phase_vm(get_def(db,i))
    next i    
+   
+   ssCa = sum_s_s("CSH","Ca")
+   ssSi = sum_s_s("CSH","Si") 
+
+   VolumeGelH2O = ssSi*calc_value("VolumeGelPores",ssCa,ssSi)
+   calc_out(VolumeGelH2O)
+   
+   
+   save(vol+ssvol-VolumeGelH2O)
 -end  
