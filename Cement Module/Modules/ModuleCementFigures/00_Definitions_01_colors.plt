@@ -9,7 +9,8 @@ set linetype 1001 lc rgb "gray80" lw  1
 set linetype 1002 lc rgb "gray80" lw  1 dt 2
 
 #water
-set style line 500 lc rgb "blue" lw lwvalue pn -pnvalue ps psvalue pt ptvalue #capillary water
+set style line 500 lc rgb "dark-blue" lw lwvalue pn -pnvalue ps psvalue pt ptvalue #capillary water
+set style line 501 lc rgb "blue" lw lwvalue pn -pnvalue ps psvalue pt ptvalue #gel water
 
 #calcite
 set style line  750 lc rgb  '#66A61E' lw lwvalue pn -pnvalue ps psvalue pt ptvalue # dark lilac
@@ -24,9 +25,9 @@ set style line 770 lc rgb '#A6761D'  lw lwvalue pn -pnvalue ps psvalue pt ptvalu
 set style line 771 lc rgb '#E5C494'  lw lwvalue pn -pnvalue ps psvalue pt ptvalue # tan
 #hydrotalcite
 set style line 780 lc rgb '#666666'  lw lwvalue pn -pnvalue ps psvalue pt ptvalue # dark gray
-#Si gel
+#hemicarboaluminate
 set style line 790 lc rgb '#7570B3'  lw lwvalue pn -pnvalue ps psvalue pt ptvalue # dark lime green
-#Gib
+#monosulfoaluminate
 set style line 791 lc rgb '#1B9E77'  lw lwvalue pn -pnvalue ps psvalue pt ptvalue # dark teal
 #CSH 
 set style line 801 lc rgb '#B2182B'  lw lwvalue pn -pnvalue ps psvalue pt ptvalue # red
@@ -46,6 +47,10 @@ set style line 820 lc rgb '#999999'  lw lwvalue pn -pnvalue ps psvalue pt ptvalu
 #mononitrate
 set style line 850 lc rgb "#ffff33" lw 3 dt 1 pt 6 pn -8 ps 2 
 
+#cementhydrates
+set style line 1001 lc rgb "sandybrown" lw lwvalue pn -pnvalue ps psvalue pt ptvalue
+#aggregates
+set style line 1050 lc rgb "brown" lw lwvalue pn -pnvalue ps psvalue pt ptvalue
 #clinkers
 set style line 900 lc rgb "gray50" #total clinkers
 set style line 901 lc rgb "gray90" #alite
