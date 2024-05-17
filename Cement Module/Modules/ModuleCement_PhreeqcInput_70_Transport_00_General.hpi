@@ -1,0 +1,185 @@
+GLOBAL_VARIABLE Aggregates::Fix 1
+GLOBAL_VARIABLE Aggregates::Volume 70
+GLOBAL_VARIABLE Aggregate::Weight -1
+GLOBAL_VARIABLE Aggregate::BulkDensity 2.65
+GLOBAL_VARIABLE Concrete::ITZThickness 30
+GLOBAL_VARIABLE Aggregate::Radius 0.1
+
+
+GLOBAL_VARIABLE Cement::Transport::Tortcem::Model$  "OhJang"
+
+GLOBAL_VARIABLE Cement::Transport::Tortcem::OhJang::n  2.7
+GLOBAL_VARIABLE Cement::Transport::Tortcem::OhJang::DsD0  2.0E-4
+GLOBAL_VARIABLE Cement::Transport::Tortcem::OhJang::CritPor 0.16
+
+GLOBAL_VARIABLE Cement::Transport::Tortcon::Model$  "OhJang"
+GLOBAL_VARIABLE Cement::Transport::Tortcon::OhJang::DiDp 6
+
+CALCULATE_VALUES
+Initiation_Properties_Concrete
+-state definition
+-mybasic 
+-start
+ vol = get_var("Aggregates::Volume")/100
+ weight = get_var("Aggregate::Weight")
+ bd = get_var("Aggregate::BulkDensity")
+ if(vol<0) then
+     vol = weight/bd
+ elseif(weight<0) then
+     weight = vol*bd
+ elseif(vol>0)
+     bd = weight/vol
+ endif
+ put_var("Aggregate::BulkDensity",bd)
+ put_var("Aggregate::Weight", weight)
+ put_var("Aggregates::Volume", vol)
+
+ txt_tort = ""
+ import "ModuleCement_PhreeqcInput_70_Transport_10_Properties.hps"
+ 
+ #tortuoisity cement
+ properties = new(cTransportProperties)
+ if(string.comparenocase(get_var("Cement::Transport::Tortcem::Model$"),"OhJang") = 0) then
+    properties.TortCement = new(cOhJang)
+ endif
+ txt_tort = txt_tort +  properties.TortCement.Model()
+
+ #Tortuosity concrete
+  if(string.comparenocase(get_var("Cement::Transport::Tortcon::Model$"),"OhJang") = 0) then
+    properties.TortConcrete = new(cOhJangconcrete)
+ endif
+ txt_tort = txt_tort +  properties.TortConcrete.Model()
+ 
+ openf("_tort._in")
+ writef(txt_tort)
+ closef()
+ 
+-end 
+
+Properties_Cement_Tortuosity_Calculate
+-mybasic
+-start
+   tortc = 1
+   if(get_node("TortCem") = 2 ) then # OhJang model
+       tortc = calc_value("TortCementOhJang")
+   endif
+   put_node("TortuosityWaterCement",tortc)
+   save(tortc)
+-end
+
+Properties_Concrete_Tortuosity_Calculate
+-mybasic
+-start
+   tortc = 1
+
+   if(get_node("TortCon") = 2 ) then # OhJang model
+       tortc = calc_value("TortConcreteOhJang")
+   endif
+   
+   put_node("TortuosityWaterConcrete",tortc)
+   save(tortc)
+-end
+
+Properties_Tortuosity_Calculate
+-mybasic
+-start
+   tortcem = calc_value("Properties_Cement_Tortuosity_Calculate")
+   tortcon = calc_value("Properties_Concrete_Tortuosity_Calculate")
+   tort = tortcem*tortcon
+   put_node("TortuosityWater",tort)
+   save(tort)
+-end
+
+INCLUDE$ _tort._in
+
+END 
+CALCULATE_VALUES
+Transport_properties_Cement
+-mybasic
+-start 
+ import "ModuleCement_PhreeqcInput_70_Transport_10_Properties.hps"
+ 
+ put_node("TortCem",-1)
+ put_node("TortCon",-1)
+ properties = new(cTransportProperties)
+ if(string.comparenocase(get_var("Cement::Transport::Tortcem::Model$"),"OhJang") = 0) then
+    properties.TortCement = new(cOhJang)
+    properties.TortCement.Set(get_var("Cement::Transport::Tortcem::OhJang::n"),get_var("Cement::Transport::Tortcem::OhJang::DsD0"),get_var("Cement::Transport::Tortcem::OhJang::CritPor"))
+    put_node("TortCem",2)
+    properties.TortCement.Construct()
+    put_node("M_intercept",properties.TortCement.M_intercept)
+    put_node("M_slope",properties.TortCement.M_slope)
+    put_node("Dp_D0Constant",properties.TortCement.Dp_D0Constant)
+    put_node("PercExp",properties.TortCement.PercExp)
+ endif
+ 
+  if(string.comparenocase(get_var("Cement::Transport::Tortcon::Model$"),"OhJang") = 0) then
+    properties.TortConcrete = new(cOhJangconcrete)
+    properties.TortConcrete.Set(get_var("Cement::Transport::Tortcon::OhJang::DiDp"),get_var("Concrete::ITZThickness"),get_var("Aggregates::Volume"),get_var("Aggregate::Radius"))
+    put_node("TortCon",2)
+    properties.TortConcrete.Construct()
+    put_node("TortuosityWaterConcrete",properties.TortConcrete.tortcon)
+ endif
+ 
+-end 
+
+Initial
+-state initial
+-mybasic
+-start
+  txt = calc_value("Transport_properties_Cement")  
+  #determine if agr is calculated or ths
+  cem_vol = calc_value("VolumeSolidsEquilibrium")/1000
+  gelpor =  calc_res(1)/1000
+  if(get_var("Aggregates::Fix") = 1 ) then
+    agg_vol = get_var("Aggregates::Volume")
+    por = 1 - cem_vol - agg_vol
+  else
+    por = transprop("ths")
+    agg_vol = 1 - por - cem_vol
+  endif  
+  put_node("Aggregate::Volume",agg_vol)
+  put_node("Aggregate::Weight",agg_vol*get_var("Aggregate::BulkDensity"))
+  put_node("Aggregate::BulkDensity",get_var("Aggregate::BulkDensity"))
+  
+  put_node("VolumeWater",por)
+  put_node("VolumeGelWater",gelpor)
+  put_node("VolumeCapWater",por-gelpor)
+  put_node("Volumecement",cem_vol)
+  
+  #Adapt Properties- porosity
+  update_sfwater(por)
+  put_node("SF_porosity",get_sfwater())
+  change_sfwater0(get_sfwater())
+  
+  #Adapt Properties - tort
+  calc_value("Properties_Tortuosity_Calculate")
+  
+-end 
+
+INCLUDE$ _tort._in
+END
+CALCULATE_VALUES
+UpdatePorosity
+-mybasic
+-state update
+-start 
+  cem_vol = calc_value("VolumeSolidsEquilibrium")/1000
+  gelpor =  calc_res(1)/1000 
+  por = 1 - get_node("Aggregate::Volume") - cem_vol
+  update_sfwater(por)
+  
+  put_node("VolumeWater",por)
+  put_node("VolumeGelWater",gelpor)
+  put_node("VolumeCapWater",por-gelpor)
+  put_node("Volumecement",cem_vol)
+  put_node("SF_porosity",get_sfwater())
+-end 
+
+Tortuosity_Concrete
+-mybasic
+-state tortw
+-start 
+   tort = calc_value("Properties_Tortuosity_Calculate")
+   save(tort) 
+-end

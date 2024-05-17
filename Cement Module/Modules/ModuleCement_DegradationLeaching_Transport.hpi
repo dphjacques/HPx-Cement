@@ -1,0 +1,105 @@
+CALCULATE_VALUES
+Cement_Ingress
+-state definition 
+-mybasic
+-start 
+
+openf("Cement_degradation_leaching._in")
+writef("fail")
+closef()
+ 
+if(get_varexist("Cement::Leaching::Type$") = 0) then    
+  
+txt = ""
+includesolution = 0 
+oxides = dict()
+
+#Make the list of components to add
+if(get_var("Cement::Leaching::Type$") = "Components" ) then
+    if (get_var("Cement::Leaching::Ca") > 0 ) then set(oxides,"Ca",get_var("Cement::Leaching::Ca")) endif
+    if (get_var("Cement::Leaching::Si") > 0 ) then set(oxides,"Si",get_var("Cement::Leaching::Si")) endif
+    if (get_var("Cement::Leaching::Al") > 0 ) then set(oxides,"Al",get_var("Cement::Leaching::Al")) endif
+    if (get_var("Cement::Leaching::S") > 0 ) then set(oxides,"S",get_var("Cement::Leaching::S")) endif
+    if (get_var("Cement::Leaching::Mg") > 0 ) then set(oxides,"Mg",get_var("Cement::Leaching::Mg")) endif
+    if (get_var("Cement::Leaching::C") > 0 ) then set(oxides,"C",get_var("Cement::Leaching::C")) endif
+    if (get_var("Cement::Leaching::Na") > 0 ) then set(oxides,"Na",get_var("Cement::Leaching::Na")) endif
+    if (get_var("Cement::Leaching::K") > 0 ) then set(oxides,"K",get_var("Cement::Leaching::K")) endif
+    if (get_var("Cement::Leaching::Cl") > 0 ) then set(oxides,"Cl",get_var("Cement::Leaching::Cl")) endif
+    if (get_var("Cement::Leaching::pH") > 0 ) then set(oxides,"pH",get_var("Cement::Leaching::pH")) endif
+elseif (get_var("Cement::Leaching::Type$") = "Solution") then
+
+    if (get_var("Cement::Leaching::Solution::Type$")= "Template") then
+       db = "LeachingSolution"
+       record = get_var("Cement::Leaching::Solution::Template$")
+    elseif (get_var("Cement::Leaching::Solution::Type$")= "File") then
+       includesolfile = get_var("Cement:::Leaching::Solution::Filename$") + ".in"
+       includesolution=1         
+    endif   
+endif
+
+#make SOLUTION
+if(includesolution=0) then
+    if(get_var("Cement::Leaching::Type$") = "Components" ) then
+        txtsol = "-units mol/kgw " + eol)
+        for ox in oxides
+          txtsol = txtsol + ox + " " + str(get(oxides,ox)) 
+          if(get_var("Cement::Leaching::Charge$") = ox ) then txtsol = txtsol + " charge " endif
+          txtsol = txtsol + eol  
+        next  
+    endif
+else
+    txtsol = "INCLUDE$ " + includesolfile + eol
+endif
+
+    
+#scale water
+    txt = txt + "MIX 1001 " + eol
+    txt = txt + "1001 1 t " + eol
+    txt = txt + "SAVE Solution 1001 " + eol
+    txt = txt + "end" + eol
+    txt = txt + "DELETE mix 1001" + eol
+    txt = txt + "end " + eol
+#copy models
+    txt = txt + "COPY equilibrium_phases 1001 1001 m 1" + eol
+    txt = txt + "copy SOLID_SOLUTIONS 1001 1001 m 1 " + eol
+    txt = txt + "end" + eol 
+
+#Set up leaching solution 
+    __cemSolutionNr =  3001
+    txt = txt + "solution " + str(__cemSolutionNr) + eol
+    txt = txt + txtsol + "end" + eol
+
+
+openf("Cement_degradation_leaching._in")
+writef(txt)
+closef()
+
+put_var("Output::Lead","Lead") 
+
+endif 
+
+-end
+END
+#output
+selected_output
+-active true 
+#
+INCLUDE$ ModuleCement_UserPunch_Transport.hps
+
+INCLUDE$ Cement_degradation_leaching._in
+
+CALCULATE_VALUES
+DeleteFiles
+-state Definition
+-mybasic 
+-start 
+    #deletef("leachingstep._in")
+    #deletef("ReactionDefinition1._in")
+    #deletef("ReactionDefinition2._in")
+    #deletef("ReactionDefinition3._in")
+    #deletef("ReactionDefinition4._in")
+    #deletef("Cement_degradation_leaching._in")
+    
+-end 
+
+

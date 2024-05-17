@@ -1,0 +1,39 @@
+class cOhJang(cTortCement)
+    
+    CritPor = 0.17
+    n = 2.7
+    Ds_D0 = 2E-4
+    
+    M_intercept = 0
+    M_slope = 0
+    Dp_D0Constant = 0
+    PercExp = 0
+    
+    def Set(_n,_dsdo,_critpor)
+        CritPor = _critpor
+        n = _n
+        Ds_D0 = _dsdo
+    enddef 
+    
+    def Model()
+        txt = "include$ ModuleCement_PhreeqcInput_70_Transport_10_Properties_20_TortCement_02_OhJang.hpi" + eol
+        return(txt)
+    enddef
+    
+    def Construct()
+        factor1 = Ds_D0^(1/n)
+        factor2 = 1 - factor1
+        factor2 = 0.5*factor2 / (1-CritPor)
+        factor3 = CritPor / (1-CritPor)
+        'intercept Eq. 6b in Oh and Jang (2004)
+        factor4 = 0.5*(factor1-factor3)
+        factor5 = factor3*factor1
+
+        M_intercept = factor4
+        M_slope = factor2
+        Dp_D0Constant = factor5
+        PercExp  =n 
+    enddef
+    
+    
+endclass

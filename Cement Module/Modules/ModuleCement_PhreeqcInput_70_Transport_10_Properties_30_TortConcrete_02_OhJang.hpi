@@ -1,0 +1,9 @@
+CALCULATE_VALUES
+TortConcreteOhJang
+-mybasic 
+-start 
+
+   
+    save(get_node("TortuosityWaterConcrete"))
+    
+-end 

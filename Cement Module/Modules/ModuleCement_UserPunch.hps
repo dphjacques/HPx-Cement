@@ -1,61 +1,5 @@
-CALCULATE_VALUES
-ExtrOutputPunch
--state Definition
--mybasic
--start 
-    txt = ""
-    ktxt = ""
-    if( get_varexist("Cement::Output::Hydrates::Moles") > -1 ) then
-        if( get_var("Cement::Output::Hydrates::Moles") = 1 ) then
-            txt = txt + "-headings " + get_var("Output::Phases") + eol
-            txt = txt + "-headings " + get_var("Output::SolidSolutions") + eol
-            txt = txt + "-headings " + get_var("Output::SolidSolutionsComp") + eol
-            if(get_varexist("Output::Kinetics") > -1 ) then
-                ktxt = ktxt + get_var("Output::Kinetics") + " "
-            endif   
-        endif 
-    else
-        put_var("Cement::Output::Hydrates::Moles",0)
-    endif
-    if(  get_varexist("Cement::Output::Hydrates::Volumes") > -1 ) then
-        if(  get_var("Cement::Output::Hydrates::Volumes")  = 1 ) then
-            txt = txt + "-headings " + get_var("Output::Phasesv") + eol
-            txt = txt + "-headings " + get_var("Output::SolidSolutionsv") + eol
-            txt = txt + "-headings " + get_var("Output::SolidSolutionsCompv") + eol
-            if(get_varexist("Output::Kineticsv") > -1 ) then
-                ktxt = ktxt + get_var("Output::Kineticsv") + " "
-            endif  
-        endif 
-    else
-        put_var("Cement::Output::Hydrates::Volumes",0)
-    endif 
-    if( get_varexist("Cement::Output::Hydrates::Weights") > -1 ) then
-        if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
-            txt = txt + "-headings " + get_var("Output::Phasesw") + eol
-            txt = txt + "-headings " + get_var("Output::SolidSolutionsw") + eol
-            txt = txt + "-headings " + get_var("Output::SolidSolutionsCompw") + eol
-            if(get_varexist("Output::Kineticsw") > -1 ) then
-                ktxt = ktxt + get_var("Output::Kineticsw") + " "
-            endif  
-        endif 
-    else
-        put_var("Cement::Output::Hydrates::Weights",0) 
-    endif
-    if( get_varexist("Cement::Output::Hydrates::SaturationIndex") > -1 ) then
-        if(get_var("Cement::Output::Hydrates::SaturationIndex")  = 1 ) then
-            txt = txt + "-headings" + get_var("Output::Phasessi")
-        endif 
-    else
-        put_var("Cement::Output::Hydrates::SaturationIndex",0) 
-    endif
-    openf("_txtheading._in")
-    writef(txt)
-    closef()
-    put_var("_leadnr",0)
-    
-    put_var("Output::Kineticsh",ktxt)
-    
--end 
+INCLUDE$ ModuleCement_UserPunch_Generic.hps
+
 
 USER_PUNCH 
 -mybasic
@@ -775,16 +719,20 @@ ExtrOutputPunch
        endif 
    
        for j = _js to _je
-           if(get_varexist("Cement::Figures::Solids::Water$") = 0) then
-               if( get_var("Cement::Figures::Solids::Water$") = "Water" or  get_var("Cement::Figures::Solids::Water$") = "Both" ) then         
-                   WriteSolidFigures(j, _is, _ie, 1, xtype )        
-               endif 
-               if( get_var("Cement::Figures::Solids::Water$") = "No water" or  get_var("Cement::Figures::Solids::Water$") = "Both" ) then
-                   WriteSolidFigures(j, _is, _ie, 0, xtype )
-               endif 
-            else
-                WriteSolidFigures(j, _is, _ie, 0, xtype )
-            endif
+           if( get_var("Cement::Figures::Solids::Detail$") = "Detail" or  get_var("Cement::Figures::Solids::Detail$") = "Both" ) then
+               
+               write(" 001 ")         
+               WriteSolidFigures(j, _is, _ie, 1, xtype )
+               
+               write(" 002 ")         
+           endif 
+           if( get_var("Cement::Figures::Solids::Detail$") = "Detail - No Water" ) then
+               WriteSolidFigures(j, _is, _ie, 0, xtype )
+           endif
+           if( get_var("Cement::Figures::Solids::Detail$") = "Detail - Both" ) then
+               WriteSolidFigures(j, _is, _ie, 1, xtype )
+               WriteSolidFigures(j, _is, _ie, 0, xtype )
+           endif  
             bsolid100 = 0 
          next j
          bsolids = 0        
@@ -819,11 +767,11 @@ ExtrOutputPunch
       if(  get_var("Cement::Figures::X::Scale$") = "Linear" or get_var("Cement::Figures::X::Scale$") = "Both") then
               xtype = "Linear"
               WriteFigures(xtype)
-      endif
-      if(  get_var("Cement::Figures::X::Scale$") = "Logscale" or get_var("Cement::Figures::X::Scale$") = "Both") then
-          xtype = "Logscale"
-          WriteFigures(xtype)
-      endif    
+          endif
+          if(  get_var("Cement::Figures::X::Scale$") = "Logscale" or get_var("Cement::Figures::X::Scale$") = "Both") then
+              xtype = "Logscale"
+              WriteFigures(xtype)
+          endif    
               
       endif
   endif

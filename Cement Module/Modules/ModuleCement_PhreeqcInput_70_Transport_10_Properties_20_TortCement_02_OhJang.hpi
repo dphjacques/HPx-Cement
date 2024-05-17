@@ -1,0 +1,13 @@
+CALCULATE_VALUES
+TortCementOhJang
+-mybasic 
+-start 
+    cappor = get_node("VolumeCapWater") / (1-get_node("Aggregate::Volume"))
+    'Eq. 6b in Oh and Jang (2004)
+    mpor = get_node("M_intercept") +get_node("M_slope")*cappor
+    'Eq 6a in Oh and Jang (2004)
+    tort_cem = (mpor + sqr(mpor^2 + get_node("Dp_D0Constant")))^get_node("PercExp")
+    
+    save(tort_cem)
+    
+-end 

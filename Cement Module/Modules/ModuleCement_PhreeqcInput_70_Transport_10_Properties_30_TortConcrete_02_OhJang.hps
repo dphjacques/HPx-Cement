@@ -1,0 +1,36 @@
+class cOhJangconcrete(cTortConcrete)
+    
+    Di_Dp = 0.1
+    ITZ = 30
+    
+    aggr = 0.1
+    aggcont = 0.7
+    
+    tortcon = 1
+        
+    def Set(_didp,_itz,_aggv,_aggr)
+        Di_Dp = _didp
+        ITZ = _itz
+        aggcont = _aggv
+        aggr = _aggr
+    enddef 
+    
+    def Model()
+        txt = "include$ ModuleCement_PhreeqcInput_70_Transport_10_Properties_30_TortConcrete_02_OhJang.hpi" + eol
+        return(txt)
+    enddef
+    
+    def Construct()
+        aggD =   aggr  * 10000
+        epsilon = itz / aggD
+       
+        factor1 = 2*Di_Dp*epsilon - 1
+        factor1 = 1/factor1
+        factor2 = (1-aggcont)/3
+        'Eq. ? in Oh and Jang (2004)
+        tortcon = 1 + aggcont/(factor1+factor2)    
+
+    enddef
+    
+    
+endclass

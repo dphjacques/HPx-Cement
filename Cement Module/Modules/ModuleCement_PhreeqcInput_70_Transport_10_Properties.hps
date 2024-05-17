@@ -1,0 +1,28 @@
+class cPorosity
+
+endclass
+
+class cTortCement
+
+    def Model()
+        return ("")
+    enddef
+endclass
+
+class cTortConcrete
+    def Model()
+        return ("")
+    enddef
+endclass
+
+
+class cTransportProperties
+
+    var Porosity = new(cPorosity)
+    var TortCement = new(cTortCement)
+    var TortConcrete = new(cTortConcrete)
+
+endclass
+
+import  "ModuleCement_PhreeqcInput_70_Transport_10_Properties_20_TortCement_02_OhJang.hps"
+import  "ModuleCement_PhreeqcInput_70_Transport_10_Properties_30_TortConcrete_02_OhJang.hps"
