@@ -49,6 +49,8 @@ class CementModelSystem
     push(ZeolitesCa,"Stellerite")
     push(ZeolitesCa,"Wairakite")
     push(ZeolitesCa,"Zeolite_CaP")
+	
+	clear_def("Db_Kinetics")
 
 
     def GetSystemPhreeqc(nr)
