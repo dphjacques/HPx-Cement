@@ -633,9 +633,9 @@ ExtrOutputPunch_Profiles
      txt = txt + "-fig_curve porosity < k " +  chr(34) + "Porosity" + chr(34) + " >" + eol
      txt = txt + "-fig_curve capwater < k " +  chr(34) + "Capillary water" + chr(34) + " >" + eol
      txt = txt + "-fig_curve gelwater < k " +  chr(34) + "Gel water" + chr(34) + " >" + eol
-     txt = txt + "-fig_curvet " + chr(34) + "Volume [-]" + eol
+     txt = txt + "-fig_curvet " + chr(34) + "Volume [-]" + chr(34) + eol
      txt = txt + "-fig_scurve sfwater < k " +  chr(34) + "por / por_0" + chr(34) + " >" + eol
-     txt = txt + "-fig_scurvet " + chr(34) + "por / por_0 [-]" + eol
+     txt = txt + "-fig_scurvet " + chr(34) + "por / por_0 [-]" + chr(34) + eol
      txt = txt + "-fig_multi all " + dist_text + eol
      fignr = fignr+1 
      txt = txt + "-fig_nr " + str(fignr) + eol
@@ -644,7 +644,7 @@ ExtrOutputPunch_Profiles
      txt = txt + "-fig_curve tortw < k " +  chr(34) + "Tortuosity" + chr(34) + " >" + eol
      txt = txt + "-fig_curve tortwcem < k " +  chr(34) + "Tortuosity cement" + chr(34) + " >" + eol
      txt = txt + "-fig_curve tortwcon < k " +  chr(34) + "Tortuosity concrete" + chr(34) + " >" + eol
-     txt = txt + "-fig_curvet " + chr(34) + "Tortuosity [-]" + eol
+     txt = txt + "-fig_curvet " + chr(34) + "Tortuosity [-]" + chr(34) + eol
      txt = txt + "-fig_multi all " + dist_text + eol
      fignr = fignr+1 
   enddef
