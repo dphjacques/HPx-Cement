@@ -1,19 +1,4 @@
-GLOBAL_VARIABLE Aggregates::Fix 1
-GLOBAL_VARIABLE Aggregates::Volume 70
-GLOBAL_VARIABLE Aggregate::Weight -1
-GLOBAL_VARIABLE Aggregate::BulkDensity 2.65
-GLOBAL_VARIABLE Concrete::ITZThickness 30
-GLOBAL_VARIABLE Aggregate::Radius 0.1
 
-
-GLOBAL_VARIABLE Cement::Transport::Tortcem::Model$  "OhJang"
-
-GLOBAL_VARIABLE Cement::Transport::Tortcem::OhJang::n  2.7
-GLOBAL_VARIABLE Cement::Transport::Tortcem::OhJang::DsD0  2.0E-4
-GLOBAL_VARIABLE Cement::Transport::Tortcem::OhJang::CritPor 0.16
-
-GLOBAL_VARIABLE Cement::Transport::Tortcon::Model$  "OhJang"
-GLOBAL_VARIABLE Cement::Transport::Tortcon::OhJang::DiDp 6
 
 CALCULATE_VALUES
 Initiation_Properties_Concrete
