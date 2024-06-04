@@ -4,4 +4,5 @@ log_k   -9.0
 
 knobs
 -iterations 2500
+-tolerance 1E-16
 -step_size              5.
