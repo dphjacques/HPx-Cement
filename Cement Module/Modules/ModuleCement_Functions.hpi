@@ -59,19 +59,25 @@ VolumeGelPores
 -start
     ss_ca = calc_arg(1)
     ss_si = calc_arg(2)
-    ca_si = ss_ca/ss_si
     
-    a1 = -3.67474
-    a2 = 14.75335*ca_si
-    p= ca_si*ca_si
-    a3 = -19.00002*p
-    p = p*ca_si
-    a4 = 10.931594*p
-    p = p *ca_si
-    a5 = -2.266734*p
+    if(ss_si < 1E-15) then
+        gelwater = 0
+    else
+        
+        ca_si = ss_ca/ss_si
+        
+        a1 = -3.67474
+        a2 = 14.75335*ca_si
+        p= ca_si*ca_si
+        a3 = -19.00002*p
+        p = p*ca_si
+        a4 = 10.931594*p
+        p = p *ca_si
+        a5 = -2.266734*p
+        
+        gelwater = a1 + a2 + a3 + a4 +a5
+    endif
     
-    gelwater = a1 + a2 + a3 + a4 +a5
-
     save(gelwater)
 -end
 
@@ -80,18 +86,24 @@ VolumeBulkPores
 -start
     ss_ca = calc_arg(1)
     ss_si = calc_arg(2)
-    ca_si = ss_ca/ss_si
     
-    a1 = -3.18553
-    a2 = 14.09635*ca_si
-    p= ca_si*ca_si
-    a3 = -15.24216*p
-    p = p*ca_si
-    a4 = 7.983487*p
-    p = p *ca_si
-    a5 = -1.542599*p
+    if(ss_si < 1E-15) then
+        bulkwater = 0
+    else
     
-    bulkwater = a1 + a2 + a3 + a4 +a5
+        ca_si = ss_ca/ss_si
+        
+        a1 = -3.18553
+        a2 = 14.09635*ca_si
+        p= ca_si*ca_si
+        a3 = -15.24216*p
+        p = p*ca_si
+        a4 = 7.983487*p
+        p = p *ca_si
+        a5 = -1.542599*p
+        
+        bulkwater = a1 + a2 + a3 + a4 +a5
+    endif
 
     save(bulkwater)
 -end
@@ -114,7 +126,7 @@ VolumeSolidsEquilibrium
    
    ssCa = sum_s_s("CSH","Ca")
    ssSi = sum_s_s("CSH","Si") 
-
+    
    VolumeGelH2O = ssSi*calc_value("VolumeGelPores",ssCa,ssSi)
    calc_out(VolumeGelH2O)
    
