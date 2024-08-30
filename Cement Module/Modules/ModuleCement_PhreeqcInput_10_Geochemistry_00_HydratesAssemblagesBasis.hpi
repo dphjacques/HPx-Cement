@@ -1,4 +1,17 @@
-INCLUDE$ ModuleCement_Functions.hpi
+CALCULATE_VALUES
+CementFunctionsRead
+-state definition
+-mybasic
+-start 
+    if(get_varexist("_ReadCementModels") = 0) then
+        txt = " "
+    else
+        txt = "INCLUDE$ ModuleCement_Functions.hpi"
+    endif
+    put_var("_readcementmodel$",txt)
+-end
+
+@_readcementmodel$
 
 
 GLOBAL_VARIABLE Format::Exponential::Precision 2
@@ -19,7 +32,35 @@ CementDatabase
        put_var("_Output$","ModuleCement_CementHydration_Output_01_TC.hpi")
        put_var("_PhaseName$","Phases_TC")
     endif
+    changedmodel = 0
+    put_var("Cement::Model::File$"," ")
+    if(get_varexist("Cement::Model::ChangeDefaultModel$") = 0) then
+        cdm = get_var("Cement::Model::ChangeDefaultModel$")
+        write(cdm + eol)
+        if(string.comparenocase(cdm,"Add - Delete") = 0) then
+            changedmodel = 1
+        elseif(string.comparenocase(cdm,"Redefine") = 0) then
+            changedmodel = 2
+        endif
+
+        if(changedmodel > 0) then
+            if(get_varexist("Cement::Model::AdaptedModel$") = 0) then
+                if (get_defexist("Model","FileName",get_var("Cement::Model::AdaptedModel$")) = 0) then
+                    fn = get_def("Model","FileName",get_var("Cement::Model::AdaptedModel$"))
+                    txt = "INCLUDE$ " + fn
+                    put_var("Cement::Model::File$",txt)
+                else
+                    changedmodel = 0
+                endif
+            endif
+        endif
+    endif
+    put_var("_ChangedModel",changedmodel)
 -end
+END 
+@Cement::Model::File$
+end
+CALCULATE_VALUES
 CementHydration
 -state definition
 -mybasic

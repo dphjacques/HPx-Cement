@@ -15,9 +15,7 @@
 #Rate Limiting Factors
 #w/c dependency
 #RH (not implemented)
-
 #Area
-
 #Temperature (not implemented)
     wc = calc_value("RateHydrationParrotKillohWaterCement",hda,parm(6),parm(9))
     rh = 1

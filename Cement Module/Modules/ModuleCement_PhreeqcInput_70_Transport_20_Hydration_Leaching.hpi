@@ -1,0 +1,5 @@
+GLOBAL_VARIABLE _entitynr 100001
+INCLUDE$ ModuleCement_PhreeqcInput_20_Hydration_00_general.hpi
+
+#Degradation
+INCLUDE$ ModuleCement_DegradationLeaching_Transport.hpi

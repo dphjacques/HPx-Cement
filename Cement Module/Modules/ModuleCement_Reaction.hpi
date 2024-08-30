@@ -53,8 +53,20 @@ class CementModel
         txt = ""
         
         txt = txt + "EQUILIBRIUM_PHASES " + str(entitynr) + eol
+        changedmodel = 0
+        if(get_varexist("_ChangedModel") = 0 ) then
+            changedmodel = get_var("_ChangedModel")
+        endif
+        if(changedmodel>0) then
+            db = get_var("Cement::Model::AdaptedModel$")
+        endif
         for min in PurePhases
-        txt = txt + min + " 0 0 " + eol
+            'first check if it should be excluded in the variant model
+            if(changedmodel>0) then
+                
+            else
+                txt = txt + min + " 0 0 " + eol
+            endif
         next      
         if(len(SolidSolution)>0) then
             txt = txt + "SOLID_SOLUTIONS " + str(entitynr) + eol

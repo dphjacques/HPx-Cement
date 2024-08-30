@@ -13,6 +13,8 @@ CementDatabase
        put_var("_Output$","ModuleCement_CementHydration_Output_01_TC.hpi")
        put_var("_PhaseName$","Phases_TC")
     endif
+    
+    put_var("_ReadCementModels",1)
 -end
 
 

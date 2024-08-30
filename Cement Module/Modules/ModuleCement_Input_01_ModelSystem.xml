@@ -29,6 +29,14 @@
 				</ToolTip>
 				<Visible>True</Visible>
 				<Export>True</Export>
+				<Info><![CDATA[]]><Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+							<Type>1</Type>
+							<ExternalFile>True</ExternalFile>
+							<ParentFolder></ParentFolder>
+							<RelativePath>ModuleCementHelp\Input_01_ModelSystem_Group_Heading.hlp</RelativePath>
+							<ParentName>Modules</ParentName>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
