@@ -1,0 +1,11 @@
+2024-05-17 Add first template for transport (1D Diffusion)
+
+2024-05-06 Add Reactivity for SCM (FA)
+           Add plotting with or without capillary water
+           
+2024-04-30 Add hydration of FA modified Parrot and Killoch equations
+           Add instructions for ThermoChimie
+           Improve definition of cement systems
+           Improve colors for some phases
+
+2024-04-01 Add hydration OPC CEM-I modified Parrot and Killoch equations
