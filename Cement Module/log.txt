@@ -1,3 +1,6 @@
+2024-09-12 Add MetaKaolin
+           Add calculation of heat release and add plots
+
 2024-05-17 Add first template for transport (1D Diffusion)
 
 2024-05-06 Add Reactivity for SCM (FA)
