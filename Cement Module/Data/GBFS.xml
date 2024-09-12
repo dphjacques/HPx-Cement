@@ -3,19 +3,23 @@
 	<DataBlock>
 		<Name>GBFS</Name>
 		<Description>Chemical composition of Granulated blast furnance slag</Description>
-		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
-\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\b\fs24 Table\b0\fs19\par
 \par
 Default unit: \par
 %mass\tab\tab %mass of oxides (g/100g)\par
 \par
-\b\fs24 Origin of the data\b0\fs19\par
-\pard\fi-720\li720\par
-\lang1033\b\f1\fs22 Adu17\b0\tab Adu-Amankwah, S., M. Zajac, C. Stabler, B. Lothenbach, and L. Black, 2017. Influence of limestone on the hydration of ternary slag cements. Cement and Concrete Research 100:96-109.\par
+Bulk Density \tab kg/dm3\par
 \par
-\pard\lang2067\f0\fs19\par
-}
-]]><Visible>False</Visible>
+\b\fs24 Origin of the data\b0\fs19\par
+
+\pard\fi-720\li720\par
+\b\f1\fs22\lang1033 Adu17\b0\tab Adu-Amankwah, S., M. Zajac, C. Stabler, B. Lothenbach, and L. Black, 2017. Influence of limestone on the hydration of ternary slag cements. Cement and Concrete Research 100:96-109.\par
+\par
+
+\pard\f0\fs19\lang2067\par
+}]]><Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 			<Type>1</Type>
 			<ExternalFile>False</ExternalFile>
@@ -27,6 +31,7 @@ Default unit: \par
 		<Headings>
 			<Heading>Name</Heading>
 			<Heading>unit</Heading>
+			<Heading>BulkDensity</Heading>
 			<Heading>CaO</Heading>
 			<Heading>SiO2</Heading>
 			<Heading>Al2O3</Heading>
@@ -36,6 +41,16 @@ Default unit: \par
 			<Heading>MgO</Heading>
 			<Heading>K2O</Heading>
 			<Heading>Na2O</Heading>
+			<Heading>Rtot</Heading>
+			<Heading>RCaO</Heading>
+			<Heading>RSiO2</Heading>
+			<Heading>RAl2O3</Heading>
+			<Heading>RCO2</Heading>
+			<Heading>RSO3</Heading>
+			<Heading>RFe2O3</Heading>
+			<Heading>RMgO</Heading>
+			<Heading>RK2O</Heading>
+			<Heading>RNa2O</Heading>
 		</Headings>
 		<Origin>0</Origin>
 		<RowId>Name</RowId>
@@ -45,6 +60,7 @@ Default unit: \par
 			<Record>
 				<Value>Adu17</Value>
 				<Value>%mass</Value>
+				<Value>2.88</Value>
 				<Value>41.82</Value>
 				<Value>34.87</Value>
 				<Value>11.62</Value>
@@ -54,6 +70,16 @@ Default unit: \par
 				<Value>5.82</Value>
 				<Value>0.07</Value>
 				<Value>0.47</Value>
+				<Value>50</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
 			</Record>
 		</Records>
 	</DataBlock>

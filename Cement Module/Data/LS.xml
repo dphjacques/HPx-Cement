@@ -3,19 +3,23 @@
 	<DataBlock>
 		<Name>LS</Name>
 		<Description>Chemical composition of Limestone</Description>
-		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Segoe UI;}{\f2\fnil\fcharset0 Calibri;}}
-\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Segoe UI;}{\f2\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\b\fs24 Table\b0\fs19\par
 \par
 Default unit: \par
 %mass\tab\tab %mass of oxides (g/100g)\par
 \par
+Bulk Density\tab kg/dm3\par
+\par
 \b\fs24 Origin of the data\b0\fs19\par
 \par
-\lang1033\b Weerdt11\b0\tab Table 1 in \f1\fs22 De Weerdt, K., Haha, M.B., Le Saout, G., Kjellsen, K.O., Justnes, H. and Lothenbach, B.  2011.  Hydration mechanisms of ternary Portland cements containing limestone powder and fly ash. Cement and Concrete Research 41(3), 279-291.\lang2067\f0\fs19\par
-\pard\fi-720\li720\lang1033\f2\fs22\par
-\pard\lang2067\f0\fs19\par
-}
-]]><Visible>False</Visible>
+\b\lang1033 Weerdt11\b0\tab Table 1 in \f1\fs22 De Weerdt, K., Haha, M.B., Le Saout, G., Kjellsen, K.O., Justnes, H. and Lothenbach, B.  2011.  Hydration mechanisms of ternary Portland cements containing limestone powder and fly ash. Cement and Concrete Research 41(3), 279-291.\f0\fs19\lang2067\par
+
+\pard\fi-720\li720\f2\fs22\lang1033\par
+
+\pard\f0\fs19\lang2067\par
+}]]><Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 			<Type>1</Type>
 			<ExternalFile>False</ExternalFile>
@@ -27,6 +31,7 @@ Default unit: \par
 		<Headings>
 			<Heading>Name</Heading>
 			<Heading>Unit</Heading>
+			<Heading>BulkDensity</Heading>
 			<Heading>CaO</Heading>
 			<Heading>SiO2</Heading>
 			<Heading>Al2O3</Heading>
@@ -36,6 +41,16 @@ Default unit: \par
 			<Heading>Fe2O3</Heading>
 			<Heading>Na2O</Heading>
 			<Heading>K2O</Heading>
+			<Heading>Rtot</Heading>
+			<Heading>RCaO</Heading>
+			<Heading>RSiO2</Heading>
+			<Heading>RAl2O3</Heading>
+			<Heading>RCO2</Heading>
+			<Heading>RCO3</Heading>
+			<Heading>RMgO</Heading>
+			<Heading>RFe2O3</Heading>
+			<Heading>RNa2O</Heading>
+			<Heading>RK2O</Heading>
 		</Headings>
 		<Origin>0</Origin>
 		<RowId>Name</RowId>
@@ -44,7 +59,8 @@ Default unit: \par
 		<Records>
 			<Record>
 				<Value>Weerdt11</Value>
-				<Value>mass</Value>
+				<Value>%mass</Value>
+				<Value>2.74</Value>
 				<Value>42.3</Value>
 				<Value>12.9</Value>
 				<Value>2.7</Value>
@@ -54,6 +70,16 @@ Default unit: \par
 				<Value>2.0</Value>
 				<Value>0.5</Value>
 				<Value>0.6</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>10</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
 			</Record>
 		</Records>
 	</DataBlock>

@@ -3,21 +3,24 @@
 	<DataBlock>
 		<Name>OPC_alite</Name>
 		<Description>Oxide composition of alite</Description>
-		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}{\f2\fnil\fcharset0 Calibri;}}
-\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}{\f2\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\b\fs24 Table\b0\fs19\par
 \par
 MolEnthalpy: Molar Enthalpy: J/mol\par
 \par
 \b\fs24 Origin of the data\b0\f1\par
 \par
-\lang1033\f0\fs20 Taylor1998 - Taylor, H.F.W.  1989.  Modification of the Bogue calculation. Advances in Cement Research 2(6), 73-77.\lang2067\f1\fs24\par
+\f0\fs20\lang1033 Taylor1998 - Taylor, H.F.W.  1989.  Modification of the Bogue calculation. Advances in Cement Research 2(6), 73-77.\f1\fs24\lang2067\par
 \par
-\lang1033\f0\fs20 Volume\par
+\f0\fs20\lang1033 Volume\par
 CEM18\par
 \par
 Entalpy\par
+
 \pard\fi-720\li720 Bentz DP. A review of early-age properties of cement-based materials. Cem Concr Res. 2008;38 (2):196-204.\f2\fs22\par
-\pard\lang2067\f0\fs19\par
+
+\pard\f0\fs19\lang2067\par
 }]]><Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 			<Type>1</Type>
@@ -54,7 +57,7 @@ Entalpy\par
 				<Value>Taylor1989</Value>
 				<Value>228</Value>
 				<Value>73.18</Value>
-				<Value>117876</Value>
+				<Value>-444107</Value>
 				<Value>%mass</Value>
 				<Value>71.6</Value>
 				<Value>25.2</Value>
