@@ -1,0 +1,58 @@
+    def Reactivity(react)
+
+        if(react = "Full Reactivity") then
+            return -1
+        elseif(react = "Bulk Reactivity") then
+            return -2
+        elseif(react = "Oxide Specific") then
+            return -3
+        else
+        
+            return -1
+        endif
+        return -1
+    enddef
+    
+    def ReactivityValueTot(r,db,rowlabel)
+        if(r = -1) then
+            return 1
+        elseif (r = -2) then
+            if(get_defexist(db,"Rtot",rowlabel) = 0) then
+                react = get_def(db,"Rtot",rowlabel)
+                if(react < 0) then 
+                    return 0
+                elseif(react > 100) then
+                    return 1
+                else 
+                    return react/100
+                endif
+            else
+                return 1
+            endif
+        else
+            return r
+        endif
+        return r
+    enddef
+    
+    def ReactivityValueTotOx(r,db,rowlabel,oxide) 
+        if (r > 0 ) then
+            return r
+        elseif (r=0) then
+            return 0
+        else
+            if(get_defexist(db,"R"+oxide,rowlabel) = 0) then
+                react = get_def(db,"R"+oxide,rowlabel)
+                if(react < 0) then 
+                    return 0
+                elseif(react > 100) then
+                    return 1
+                else 
+                    return react/100
+                endif
+            else
+                return 1
+            endif
+        endif
+        return 0
+    enddef

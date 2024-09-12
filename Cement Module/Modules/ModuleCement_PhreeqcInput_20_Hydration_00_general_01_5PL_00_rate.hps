@@ -1,0 +1,8 @@
+
+    hd = calc_value("CalculateRate5PL",parm(1),parm(2),parm(3),parm(4),parm(5),total_time())
+    
+    hdo = m()/m0()
+    
+    moles = hd - hdo
+    
+    save(moles)

@@ -18,6 +18,57 @@ class CementModel
         if(exists(Elements,"N")) then push(Oxides,"NO2")              
     enddef
     
+    def CheckBulkdensity()
+        if(get_varexist("Cement::Clinker::BulkDensity") <> 0) then
+            rowlabel = get_var("Cement::Clinker::Reference$")
+            if(get_defexist("OPC","BulkDensity",rowlabel) = 0) then
+                put_var("Cement::Clinker::BulkDensity",get_def("OPC","BulkDensity",rowlabel)))
+            else
+                put_var("Cement::Clinker::BulkDensity",-1)
+            endif
+        endif
+        if(get_varexist("GBFS::BulkDensity") <> 0) then
+            rowlabel = get_var("GBFS::Reference$")
+            if(get_defexist("GBFS","BulkDensity",rowlabel) = 0) then
+                put_var("GBFS::BulkDensity",get_def("GBFS","BulkDensity",rowlabel)))
+            else
+                put_var("GBFS::BulkDensity",-1)
+            endif
+        endif
+        if(get_varexist("SF::BulkDensity") <> 0) then
+            rowlabel = get_var("SF::Reference$")
+            if(get_defexist("SF","BulkDensity",rowlabel) = 0) then
+                put_var("SF::BulkDensity",get_def("SF","BulkDensity",rowlabel)))
+            else
+                put_var("SF::BulkDensity",-1)
+            endif
+        endif
+        if(get_varexist("FA::BulkDensity") <> 0) then
+            rowlabel = get_var("FA::Reference$")
+            if(get_defexist("FA","BulkDensity",rowlabel) = 0) then
+                put_var("FA::BulkDensity",get_def("FA","BulkDensity",rowlabel)))
+            else
+                put_var("FA::BulkDensity",-1)
+            endif
+        endif
+        if(get_varexist("LS::BulkDensity") <> 0) then
+            rowlabel = get_var("LS::Reference$")
+            if(get_defexist("LS","BulkDensity",rowlabel) = 0) then
+                put_var("LS::BulkDensity",get_def("LS","BulkDensity",rowlabel)))
+            else
+                put_var("LS::BulkDensity",-1)
+            endif
+        endif
+        if(get_varexist("MK::BulkDensity") <> 0) then
+            rowlabel = get_var("MK::Reference$")
+            if(get_defexist("MK","BulkDensity",rowlabel) = 0) then
+                put_var("MK::BulkDensity",get_def("MK","BulkDensity",rowlabel)))
+            else
+                put_var("MK::BulkDensity",-1)
+            endif
+        endif
+    enddef
+    
     def WritePhreeqcSolution(entitynr,boutprint, boutpunch,belement)
 
         txt = "SOLUTION " + str(entitynr) + eol
@@ -92,23 +143,7 @@ class CementModel
         return txt
     enddef
     
-    def Reactivity(react)
-        write(react + eol)
-        if(react = "Full Reactivity") then
-            write("ful")
-            return -1
-        elseif(react = "Bulk Reactivity") then
-            write("buke")
-            return -2
-        elseif(react = "Oxide Specific") then
-            write("ox")
-            return -3
-        else
-        write("no")
-            return -1
-        endif
-        return -1
-    enddef
+	import "ModuleCement_Reactivity.hpi"
     
     def WritePhreeqcCementReaction(entitynr)
 
@@ -118,10 +153,15 @@ class CementModel
         #r... Reactivity model - -1:Full -2:Bulk -3:Oxide-specific
         bopc = 0
         bgbfs = 0
+        rgbfs = -1
         bsf = 0
+        rsf = -1
         bfa = 0
         rfa = -1
         bls = 0
+        rls = -1
+        bmk = 0
+        rmk = -1
         
         
 
@@ -133,52 +173,69 @@ class CementModel
         if( get_varexist("GBFS::Amount") = 0 ) then
             if(  get_var("GBFS::Amount") > 0) then
                 bgbfs = 1
+                if(get_varexist("GBFS::Reactivity$") = 0) then
+                     rgbfs = Reactivity(get_var("GBFS::Reactivity$"))
+                endif
             endif
         endif
         if( get_varexist("SF::Amount") = 0 ) then
             if(  get_var("SF::Amount") > 0) then
                 bsf = 1
-                
+                if(get_varexist("SF::Reactivity$") = 0) then
+                    rsf = Reactivity(get_var("SF::Reactivity$"))
+                endif
             endif
         endif
         if( get_varexist("FA::Amount") = 0 ) then
             if(  get_var("FA::Amount") > 0) then
                 bfa = 1
                 if(get_varexist("FA::Reactivity$") = 0) then
-                     write("herehere"+eol)
-                     rfa = Reactivity(get_var("FA::Reactivity$"))
+                    rfa = Reactivity(get_var("FA::Reactivity$"))
                 endif
-               
-                write(rfa)
             endif
         endif
         if( get_varexist("LS::Amount") = 0 ) then
             if(  get_var("LS::Amount") > 0) then
                 bls = 1
+                if(get_varexist("LS::Reactivity$") = 0) then
+                    rls = Reactivity(get_var("LS::Reactivity$"))
+                endif
+            endif
+        endif
+        if( get_varexist("MK::Amount") = 0 ) then
+            if(  get_var("MK::Amount") > 0) then
+                bmk = 1
+                if(get_varexist("MK::Reactivity$") = 0) then
+                    rmk = Reactivity(get_var("MK::Reactivity$"))
+                endif
             endif
         endif
 
 
-        #relative amoutns of oxide Cement
+        #relative amounts of oxide Cement
         if(bopc = 1) then
             rowlabelcement =  get_var("Cement::Clinker::Reference$") 
         endif
         if(bgbfs=1) then
-          rowlabelgbfs = get_var("GBFS::Reference$")
+            rowlabelgbfs = get_var("GBFS::Reference$")
+            rgbfs = ReactivityValueTot(rgbfs,"GBFS",rowlabel)
         endif
         if(bsf=1) then
             rowlabelsf = get_var("SF::Reference$")
+            rsf = ReactivityValueTot(rsf,"SF",rowlabelsf)
         endif
         if(bfa=1) then
             rowlabelfa = get_var("FA::Reference$")
-            if(rfa = -1) then
-                rfa = 1
-            elseif (rfa = -2) then
-                rfa = get_def("FA","Rtot",rowlabelfa)/100
-            endif
+            rfa = ReactivityValueTot(rfa,"FA",rowlabelfa)
+            write("FA reactivity res " + str(rfa) + eol)
         endif
         if(bls=1) then
             rowlabells = get_var("LS::Reference$")
+            ls = ReactivityValueTot(rls,"LS",rowlabells)
+        endif
+        if(bmk=1) then
+            rowlabelmk = get_var("MK::Reference$")
+            rmk = ReactivityValueTot(rmk,"MK",rowlabelmk)
         endif
 
         #
@@ -201,31 +258,53 @@ class CementModel
             endif
             if(bgbfs = 1) then
                 if(get_defexist("GBFS",oxide,rowlabelgbfs)=0) then
-                    am = am + (get_def("GBFS",oxide,rowlabelgbfs)*  get_var("GBFS::Amount")  /100 *  get_var("GBFS::ReactedAmount") /100) 
+                    amgbfs = get_def("GBFS",oxide,rowlabelgbfs)*  get_var("GBFS::Amount")  /100 
+                    amt = amt + amgbfs
+                    amgbfs= amgbfs*get_var("GBFS::ReactedAmount") /100 
+                    amR = amR + amgbfs
+                    amgbfs = amgbfs*ReactivityValueTotOx(rgbfs,"GBFS",rowlabelgbfs,oxide)
+                    am = am + amgbfs
                 endif
             endif
             if(bsf = 1) then
                 if(get_defexist("SF",oxide,rowlabelsf)=0) then
-                    am = am + (get_def("SF",oxide,rowlabelsf)*  get_var("SF::Amount")  /100 *  get_var("SF::ReactedAmount") /100) 
+                    amsf = get_def("SF",oxide,rowlabelsf)*  get_var("SF::Amount")  /100 
+                    amt = amt + amsf
+                    afsf = amsf * get_var("SF::ReactedAmount") /100
+                    amR = amR + amsf
+                    amsf = amsf*ReactivityValueTotOx(rsf,"SF",rowlabelsf,oxide) 
+                    am = am + amsf
                 endif
             endif
             if(bfa = 1) then
                 if(get_defexist("FA",oxide,rowlabelfa)=0) then
                     amfa = get_def("FA",oxide,rowlabelfa)*  get_var("FA::Amount")  /100
                     amt = amt + amfa
-                    amfa = amfa*  get_var("FA::ReactedAmount") /100) 
+                    amfa = amfa*  get_var("FA::ReactedAmount") /100 
                     amR = amR + amfa
-                    if(rfa>0) then
-                        amfa = amfa*rfa
-                    else
-                        amfa = amfa*get_def("FA","R"+oxide,rowlabelfa)/100
-                    endif
+                    write("FA oxide " + str(ReactivityValueTotOx(rfa,"FA",rowlabelfa,oxide)) + eol)
+                    amfa = amfa*ReactivityValueTotOx(rfa,"FA",rowlabelfa,oxide)
                     am = am + amfa 
                 endif
             endif
             if(bls = 1) then
                 if(get_defexist("LS",oxide,rowlabells)=0) then
-                    am = am + (get_def("LS",oxide,rowlabells)*  get_var("LS::Amount")  /100 *  get_var("LS::ReactedAmount") /100) 
+                    amls = get_def("LS",oxide,rowlabells)*  get_var("LS::Amount")  /100 
+                    amt = amt + amls
+                    amls = amls *  get_var("LS::ReactedAmount") /100
+                    amR = amR + amls
+                    amls = amls*ReactivityValueTotOx(rls,"LS",rowlabells,oxide) 
+                    am = am + amls
+                endif
+            endif
+            if(bmk = 1) then
+                if(get_defexist("MK",oxide,rowlabelmk)=0) then
+                    ammk = get_def("MK",oxide,rowlabelmk)*  get_var("MK::Amount")  /100 
+                    amt = amt + ammk
+                    ammk = ammk *  get_var("MK::ReactedAmount") /100
+                    amR = amR + ammk
+                    ammk = ammk*ReactivityValueTotOx(rmk,"MK",rowlabelmk,oxide)
+                    am = am + ammk
                 endif
             endif
             am = am /gfw(oxide)
@@ -239,4 +318,7 @@ class CementModel
         return txt
     enddef
 
+
+    
+    
 endclass

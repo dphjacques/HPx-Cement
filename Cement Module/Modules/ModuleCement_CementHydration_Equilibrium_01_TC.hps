@@ -26,6 +26,15 @@ class CementHydration
         txt = txt + "save EQUILIBRIUM_PHASES " + str(savenr) + eol
         txt = txt + "save SOLID_SOLUTIONS " + str(savenr) + eol
         txt = txt + "END" + eol
+        
+        
+        
+        txt = txt + "CALCULATE_VALUES" + eol
+        txt = txt + "OutputHydration" + eol
+        txt = txt + "-active false" + eol
+        txt = txt + "END"  +eol
+        
+        
         openf("Cement" + str(entitynr) + "_" + str(savenr) + "._in")
         writef(txt)
         closef()

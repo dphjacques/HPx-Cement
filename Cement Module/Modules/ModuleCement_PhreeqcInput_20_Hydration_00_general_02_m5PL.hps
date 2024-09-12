@@ -1,0 +1,21 @@
+
+calculate_values
+CalculateRate5PL
+#Calculation of change in reaction degree 
+-mybasic
+-start
+'[
+Parameters:
+1   A 
+2   B 
+3   C 
+4   D 
+5   G 
+6   time 
+']
+    change = 1 + (calc_arg(6)/calc_arg(3))^calc_arg(2)
+    change = (calc_arg(1)-calc_arg(4))/change
+    change = change^calc_arg(5)
+    change = calc_arg(D) + change
+    save(change)
+-end

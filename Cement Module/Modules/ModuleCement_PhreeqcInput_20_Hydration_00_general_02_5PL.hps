@@ -1,0 +1,21 @@
+
+calculate_values
+CalculateRate5PL
+#Calculation of change in reaction degree 
+-mybasic
+-start
+'[
+Parameters:
+1   A minimum (typically 0%)
+2   B steepness
+3   C time of infection point (days)
+4   D maximum (% - linked to reactivity)
+5   G assymetry 
+6   time (totaltime) 
+']
+    change = 1 + (calc_arg(6)/calc_arg(3))^calc_arg(2)
+    change = (calc_arg(1)-calc_arg(4))/change
+    change = change^calc_arg(5)
+    change = calc_arg(D) + change
+    save(change)
+-end

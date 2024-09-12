@@ -150,6 +150,38 @@
 							<Default />
 						</Cell>
 					</Record>
+					<Record>
+						<ID><![CDATA[2024-09-11T15:49:1634]]></ID>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<Cell><![CDATA[Cement::Output::Hydrates::Heat]]></Cell>
+						<Cell>
+							<Check>True</Check>
+							<Default>True</Default>
+						</Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell>
+							<Text />
+							<Default />
+						</Cell>
+					</Record>
+					<Record>
+						<ID><![CDATA[2024-09-11T17:01:4845]]></ID>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<Cell><![CDATA[Cement::Output::Hydrates::CumHeat]]></Cell>
+						<Cell>
+							<Check>True</Check>
+							<Default>True</Default>
+						</Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell>
+							<Text />
+							<Default />
+						</Cell>
+					</Record>
 				</Records>
 			</Group>
 			<Group>
@@ -534,8 +566,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Figures::Water::Elements::ShowZero]]></Cell>
 						<Cell>
-							<Check>False</Check>
-							<Default>False</Default>
+							<Check>True</Check>
+							<Default>True</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -742,8 +774,24 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Figures::Solids::ShowZero]]></Cell>
 						<Cell>
-							<Check>False</Check>
-							<Default>False</Default>
+							<Check>True</Check>
+							<Default>True</Default>
+						</Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell>
+							<Text />
+							<Default />
+						</Cell>
+					</Record>
+					<Record>
+						<ID><![CDATA[2024-09-11T15:38:12112]]></ID>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<Cell><![CDATA[Cement::Figures::Heat]]></Cell>
+						<Cell>
+							<Check>True</Check>
+							<Default>True</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>

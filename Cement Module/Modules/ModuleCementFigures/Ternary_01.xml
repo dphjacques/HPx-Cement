@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Items>
+	<Item>OPC<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
+	<Item>GBFS<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
+	<Item>SF<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
+	<Item>FA<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
+	<Item>LS<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
+	<Item>MK<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
+</Items>

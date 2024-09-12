@@ -23,6 +23,7 @@ if (get_varexist("Cement::Hydration::Output$")   = 0) then
         bsf = 0
         bfa = 0
         bls = 0
+		bmk = 0
 
         if( get_varexist("Cement::Clinker::Reference$") = 0 ) then
             if(  get_var("Cement::Clinker::Amount") > 0) then
@@ -48,8 +49,13 @@ if (get_varexist("Cement::Hydration::Output$")   = 0) then
             if(  get_var("LS::Amount") > 0) then
                 bls = 1
             endif
+        endif        
+        if( get_varexist("MK::Reference$") = 0 ) then
+            if(  get_var("MK::Amount") > 0) then
+                bmk = 1
+            endif
         endif
-        
+		
 hydratedvolume = 0
 strzero = ""
 def writef_hydrates(count,name$,moles)
@@ -152,6 +158,10 @@ if(bls = 1) then
     writef(string.format("%35s","LS") + string.format("%15i",  get_var("LS::Amount")  ) + " weight%" +eol)
     writef(string.format("%35s","Reacted LS") + string.format("%15i", get_var("LS::ReactedAmount") ) + " % reacted" +eol+eol)
 endif
+if(bmk = 1) then
+    writef(string.format("%35s","MK") + string.format("%15i",  get_var("MK::Amount")  ) + " weight%" +eol)
+    writef(string.format("%35s","Reacted MK") + string.format("%15i", get_var("MK::ReactedAmount") ) + " % reacted" +eol+eol)
+endif
 
 writef(string.format("%35s","Amount of cement") + string.format("%15i",  get_var("Cement::Recipe::Amount")  ) + eol )
 writef(string.format("%35s","w/c ratio") + string.format("%15.2f", get_var("Cement::Recipe::w_c") ) + eol)
@@ -249,6 +259,9 @@ endif
 if(bls = 1) then
     inivolume = inivolume +  get_var("LS::Amount") / get_var("LS::BulkDensity") 
 endif
+if(bmk = 1) then
+    inivolume = inivolume +  get_var("MK::Amount") / get_var("MK::BulkDensity") 
+endif
 inivolume = inivolume *  get_var("Cement::Recipe::Amount") /100
 inivolume = inivolume +  get_var("Cement::Recipe::Amount") * get_var("Cement::Recipe::w_c") 
 writef(string.format("%20.2f",inivolume) + eol)
@@ -283,7 +296,13 @@ if(bls = 1) then
     unreacted_ls = unreact_rel *  get_var("LS::Amount")  / get_var("LS::BulkDensity") 
     unreacted_ls = unreacted_ls * get_var("Cement::Recipe::Amount") /100
 endif
-totalvolume = hydratedvolume + unreacted_opc + unreacted_gbfs + unreacted_sf + unreacted_fa + unreacted_ls + tot("water")*1000
+unreacted_mk = 0
+if(bmk = 1) then
+    unreact_rel = (100- get_var("MK::ReactedAmount"))/100
+    unreacted_mk = unreact_rel *  get_var("MK::Amount")  / get_var("MK::BulkDensity") 
+    unreacted_mk = unreacted_mk * get_var("Cement::Recipe::Amount") /100
+endif
+totalvolume = hydratedvolume + unreacted_opc + unreacted_gbfs + unreacted_sf + unreacted_fa + unreacted_ls + unreacted_mk + tot("water")*1000
 
 writef(string.format("%30s","Total volume"))
 writef(string.format("%20.2f",totalvolume) )
@@ -328,6 +347,11 @@ if(bls = 1) then
     writef(string.format("%30s","Unreacted LS"))
     writef(string.format("%20.2f", unreacted_ls))
     writef(string.format("%20.2f",( unreacted_ls)/inivolume)+eol)
+endif
+if(bmk = 1) then
+    writef(string.format("%30s","Unreacted MK"))
+    writef(string.format("%20.2f", unreacted_mk))
+    writef(string.format("%20.2f",( unreacted_mk)/inivolume)+eol)
 endif
 ssSi = sum_s_s("CSH","Si")
 gelpor = calc_value("VolumeGelPores",sum_s_s("CSH","Ca"),sum_s_s("CSH","Si"))

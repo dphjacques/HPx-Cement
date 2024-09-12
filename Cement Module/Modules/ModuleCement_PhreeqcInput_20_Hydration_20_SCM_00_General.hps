@@ -1,5 +1,165 @@
 class HydrationSCM(Hydration)
+ 
+    var SCM = "ppp"        #e.g. FA, ...
+    var Model = ""      #e.g. P&K
+    var RunType = ""    #Bulk, CaO, SiO2, ...
+    
+    var Amount = 0
+    var rowindex = 0
+    var MolarMass = -2
+    
+    def Initiate()
+        amount = get_var("Cement::Recipe::Amount")*get_var(SCM + "::Amount")/100
+        rowindex = get_var(SCM + "::Reference$")
+        
+        if(get_var("Cement::Hydration::" +SCM + "::Type$") = "Bulk") then
+            if(get_var(SCM + "::Reactivity$") = "Oxide Specific") then
+              etxt = "Error in definition of hydration of SCM " + SCM + eol
+              etxt = etxt + "Options in Reactivity$ (recipe tab) and Type$ (hydration tab) are not compatible:" + eol
+              etxt = etxt + "Bulk hydration Type$ cannot be combined with the option Oxide specfiic Reactivity$."+eol)
+              err(etxt)
+            endif
+        endif
+        
+        #obtain molarmass
+        if(get_defexist(SCM,"MolarMass",rowindex)<0) then
+            MolarMass = 100
+        else
+            if(get_def(SCM,"MolarMass",rowindex)<0) then
+                MolarMass = 100
+            else
+                MolarMass = get_def(SCM,"MolarMass",rowindex)
+            endif
+        endif
+        put_var(SCM+"::BulkDensity",MolarMass) 
+    enddef
+    
+    import "ModuleCement_Reactivity.hpi"
+    
+    def FindIndex(db,parindex,oxide)
+        nrrec = get_defnrrec(db)
+        for i = 0 to nrrec-1
+            if(get_def(db,"Name",i)=parindex) then
+                if(get_def(db,"Oxide",i)=oxide) then
+                    return i
+                endif
+            endif
+        next i
+        return -999
+    
+    enddef
 
+    def WriteKinetics(cemsys)
+        txt = "" 
+        
+        Initiate()
+        
+        db_param = SCM + "_"
+        var param = list()
+        
+        if(model = "mPK" or model = "P&K") then
+            db_param = db_param + "PK"
+            param = list("K1","N1","K2","K3","N3","Hx","Ea","EaT")
+            model = "mPK"
+        else
+            db_param = db_param + Model
+        endif
+        
+        dbscm = SCM
 
+        if(get_varexist(SCM + "::Amount") = 0 ) then
+            if(get_var(SCM + "::Amount") > 0) then
+                if(get_varexist(SCM + "::Reactivity$") = 0) then
+                    name = get_var(SCM + "::Reactivity$")
+                    reactedamount = Reactivity(name) #check: why is Reactivity(get_var(SCM + "::Reactivity$")) not working
+                    reactedamount = ReactivityValueTot(reactedamount,dbscm,rowindex)#check: why is RReactivityValueTot(reactedamount,SCM,rowindex) not working
+                endif
+             endif 
+        endif
+        
+        #KINETICS
+        #oxides = list("SiO2","CaO","Al2O3","SO3")
+        
+        parindex = get_var("Cement::Hydration::" +SCM + "::" + model + "::Parameters$")
+        
+        it = iterator(cemsys.Oxides)
+        txt1 = " "
+        while move_next(it) 
+            ox = get(it)
+            if(get_var("Cement::Hydration::" +SCM + "::Type$") = "Bulk") then
+                if(get_defexist(SCM,ox, rowindex)=0) then
+                    toich = get_def(SCM,ox, rowindex) / gfw(ox) /100 * molarmass  #check units !!!!
+                    txt1 = txt1 + " " + ox + " " + str(toich)
+                endif
+            else 
+                parindexnr =  FindIndex(db_param,parindex,ox) 
+                if(parindexnr > -1) then
+                    molarmass = gfw(ox)
+                    ratename = SCM + ox
+                    txt = txt + ratename + eol
+                    txt = txt + "-formula H 0 " + ox + " 1" + eol
+                    oxamount = amount * get_def(SCM,ox, rowindex)/100
+                    oxamount = oxamount*ReactivityValueTotOx(reactedamount,dbscm,rowindex,ox)
+                    txt = txt + "-m0 " + str(oxamount/molarmass) + eol
+                    txt = txt + "-parms " + WriteKineticParameters(db_param,parindexnr,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol
+                    molarmass = get_def(db_param,"MolarMass",parindexnr)
+                    molvolume = get_def(db_param,"MolarVolume",parindexnr)
+                    molenthalpy = get_def(db_param,"MolarEnthalpy",parindexnr)                   
+                    push_def("Db_Kinetics",ratename,molarmass,molvolume,molenthalpy)
+                endif
+            
+            endif
+        wend
 
+        if(get_var("Cement::Hydration::" +SCM + "::Type$") = "Bulk") then
+            txt = txt + SCM + "Rate" + eol
+            txt = txt + "-formula " + txt1 + eol
+            txt = txt + "-m0 " + str(amount*reactedamount/molarmass) + eol
+            txt = txt + "-parms " + WriteKineticParameters(db_param,parindexnr,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol 
+            molarmass = get_def(db_param,"MolarMass",parindexnr)
+            molvolume = get_def(db_param,"MolarVolume",parindexnr)
+            molenthalpy = get_def(db_param,"MolarEnthalpy",parindexnr)           
+            push_def("Db_Kinetics",SCM + "Rate",molarmass,molvolume,molenthalpy)
+        endif
+        return txt
+    enddef
+
+    def WriteIncludeRates(cemsys)
+        txt = "RATES " + eol
+        db_param = SCM + "_"
+        
+        if(model = "mPK" or model = "P&K") then
+            db_param = db_param + "PK"
+            model = "mPK"
+        else
+            db_param = db_param + Model
+        endif
+        parindex = get_var("Cement::Hydration::" +SCM + "::" + model + "::Parameters$")
+        if(get_var("Cement::Hydration::" +SCM + "::Type$") = "Bulk") then
+            txt = txt + SCM + "Rate" + eol
+            txt = txt + "-mybasic " + eol
+            txt = txt + "-start " + eol 
+            txt = txt + "import " +  chr(34) + "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_01_mPKrates.hps" +  chr(34) + eol
+            txt = txt + "-end" + eol
+        else
+            it = iterator(cemsys.Oxides)
+            while move_next(it) 
+                ox = get(it) 
+                parindexnr =  FindIndex(db_param,parindex,ox) 
+                if(parindexnr > -1) then
+                    ratename = SCM + ox
+                    txt = txt + ratename + eol
+                    txt = txt + "-mybasic " + eol
+                    txt = txt + "-start " + eol 
+                    txt = txt + "import " +  chr(34) + "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_01_mPKrates.hps" +  chr(34) + eol
+                    txt = txt + "-end" + eol
+                endif
+            
+            wend       
+        endif
+        
+        
+        return txt
+    enddef
+    
 endclass 

@@ -15,7 +15,7 @@ class HydrationOPCmPK(HydrationOPC)
             clinindex =  get_var("Cement::Clinker::Alite$")   
             molarmass = get_def("OPC_alite","MolarMass",clinindex)
             molvolume = get_def("OPC_alite","MolarVolume",clinindex)
-            molentalphy = get_def("OPC_alite","MolarEnthalpy",clinindex)   
+            molenthalpy = get_def("OPC_alite","MolarEnthalpy",clinindex)   
             txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_alite",index,cemsys,molarmass) + eol
             clinamount = cemamount * get_def("OPC_min","Alite", cemrowindex)/100
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
@@ -30,7 +30,7 @@ class HydrationOPCmPK(HydrationOPC)
             clinindex =  get_var("Cement::Clinker::Belite$")   
             molarmass = get_def("OPC_belite","MolarMass",clinindex) 
             molvolume = get_def("OPC_belite","MolarVolume",clinindex)
-            molentalphy = get_def("OPC_belite","MolarEnthalpy",clinindex) 
+            molenthalpy = get_def("OPC_belite","MolarEnthalpy",clinindex) 
             txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_belite",index,cemsys,molarmass) + eol
             clinamount = cemamount * get_def("OPC_min","Belite", cemrowindex)/100
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
@@ -45,7 +45,7 @@ class HydrationOPCmPK(HydrationOPC)
             clinindex =  get_var("Cement::Clinker::Aluminate$")   
             molarmass = get_def("OPC_aluminate","MolarMass",clinindex)  
             molvolume = get_def("OPC_aluminate","MolarVolume",clinindex)
-            molentalphy = get_def("OPC_aluminate","MolarEnthalpy",clinindex)
+            molenthalpy = get_def("OPC_aluminate","MolarEnthalpy",clinindex)
             txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_aluminate",index,cemsys,molarmass) + eol
             clinamount = cemamount * get_def("OPC_min","Aluminate", cemrowindex)/100
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
@@ -60,7 +60,7 @@ class HydrationOPCmPK(HydrationOPC)
             clinindex =  get_var("Cement::Clinker::Ferrite$")   
             molarmass = get_def("OPC_ferrite","MolarMass",clinindex)  
             molvolume = get_def("OPC_ferrite","MolarVolume",clinindex)
-            molentalphy = get_def("OPC_ferrite","MolarEnthalpy",clinindex)
+            molenthalpy = get_def("OPC_ferrite","MolarEnthalpy",clinindex)
             txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_ferrite",index,cemsys,molarmass) + eol
             clinamount = cemamount * get_def("OPC_min","Ferrite", cemrowindex)/100
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol

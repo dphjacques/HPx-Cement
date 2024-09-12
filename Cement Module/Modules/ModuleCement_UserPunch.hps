@@ -3,7 +3,8 @@ INCLUDE$ ModuleCement_UserPunch_Generic.hps
 
 USER_PUNCH 
 -mybasic
--headings Amount OPC GBFS SF FA LS wc
+
+-headings Amount OPC GBFS SF FA LS MK wc
 -headings @Output::Oxides 
 
 -headings Lead
@@ -13,9 +14,9 @@ include$ _txtheading._in
 -headings CSH_Ca CSH_Si GelPores
 -headings @Output::Zeolites
 -headings @Output::Kineticsh
-
+-headings @Output::HeatSums
 -start
- 
+    
     punch(  get_var("Cement::Recipe::Amount") )
     punch( get_var("Cement::Clinker::Amount") )
     if(get_varexist("GBFS::Amount") > -1) then
@@ -23,18 +24,23 @@ include$ _txtheading._in
     else
         punch(0)
     endif 
-        if(get_varexist("SF::Amount") > -1) then
+    if(get_varexist("SF::Amount") > -1) then
         punch( get_var("SF::Amount") )
     else
         punch(0)
     endif 
-        if(get_varexist("FA::Amount") > -1) then
+    if(get_varexist("FA::Amount") > -1) then
         punch( get_var("FA::Amount") )
     else
         punch(0)
     endif 
-        if(get_varexist("LS::Amount") > -1) then
+    if(get_varexist("LS::Amount") > -1) then
         punch( get_var("LS::Amount") )
+    else
+        punch(0)
+    endif 
+    if(get_varexist("MK::Amount") > -1) then
+        punch( get_var("MK::Amount") )
     else
         punch(0)
     endif 
@@ -55,6 +61,7 @@ include$ _txtheading._in
     next i 
     
     #print lead
+    timestep = 0
     if(get_varexist("Cement::Leaching::Type$") = 0 ) then
         if(get_varexist("Leaching::Run::AddedWater")=0) then
             addedwater = get_var("Leaching::Run::TotalAmountAddedWater") + get_var("Leaching::Run::AddedWater")
@@ -87,6 +94,7 @@ include$ _txtheading._in
         leadvar = get_var("Cement::Figures::Lead$")
         if(string.comparenocase(leadvar,"time") = 0) then
             punch(total_time())
+            timestep = time()
         elseif(get_varexist(leadvar) = 0) then
             punch(get_var(leadvar))
         else
@@ -154,7 +162,7 @@ include$ _txtheading._in
         db = "Db_SolidSolutions_Def"
         dba = "Db_SolidSolutions_Comp"
         count = get_defnrrec(db)-1
-                write("NRCOUNT" + str(count) + " " + eol)
+
         for i = 0 to count 
             min = get_def(db,0,i)
             nr = get_def(db,1,i)
@@ -210,6 +218,60 @@ include$ _txtheading._in
             #next i  
        endif
     endif
+    
+    #heat
+    if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+        if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then 
+            db = "Db_Minerals"
+            count = get_defnrrec(db)-1
+            sumphases = 0
+            for i = 0 to count 
+                phase = get_def(db,i)
+                n = equi_delta(phase)
+                dh = delta_h_phase(phase) 
+                Q = n*dh
+                sumphases = sumphases + Q
+                if(get_varexist("cCumQ" + phase)=0) then
+                    put_var("cCumQ" + phase,get_var("cCumQ" + phase)+Q)
+                else
+                    put_var("cCumQ" + phase,Q)
+                endif
+                if(timestep>0) then
+                    Q = Q /timestep
+                endif
+                punch(Q)
+                if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+                   punch(get_var("cCumQ" + phase))
+                endif
+            next i
+  
+            db = "Db_SolidSolutions"
+            count = get_defnrrec(db)-1
+            sums_s = 0
+            for i = 0 to count 
+                phase = get_def(db,i)
+                n = s_s_delta(phase)
+                dh = delta_h_phase(phase) 
+                Q = n*dh
+                sums_s = sums_s + Q
+                if(get_varexist("cCumQ" + phase)=0) then
+                    put_var("cCumQ" + phase,get_var("cCumQ" + phase)+Q)
+                else
+                    put_var("cCumQ" + phase,Q)
+                endif
+                if(timestep>0) then
+                    Q = Q /timestep
+                endif
+                punch(Q)
+                if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+                   punch(get_var("cCumQ" + phase))
+                endif
+            next i
+ 
+ 
+            
+        endif
+     endif
     
     
     ca = sum_s_s("CSH","Ca")
@@ -305,8 +367,60 @@ include$ _txtheading._in
                 punch(kin(get_def(db,"kin",i))*get_def(db,"gfw",i))
             next i            
         endif
+        if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+            if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then 
+                sumkin = 0
+                for i = 0 to count 
+                    phase = get_def(db,"kin",i)
+                    n = kin_delta(phase)
+                    dh_t = get_def(db,"enthalpy",i)
+                    if(string.comparenocase("STRING",str(type(dh_t))) = 0) then
+                        dh=0
+                     else
+                     dh = dh_t
+                    endif 
+                    Q = n*dh/1000
+                    sumkin = sumkin + Q
+                    if(get_varexist("cCumQ" + phase)=0) then
+                        put_var("cCumQ" + phase,get_var("cCumQ" + phase)+Q)
+                    else
+                        put_var("cCumQ" + phase,Q)
+                    endif
+                    if(timestep>0) then
+                        Q = Q /timestep
+                    endif
+                    punch(Q)
+                    if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+                       punch(get_var("cCumQ" + phase))
+                    endif
+                next i
+              endif
+           endif
     endif
-   
+    
+    #Heat
+    if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+       if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then 
+           if(get_varexist("cCumHydrates") = 0 ) then
+               put_var("cCumHydrates",get_var("cCumHydrates")+sumphases+sums_s)
+           else
+                put_var("cCumHydrates",sumphases+sums_s)
+           endif
+           if(get_varexist("cCumCement") = 0 ) then
+               put_var("cCumCement",get_var("cCumCement")+sumkin)
+           else
+           put_var("cCumCement",sumkin)
+           endif 
+           if(timestep>0) then
+               sumhydrates = (sumphases+sums_s)/timestep
+               sumkin = sumkin/timestep
+           endif
+           punch(sumhydrates,sumkin,sumhydrates+sumkin)
+           punch(get_var("cCumHydrates"),get_var("cCumCement"),get_var("cCumHydrates")+get_var("cCumCement"))
+                
+       endif      
+    endif
+    
 -end
 END 
 INCLUDE$ ModuleCementFigures/00_Definitions_02_LineStyleNumbers.hpi
@@ -451,28 +565,21 @@ ExtrOutputPunch
   enddef
   
   def WriteFigure(name, xtype)
-  write(" 101 ")  
           txt = txt + "-fig_nr " + str(fignr) + eol
-           write(" 102 ")  
-          txt1 = "INCLUDE$ " + name + ".plt "
-           write(" 103 ")  
+          txt1 = "INCLUDE$ " + name + ".plt " 
           txt = txt + txt1  + eol
-           write(" 104 ") 
           txt = txt + "-fig_variabletype " + chr(34) + xtype + chr(34)  + " " + eol
-           write(" 104 ")  
           if(get_varexist("Cement::Figures::X::Column") > -1) then
              txt = txt + "-fig_x " + get_var("Cement::Figures::X::Column$") + eol    
           endif
-           write(" 105 ")  
-          txt = txt + "-fig_xt " +  chr(34) + get_var("Cement::Figures::X::Title$") +  chr(34) + " " + eol
-          write(" 1 ")         
+          txt = txt + "-fig_xt " +  chr(34) + get_var("Cement::Figures::X::Title$") +  chr(34) + " " + eol      
           if(belements = 1) then
               WriteListElements()
           endif
           if(bsolids = 1) then
               WriteListSolids()
           endif
-          write(" 2 ")         
+       
           txt = txt + "-fig_start " + eol
           bgrid = 0
           if(xtype = "Logscale") then
@@ -502,8 +609,7 @@ ExtrOutputPunch
                 txt = txt + " noxtics nomxtics " 
              endif
           endif
-          
-          write(" 3 ")         
+                
           if(bylogscale = 1) then
               if( get_var("Cement::Figures::Y::Grid$") = "Both" or get_var("Cement::Figures::Y::Grid$") = "Both Log" ) then
                   txt = txt + " ytics mytics " 
@@ -524,9 +630,8 @@ ExtrOutputPunch
               else
                   txt = txt + " noytics nomytics " 
               endif 
-          endif 
-          
-          write(" 4 ")         
+          endif                
+
           txt = txt + " lt 1001, lt 1002 " + eol
           if (bgrid = 0) then
               txt = txt + "unset grid " + eol
@@ -540,12 +645,10 @@ ExtrOutputPunch
           txt = txt + "-fig_end " + eol
           
           fignr = fignr+1
-          
-          write(" 5 ")         
+       
   enddef
   
   def WriteSolidFigures(j, _is, _ie, water, xtype )
-   write(" 501 ") 
     if (j = 1) then
         un = ""
         una = ""
@@ -555,13 +658,11 @@ ExtrOutputPunch
        una = " - per 100 g"
        bsolid100 = 1
     endif
-       write(" 502 ") 
     if(water = 1) then
         swater = " "
     else
         swater = "- no water"
     endif
-       write(" 503 ") 
     for i = _is to _ie
         if(  string.find(get_var("Cement::Figures::Soilds::Value$"),"Moles")>-1 or  get_var("Cement::Figures::Soilds::Value$") = "All") then  
             WriteFigure("Solids_Moles"+un,xtype)
@@ -719,12 +820,8 @@ ExtrOutputPunch
        endif 
    
        for j = _js to _je
-           if( get_var("Cement::Figures::Solids::Detail$") = "Detail" or  get_var("Cement::Figures::Solids::Detail$") = "Both" ) then
-               
-               write(" 001 ")         
-               WriteSolidFigures(j, _is, _ie, 1, xtype )
-               
-               write(" 002 ")         
+           if( get_var("Cement::Figures::Solids::Detail$") = "Detail" or  get_var("Cement::Figures::Solids::Detail$") = "Both" ) then        
+               WriteSolidFigures(j, _is, _ie, 1, xtype )       
            endif 
            if( get_var("Cement::Figures::Solids::Detail$") = "Detail - No Water" ) then
                WriteSolidFigures(j, _is, _ie, 0, xtype )
@@ -737,7 +834,22 @@ ExtrOutputPunch
          next j
          bsolids = 0        
     endif 
-        
+    
+    if(get_varexist("Cement::Figures::Heat") = 0) then
+        if( get_var("Cement::Figures::Heat") = 1) then 
+            WriteFigure("Heat_rate_system",xtype)
+            txt = txt + eol 
+            WriteFigure("Heat_rate_binder",xtype)
+            txt = txt + eol
+            #if( get_var("Cement::Output::Hydrates::CumHeat) = 1) then 
+                WriteFigure("Heat_cum_system",xtype)
+                txt = txt + eol
+                WriteFigure("Heat_cum_binder",xtype)
+                txt = txt + eol
+            #endif
+        endif
+    endif
+    
   enddef
   
 

@@ -10,16 +10,15 @@ CementHydrationInitiate
     import "ModuleCement_PhreeqcInput_20_Hydration_01_hydration.hps"
     
     import "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_00_General.hps"
-    import "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_10_FA.hps"
     
-    bFA = 0
-    if(get_varexist("FA::Amount")>-1) then
-        if(get_var("FA::Amount")>0) then
-            bFA = 1
-        endif
-    endif
 
     entitynr = 1
+    
+    if(get_varexist("FA::Amount")>-1) then
+      if(get_var("FA::Amount")>0) then
+          bFA = 1
+      endif
+    endif
   
     system = get_var("Cement::Model::System$") 
     system = left(system,2)
@@ -30,7 +29,10 @@ CementHydrationInitiate
     
     opckin = new(HydrationOPCmPK)
     if(bFA = 1) then         
-            fakin = new(HydrationFAmPK)
+            fakin = new(HydrationSCM)
+            fakin.SCM = "FA"
+            fakin.Model = get_var("Cement::Hydration::FA::Model$")
+            fakin.RunType = get_var("Cement::Hydration::FA::Type$")
     endif
     
     
@@ -43,7 +45,7 @@ CementHydrationInitiate
     #rates
     ostr = opckin.WriteIncludeRates() + eol + "END" + eol 
     if (bFA=1) then
-        ostr = ostr + fakin.WriteIncludeRates() + eol + "END" + eol 
+        ostr = ostr + fakin.WriteIncludeRates(cemsys) + eol + "END" + eol 
     endif
     
     
@@ -84,14 +86,26 @@ CementHydrationInitiate
     htxt = ""
     hvtxt = ""
     hwtxt = ""
+    hhtxt = ""
     for i = 0 to count 
        htxt = htxt + get_def(db,"kin",i) + " "
        hvtxt = hvtxt + "v" + get_def(db,"kin",i) + " "
        hwtxt = hwtxt + "w" + get_def(db,"kin",i) + " "
+       hhtxt = hhtxt + "h" + get_def(db,"kin",i) + " "
+       if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+        hhtxt  = hhtxt + "ch" + get_def(db,"kin",i) + " "
+       endif
+       
     next i
     put_var("Output::Kinetics",htxt)
     put_var("Output::Kineticsv",hvtxt)
-    put_var("Output::Kineticsw",hwtxt)
+    put_var("Output::Kineticsw",hwtxt)    
+    if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+         if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then
+             put_var("Output::HeatKin",hhtxt)
+         endif
+    endif
+    
     
     vol = get_var("Cement::Composition::Clinker::Volume0")
     put_var("Cement::Composition::Volume0",vol+get_var("AmountWater")*1000)

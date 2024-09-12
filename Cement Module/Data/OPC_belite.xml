@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<DataBlocks>
+	<DataBlock>
+		<Name>OPC_belite</Name>
+		<Description>Oxide composition of belite</Description>
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Segoe UI;}{\f2\fnil\fcharset0 Calibri;}}
+\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+\par
+Default unit: \par
+%mass\tab\tab %mass of oxides (g/100g)\par
+\par
+\b\fs24 Origin of the data\b0\fs19\par
+\par
+\lang1033\b Weerdt11\b0\tab Table 1 in \f1\fs22 De Weerdt, K., Haha, M.B., Le Saout, G., Kjellsen, K.O., Justnes, H. and Lothenbach, B.  2011.  Hydration mechanisms of ternary Portland cements containing limestone powder and fly ash. Cement and Concrete Research 41(3), 279-291.\lang2067\f0\fs19\par
+\pard\fi-720\li720\lang1033\f2\fs22\par
+\pard\lang2067\f0\fs19\par
+}]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<Type>1</Type>
+			<ExternalFile>False</ExternalFile>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
+		</Info>
+		<Export>true</Export>
+		<Headings>
+			<Heading>Name</Heading>
+			<Heading>MolarMass</Heading>
+			<Heading>MolarVolume</Heading>
+			<Heading>MolarEnthalpy</Heading>
+			<Heading>Unit</Heading>
+			<Heading>CaO</Heading>
+			<Heading>SiO2</Heading>
+			<Heading>Al2O3</Heading>
+			<Heading> Fe2O3</Heading>
+			<Heading>MgO</Heading>
+			<Heading>SO3</Heading>
+			<Heading>Na2O</Heading>
+			<Heading>K2O</Heading>
+			<Heading>P2O5</Heading>
+			<Heading>TiO2</Heading>
+			<Heading>MnO3</Heading>
+		</Headings>
+		<Origin>0</Origin>
+		<RowId>Name</RowId>
+		<InfoId></InfoId>
+		<CaseSensitive>false</CaseSensitive>
+		<Records>
+			<Record>
+				<Value>Taylor1989</Value>
+				<Value>172</Value>
+				<Value>51.79</Value>
+				<Value>45064</Value>
+				<Value>%mass</Value>
+				<Value>63.5</Value>
+				<Value>31.5</Value>
+				<Value>2.1</Value>
+				<Value>0.9</Value>
+				<Value>0.5</Value>
+				<Value>0.1</Value>
+				<Value>0.1</Value>
+				<Value>0.9</Value>
+				<Value>0.2</Value>
+				<Value>0.2</Value>
+				<Value>0</Value>
+			</Record>
+		</Records>
+	</DataBlock>
+</DataBlocks>

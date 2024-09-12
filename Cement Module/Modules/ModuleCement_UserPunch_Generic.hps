@@ -43,11 +43,26 @@ ExtrOutputPunch
     endif
     if( get_varexist("Cement::Output::Hydrates::SaturationIndex") > -1 ) then
         if(get_var("Cement::Output::Hydrates::SaturationIndex")  = 1 ) then
-            txt = txt + "-headings" + get_var("Output::Phasessi")
+            txt = txt + "-headings" + get_var("Output::Phasessi") + eol
         endif 
     else
         put_var("Cement::Output::Hydrates::SaturationIndex",0) 
     endif
+    if( get_varexist("Cement::Output::Hydrates::Heat") > -1 ) then
+        if(get_var("Cement::Output::Hydrates::Heat")  = 1 ) then
+            txt = txt + "-headings " + get_var("Output::HeatPhases") + eol
+            if(get_varexist("Output::HeatSolSol") > -1 ) then
+                write(get_var("Output::HeatSolSol"))
+                txt = txt + "-headings "  + get_var("Output::HeatSolSol") + " " + eol
+            endif 
+            if(get_varexist("Output::HeatKin") > -1 ) then
+                ktxt = ktxt + get_var("Output::HeatKin") + " " + eol
+            endif 
+        endif 
+    else
+        put_var("Cement::Output::Hydrates::Heat",0) 
+    endif
+    
     openf("_txtheading._in")
     writef(txt)
     closef()

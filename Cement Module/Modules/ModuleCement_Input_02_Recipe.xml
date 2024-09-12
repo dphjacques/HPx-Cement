@@ -261,22 +261,6 @@
 							<Default />
 						</Cell>
 					</Record>
-					<Record>
-						<ID><![CDATA[2023-03-03T13:36:5012]]></ID>
-						<Visible>True</Visible>
-						<Export>True</Export>
-						<Cell><![CDATA[Cement::Clinker::BulkDensity]]></Cell>
-						<Cell>
-							<Text>3.1</Text>
-							<Default>3.1</Default>
-						</Cell>
-						<Cell><![CDATA[kg/dm3]]></Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell>
-							<Text />
-							<Default />
-						</Cell>
-					</Record>
 				</Records>
 			</Group>
 			<Group>
@@ -405,15 +389,21 @@
 						</Cell>
 					</Record>
 					<Record>
-						<ID><![CDATA[2023-03-03T16:31:2083]]></ID>
+						<ID><![CDATA[2024-09-07T8:01:5644]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>
-						<Cell><![CDATA[GBFS::BulkDensity]]></Cell>
+						<Cell><![CDATA[GBFS::Reactivity$]]></Cell>
 						<Cell>
-							<Text>2.88</Text>
-							<Default>2.88</Default>
+							<Text>
+								<List>
+									<Folder>Modules</Folder>
+									<File>ModuleCement_List_01_OptionsReactivity.xml</File>
+									<Default>0</Default>
+									<Dynamic>True</Dynamic>
+								</List>
+							</Text>
 						</Cell>
-						<Cell><![CDATA[kg/dm3]]></Cell>
+						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
 							<Text />
@@ -548,15 +538,21 @@
 						</Cell>
 					</Record>
 					<Record>
-						<ID><![CDATA[2023-03-03T16:31:4592]]></ID>
+						<ID><![CDATA[2024-09-07T8:13:5564]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>
-						<Cell><![CDATA[SF::BulkDensity]]></Cell>
+						<Cell><![CDATA[SF::Reactivity$]]></Cell>
 						<Cell>
-							<Text>2.2</Text>
-							<Default>2.2</Default>
+							<Text>
+								<List>
+									<Folder>Modules</Folder>
+									<File>ModuleCement_List_01_OptionsReactivity.xml</File>
+									<Default>0</Default>
+									<Dynamic>True</Dynamic>
+								</List>
+							</Text>
 						</Cell>
-						<Cell><![CDATA[kg/dm3]]></Cell>
+						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
 							<Text />
@@ -584,6 +580,10 @@
 						<Name>Name<Visible>False</Visible>
 							<ReadOnly>False</ReadOnly>
 						</Name>
+						<ToolTip>
+							<Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+						</ToolTip>
 						<Visible>True</Visible>
 						<Export>True</Export>
 						<ReadOnly>True</ReadOnly>
@@ -687,22 +687,6 @@
 						</Cell>
 					</Record>
 					<Record>
-						<ID><![CDATA[2024-03-06T9:33:4483]]></ID>
-						<Visible>True</Visible>
-						<Export>True</Export>
-						<Cell><![CDATA[FA::BulkDensity]]></Cell>
-						<Cell>
-							<Text>2.49</Text>
-							<Default>2.49</Default>
-						</Cell>
-						<Cell><![CDATA[kg/dm3]]></Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell>
-							<Text />
-							<Default />
-						</Cell>
-					</Record>
-					<Record>
 						<ID><![CDATA[2024-05-01T9:32:5414]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>
@@ -710,20 +694,10 @@
 						<Cell>
 							<Text>
 								<List>
-									<Item>Full Reactivity<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Bulk Reactivity<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Oxide Specific<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
+									<Folder>Modules</Folder>
+									<File>ModuleCement_List_01_OptionsReactivity.xml</File>
 									<Default>0</Default>
-									<Dynamic>False</Dynamic>
+									<Dynamic>True</Dynamic>
 								</List>
 							</Text>
 						</Cell>
@@ -755,6 +729,10 @@
 						<Name>Name<Visible>False</Visible>
 							<ReadOnly>False</ReadOnly>
 						</Name>
+						<ToolTip>
+							<Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+						</ToolTip>
 						<Visible>True</Visible>
 						<Export>True</Export>
 						<ReadOnly>True</ReadOnly>
@@ -858,15 +836,174 @@
 						</Cell>
 					</Record>
 					<Record>
-						<ID><![CDATA[2024-03-06T9:35:1993]]></ID>
+						<ID><![CDATA[2024-09-07T8:39:1684]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>
-						<Cell><![CDATA[LS::BulkDensity]]></Cell>
+						<Cell><![CDATA[LS::Reactivity$]]></Cell>
 						<Cell>
-							<Text>2.74</Text>
-							<Default>2.74</Default>
+							<Text>
+								<List>
+									<Folder>Modules</Folder>
+									<File>ModuleCement_List_01_OptionsReactivity.xml</File>
+									<Default>0</Default>
+									<Dynamic>True</Dynamic>
+								</List>
+							</Text>
 						</Cell>
-						<Cell><![CDATA[kg/dm3]]></Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell>
+							<Text />
+							<Default />
+						</Cell>
+					</Record>
+				</Records>
+			</Group>
+			<Group>
+				<Name>MK<Visible>True</Visible>
+					<ReadOnly>False</ReadOnly>
+				</Name>
+				<Heading>
+					<Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+				</Heading>
+				<ToolTip>
+					<Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+				</ToolTip>
+				<Visible>True</Visible>
+				<Export>True</Export>
+				<Columns>
+					<Column>
+						<Name>Name<Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+						</Name>
+						<ToolTip>
+							<Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+						</ToolTip>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<ReadOnly>True</ReadOnly>
+						<VariableNaming>True</VariableNaming>
+						<Note>False</Note>
+					</Column>
+					<Column>
+						<Name>Value<Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+						</Name>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<ReadOnly>False</ReadOnly>
+						<VariableNaming>False</VariableNaming>
+						<Note>False</Note>
+					</Column>
+					<Column>
+						<Name>Unit<Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+						</Name>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<ReadOnly>True</ReadOnly>
+						<VariableNaming>False</VariableNaming>
+						<Note>False</Note>
+					</Column>
+					<Column>
+						<Name>Description<Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+						</Name>
+						<ToolTip>
+							<Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+						</ToolTip>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<ReadOnly>True</ReadOnly>
+						<VariableNaming>False</VariableNaming>
+						<Note>False</Note>
+					</Column>
+					<Column>
+						<Name>Note<Visible>False</Visible>
+							<ReadOnly>False</ReadOnly>
+						</Name>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<ReadOnly>False</ReadOnly>
+						<VariableNaming>False</VariableNaming>
+						<Note>True</Note>
+					</Column>
+				</Columns>
+				<Records>
+					<Record>
+						<ID><![CDATA[2024-09-06T9:35:2290]]></ID>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<Cell><![CDATA[MK::Reference$]]></Cell>
+						<Cell>
+							<Text>
+								<List>
+									<Folder>Data</Folder>
+									<File>MK_list.xml</File>
+									<Default>0</Default>
+									<Dynamic>True</Dynamic>
+								</List>
+							</Text>
+						</Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell>
+							<Text />
+							<Default />
+						</Cell>
+					</Record>
+					<Record>
+						<ID><![CDATA[2024-09-06T9:35:1991]]></ID>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<Cell><![CDATA[MK::Amount]]></Cell>
+						<Cell>
+							<Text>0</Text>
+							<Default>0</Default>
+						</Cell>
+						<Cell><![CDATA[mass%]]></Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell>
+							<Text />
+							<Default />
+						</Cell>
+					</Record>
+					<Record>
+						<ID><![CDATA[2024-09-06T9:35:1992]]></ID>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<Cell><![CDATA[MK::AmountReacted]]></Cell>
+						<Cell>
+							<Text>100</Text>
+							<Default>100</Default>
+						</Cell>
+						<Cell><![CDATA[mass%]]></Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell>
+							<Text />
+							<Default />
+						</Cell>
+					</Record>
+					<Record>
+						<ID><![CDATA[2024-09-07T8:39:4694]]></ID>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<Cell><![CDATA[MK::Reactivity$]]></Cell>
+						<Cell>
+							<Text>
+								<List>
+									<Folder>Modules</Folder>
+									<File>ModuleCement_List_01_OptionsReactivity.xml</File>
+									<Default>0</Default>
+									<Dynamic>True</Dynamic>
+								</List>
+							</Text>
+						</Cell>
+						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
 							<Text />

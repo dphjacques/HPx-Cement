@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<DataBlocks>
+	<DataBlock>
+		<Name>MK</Name>
+		<Description>Chemical composition of Metakaolin</Description>
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Microsoft Sans Serif;}{\f2\fnil\fcharset0 Calibri;}{\f3\fswiss\fprq2\fcharset0 Calibri;}{\f4\fnil\fcharset0 Microsoft Sans Serif;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\b\fs24 Table\b0\fs19\par
+\par
+Default unit: \par
+%mass\tab\tab %mass of oxides (g/100g)\par
+\par
+Bulk Density\tab kg/dm3\par
+\par
+\b\fs24 Origin of the data\b0\fs19\par
+\b\f1\fs16\lang1033\par
+\par
+
+\pard\widctlpar\fi-1200\li1296\b0\f2\fs22 Ngu24\tab Nguyen, T. N., Q. T. Phung, D. Jacques, J. Elsen and Y. Pontikes (2024). Microstructure and transport properties of metakaolin-based geopolymers subjected to accelerated leaching." Construction and Building Materials 426. doi:j.conbuildmat.2024.136225. \par
+\tab Bulk density is from Table 1 in R. B\'fccher, P. Diedrich, G. Escadeillas, and M. Cyr (2017). Service life of metakaolin-based concrete exposed to carbonation comparison with blended cement containing fly-ash, blast furnace slag, and limestone filler. Cement and Concrete Research 99, 18-29.\par
+\par
+\par
+\f3\lang2067\par
+
+\pard\f4\fs16\par
+}]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<Type>1</Type>
+			<ExternalFile>False</ExternalFile>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
+		</Info>
+		<Export>true</Export>
+		<Headings>
+			<Heading>Name</Heading>
+			<Heading>unit</Heading>
+			<Heading>BulkDensity</Heading>
+			<Heading>CaO</Heading>
+			<Heading>SiO2</Heading>
+			<Heading>Al2O3</Heading>
+			<Heading>CO2</Heading>
+			<Heading>SO3</Heading>
+			<Heading>Fe2O3</Heading>
+			<Heading>MgO</Heading>
+			<Heading>K2O</Heading>
+			<Heading>Na2O</Heading>
+			<Heading>Rtot</Heading>
+			<Heading>RCaO</Heading>
+			<Heading>RSiO2</Heading>
+			<Heading>RAl2O3</Heading>
+			<Heading>RCO2</Heading>
+			<Heading>RSO3</Heading>
+			<Heading>RFe2O3</Heading>
+			<Heading>RMgO</Heading>
+			<Heading>RK2O</Heading>
+			<Heading>RNa2O</Heading>
+		</Headings>
+		<Origin>0</Origin>
+		<RowId>Name</RowId>
+		<InfoId></InfoId>
+		<CaseSensitive>false</CaseSensitive>
+		<Records>
+			<Record>
+				<Value>Ngu24</Value>
+				<Value>%mass</Value>
+				<Value>2.51</Value>
+				<Value>0.03</Value>
+				<Value>52.08</Value>
+				<Value>44.27</Value>
+				<Value>0</Value>
+				<Value>0.03</Value>
+				<Value>0.45</Value>
+				<Value>0.08</Value>
+				<Value>0.17</Value>
+				<Value>0.26</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+			</Record>
+		</Records>
+	</DataBlock>
+</DataBlocks>

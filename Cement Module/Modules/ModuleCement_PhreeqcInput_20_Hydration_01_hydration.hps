@@ -76,9 +76,18 @@ class Hydration
          
          it = iterator(param)
          while move_next(it)
-             txt = txt + str(get_def(db,get(it),index)) + " "
+             if(get_defexist(db,get(it),index) <> 0) then
+                 errtxt = "Parameter " + get(it) + "not defined in datablock " + db 
+                 return txt
+             endif
+             parametervalue = get_def(db,get(it),index)
+             if(string.comparenocase("STRING",str(type(parametervalue))) = 0) then
+                 errtxt = "Parameter " + get(it) + " does not have a numerical value in datablock " + db 
+                 err(errtxt)
+             else
+                txt = txt + str(get_def(db,get(it),index)) + " "
+             endif 
          wend
-
          return txt
      enddef
      

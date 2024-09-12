@@ -69,6 +69,15 @@
 			<Folder>Data</Folder>
 			<File>LS.xml</File>
 		</DataBlock>
+		<DataBlock>
+			<Name>MK</Name>
+			<Description>Chemical composition of Metakaolin</Description>
+			<Use>true</Use>
+			<Import>true</Import>
+			<RelPath>true</RelPath>
+			<Folder>Data</Folder>
+			<File>MK.xml</File>
+		</DataBlock>
 	</DataBlocks>
 	<Transformation></Transformation>
 	<Additions><![CDATA[include$ ModuleCement_PhreeqcInput_01_AdditionsToDatabase.hpi]]></Additions>

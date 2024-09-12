@@ -49,8 +49,8 @@ class CementModelSystem
     push(ZeolitesCa,"Stellerite")
     push(ZeolitesCa,"Wairakite")
     push(ZeolitesCa,"Zeolite_CaP")
-	
-	clear_def("Db_Kinetics")
+    
+    clear_def("Db_Kinetics")
 
 
     def GetSystemPhreeqc(nr)
@@ -133,6 +133,19 @@ class CementModelSystem
                 put_var("Output::Phasessi",txt)
             endif
         endif
+		
+		if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+            if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then
+                txt = " "
+                for i in cemsys.PurePhases
+                    txt = txt + "h" + i + " "
+					if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+						txt  = txt + "ch" + i + " "
+					endif
+                next i 
+                put_var("Output::HeatPhases",txt)
+            endif
+        endiff
         
         #zeolites
        txt = " "
@@ -207,6 +220,8 @@ class CementModelSystem
         
         
     enddef
+    
+    include$ Define_New_Solid_Solution_TC.in
 
     system = get_var("Cement::Model::System$") 
     system = left(system,2)
@@ -223,7 +238,8 @@ class CementModelSystem
             next j
         endif
     next i
-
+	
+	sysnr.CheckBulkdensity()
     sysnr.SetOxides()
     
     colindex = get_defheading("Phases_TC",system)
@@ -258,312 +274,5 @@ class CementModelSystem
     endif
     CementModels = dict(number,sysnr)   
   
-    
-
-    #definition system 07
-#    sys07 = new(CementModel)
-#    push(sys07.Elements,"Ca")
-#    push(sys07.Elements,"Si")
-#    push(sys07.Elements,"Al")
-#    push(sys07.Elements,"S")
-#    push(sys07.Elements,"Mg")
-#    push(sys07.Elements,"C")  
-#    sys07.SetOxides()
-#    
-#    
-#    put_var("Output::Minerals"," ")
-#    push(sys07.PurePhases,"Portlandite")
-#    push(sys07.PurePhases,"SiO2(am)")
-#    push(sys07.PurePhases,"Calcite")
-#    push(sys07.PurePhases,"Gypsum")
-#    push(sys07.PurePhases,"C3AH6")
-#    push(sys07.PurePhases,"C4AH13")
-#    push(sys07.PurePhases,"Stratlingite")
-#    push(sys07.PurePhases,"Monocarboaluminate")
-#    push(sys07.PurePhases,"Hemicarboaluminate")
-#    push(sys07.PurePhases,"Monosulfoaluminate")
-#    push(sys07.PurePhases,"Brucite")
-#    push(sys07.PurePhases,"Hydrotalcite")
-#    push(sys07.PurePhases,"Hydrotalcite-CO3")
-#    push(sys07.PurePhases,"MSH0.8")
-#    push(sys07.PurePhases,"MSH1.1")
-#    push(sys07.PurePhases,"Ettringite")
-#    push(sys07.PurePhases,"CSH1.6")
-#    push(sys07.PurePhases,"CSH1.2")
-#    push(sys07.PurePhases,"CSH0.8")  
-#    CementModels = dict(7,sys07)
-#
-#    #definition system 09
-#    sys09 = new(CementModel)
-#    push(sys09.Elements,"Ca")
-#    push(sys09.Elements,"Si")
-#    push(sys09.Elements,"Al")
-#    push(sys09.Elements,"S")
-#    push(sys09.Elements,"Mg")
-#    push(sys09.Elements,"C")  
-#    push(sys09.Elements,"Cl")  
-#    sys09.SetOxides()
-#    
-#     put_var("Output::Minerals"," ")  
-#    push(sys09.PurePhases,"Portlandite")
-#    push(sys09.PurePhases,"SiO2(am)")
-#    push(sys09.PurePhases,"Calcite")
-#    push(sys09.PurePhases,"Gypsum")
-#    push(sys09.PurePhases,"C3AH6")
-#    push(sys09.PurePhases,"C4AH13")
-#    push(sys09.PurePhases,"Stratlingite")
-#    push(sys09.PurePhases,"Monocarboaluminate")
-#    push(sys09.PurePhases,"Hemicarboaluminate")
-#    push(sys09.PurePhases,"Monosulfoaluminate")
-#    push(sys09.PurePhases,"Brucite")
-#    push(sys09.PurePhases,"Hydrotalcite")
-#    push(sys09.PurePhases,"Hydrotalcite-CO3")
-#    push(sys09.PurePhases,"MSH0.8")
-#    push(sys09.PurePhases,"MSH1.1")
-#    push(sys09.PurePhases,"Ettringite")
-#    push(sys09.PurePhases,"CSH1.6")
-#    push(sys09.PurePhases,"CSH1.2")
-#    push(sys09.PurePhases,"CSH0.8") 
-#    push(sys09.PurePhases,"Friedel-salt") 
-#    set(CementModels,9,sys09)    
-#    
-#    #definition system 11
-#    sys11 = new(CementModel)
-#    push(sys11.Elements,"Ca")
-#    push(sys11.Elements,"Si")
-#    push(sys11.Elements,"Al")
-#    push(sys11.Elements,"S")
-#    push(sys11.Elements,"Mg")
-#    push(sys11.Elements,"C")  
-#    push(sys11.Elements,"Fe")  
-#    sys11.SetOxides()
-#    
-#    put_var("Output::Minerals"," ")
-#    push(sys11.PurePhases,"Portlandite")
-#    push(sys11.PurePhases,"SiO2(am)")
-#    push(sys11.PurePhases,"Calcite")
-#    push(sys11.PurePhases,"Gypsum")
-#    push(sys11.PurePhases,"C3AH6")
-#    push(sys11.PurePhases,"C3FH6")
-#    push(sys11.PurePhases,"C4AH13")
-#    push(sys11.PurePhases,"C4FH13")
-#    push(sys11.PurePhases,"Stratlingite")
-#    push(sys11.PurePhases,"Monocarboaluminate")
-#    push(sys11.PurePhases,"Hemicarboaluminate")
-#    push(sys11.PurePhases,"Monosulfoaluminate")
-#    push(sys11.PurePhases,"Monosulfate-Fe")
-#    push(sys11.PurePhases,"Brucite")
-#    push(sys11.PurePhases,"Hydrotalcite")
-#    push(sys11.PurePhases,"Hydrotalcite-CO3")
-#    push(sys11.PurePhases,"Ettringite")
-#    push(sys11.PurePhases,"Ettringite-Fe")
-#    push(sys11.PurePhases,"Ferrihydrite(am)")
-#    push(sys11.PurePhases,"CSH1.6")
-#    push(sys11.PurePhases,"CSH1.2")
-#    push(sys11.PurePhases,"CSH0.8")  
-#    set(CementModels,11,sys11)
-#    
-#    
-#    #definition system 15
-#    sys15 = new(CementModel)
-#    push(sys15.Elements,"Ca")
-#    push(sys15.Elements,"Si")
-#    push(sys15.Elements,"Al")
-#    push(sys15.Elements,"S")
-#    push(sys15.Elements,"Mg")
-#    push(sys15.Elements,"C") 
-#    push(sys15.Elements,"Na") 
-#    push(sys15.Elements,"K") 
-#    push(sys15.Elements,"Cl")  
-#    sys15.SetOxides()
-#    
-#    
-#    put_var("Output::Minerals"," ")
-#    push(sys15.PurePhases,"Portlandite")
-#    push(sys15.PurePhases,"SiO2(am)")
-#    push(sys15.PurePhases,"Calcite")
-#    push(sys15.PurePhases,"Gypsum")
-#    push(sys15.PurePhases,"C3AH6")
-#    push(sys15.PurePhases,"C4AH13")
-#    push(sys15.PurePhases,"Stratlingite")
-#    push(sys15.PurePhases,"Monocarboaluminate")
-#    push(sys15.PurePhases,"Hemicarboaluminate")
-#    push(sys15.PurePhases,"Monosulfoaluminate")
-#    push(sys15.PurePhases,"Brucite")
-#    push(sys15.PurePhases,"Hydrotalcite")
-#    push(sys15.PurePhases,"Hydrotalcite-CO3")
-#    push(sys15.PurePhases,"MSH0.8")
-#    push(sys15.PurePhases,"MSH1.1")
-#    push(sys15.PurePhases,"Ettringite")
-#    push(sys15.PurePhases,"CSH1.6")
-#    push(sys15.PurePhases,"CSH1.2")
-#    push(sys15.PurePhases,"CSH0.8") 
-#    push(sys15.PurePhases,"Friedel-salt") 
-#    if (get_varexist("Cement::Model::Zeolites::Na") = 0) then
-#        if (get_var("Cement::Model::Zeolites::Na") = 1) then
-#            push(sys15.PurePhases,"Analcime")
-#            push(sys15.PurePhases,"Clinoptilolite_Na")
-#            push(sys15.PurePhases,"Heulandite_Na")
-#            push(sys15.PurePhases,"Phillipsite_Na")
-#            push(sys15.PurePhases,"Natrolite")
-#            push(sys15.PurePhases,"Merlinoite_Na")
-#        endif 
-#    endif
-#    
-#    
-#    set(CementModels,15,sys15) 
-#    
-#    
-#    
-#    #definition system 17
-#    sys17 = new(CementModel)
-#    push(sys17.Elements,"Ca")
-#    push(sys17.Elements,"Si")
-#    push(sys17.Elements,"Al")
-#    push(sys17.Elements,"S")
-#    push(sys17.Elements,"Mg")
-#    push(sys17.Elements,"C")  
-#    push(sys17.Elements,"Fe")
-#    push(sys17.Elements,"Na") 
-#    push(sys17.Elements,"K") 
-#    push(sys17.Elements,"Cl")    
-#    sys17.SetOxides()
-#    
-#    put_var("Output::Minerals"," ")
-#    push(sys17.PurePhases,"Portlandite")
-#    push(sys17.PurePhases,"SiO2(am)")
-#    push(sys17.PurePhases,"Calcite")
-#    push(sys17.PurePhases,"Gypsum")
-#    push(sys17.PurePhases,"C3AH6")
-#    push(sys17.PurePhases,"C3FH6")
-#    push(sys17.PurePhases,"C4AH13")
-#    push(sys17.PurePhases,"C4FH13")
-#    push(sys17.PurePhases,"Stratlingite")
-#    push(sys17.PurePhases,"Monocarboaluminate")
-#    push(sys17.PurePhases,"Hemicarboaluminate")
-#    push(sys17.PurePhases,"Monosulfoaluminate")
-#    push(sys17.PurePhases,"Monosulfate-Fe")
-#    push(sys17.PurePhases,"Brucite")
-#    push(sys17.PurePhases,"Hydrotalcite")
-#    push(sys17.PurePhases,"Hydrotalcite-CO3")
-#    push(sys17.PurePhases,"MSH0.8")
-#    push(sys17.PurePhases,"MSH1.1")
-#    push(sys17.PurePhases,"Ettringite")
-#    push(sys17.PurePhases,"Ettringite-Fe")
-#    push(sys17.PurePhases,"Ferrihydrite(am)")
-#    push(sys17.PurePhases,"CSH1.6")
-#    push(sys17.PurePhases,"CSH1.2")
-#    push(sys17.PurePhases,"CSH0.8")  
-#    push(sys17.PurePhases,"Friedel-salt") 
-#    if (get_varexist("Cement::Model::Zeolites::Na") = 0) then
-#        if (get_var("Cement::Model::Zeolites::Na") = 1) then
-#            push(sys17.PurePhases,"Analcime")
-#            push(sys17.PurePhases,"Clinoptilolite_Na")
-#            push(sys17.PurePhases,"Heulandite_Na")
-#            push(sys17.PurePhases,"Phillipsite_Na")
-#            push(sys17.PurePhases,"Natrolite")
-#            push(sys17.PurePhases,"Merlinoite_Na")
-#        endif 
-#    endif
-#    if (get_varexist("Cement::Model::Zeolites::K") = 0) then
-#        if (get_var("Cement::Model::Zeolites::K") = 1) then
-#            push(sys17.PurePhases,"Clinoptilolite_K")
-#            push(sys17.PurePhases,"Merlinoite_K")
-#            push(sys17.PurePhases,"Phillipsite_K")
-#        endif 
-#    endif
-#    if (get_varexist("Cement::Model::Zeolites::Ca") = 0) then
-#        if (get_var("Cement::Model::Zeolites::Ca") = 1) then
-#            push(sys17.PurePhases,"Chabazite")
-#            push(sys17.PurePhases,"Clinoptilolite_Ca")
-#            push(sys17.PurePhases,"Gismondine")
-#            push(sys17.PurePhases,"Heulandite_Ca")
-#            push(sys17.PurePhases,"Laumontite")
-#            push(sys17.PurePhases,"Mordenite_Ca")
-#            push(sys17.PurePhases,"Phillipsite_Ca")
-#            push(sys17.PurePhases,"Scolecite")
-#            push(sys17.PurePhases,"Stellerite")
-#            push(sys17.PurePhases,"Wairakite")
-#            push(sys17.PurePhases,"Zeolite_CaP")
-#        endif 
-#    endif
-#    set(CementModels,17,sys17)
-#
-#        #definition system 19
-#    sys19 = new(CementModel)
-#    push(sys19.Elements,"Ca")
-#    push(sys19.Elements,"Si")
-#    push(sys19.Elements,"Al")
-#    push(sys19.Elements,"S")
-#    push(sys19.Elements,"Mg")
-#    push(sys19.Elements,"C")  
-#    push(sys19.Elements,"Fe")
-#    push(sys19.Elements,"Na") 
-#    push(sys19.Elements,"K") 
-#    push(sys19.Elements,"Cl")    
-#    push(sys19.Elements,"N")    
-#    sys19.SetOxides()
-#    
-#    put_var("Output::Minerals"," ")
-#    push(sys19.PurePhases,"Portlandite")
-#    push(sys19.PurePhases,"SiO2(am)")
-#    push(sys19.PurePhases,"Calcite")
-#    push(sys19.PurePhases,"Gypsum")
-#    push(sys19.PurePhases,"C3AH6")
-#    push(sys19.PurePhases,"C3FH6")
-#    push(sys19.PurePhases,"C4AH13")
-#    push(sys19.PurePhases,"C4FH13")
-#    push(sys19.PurePhases,"Stratlingite")
-#    push(sys19.PurePhases,"Monocarboaluminate")
-#    push(sys19.PurePhases,"Hemicarboaluminate")
-#    push(sys19.PurePhases,"Monosulfoaluminate")
-#    push(sys19.PurePhases,"Monosulfate-Fe")
-#    push(sys19.PurePhases,"Brucite")
-#    push(sys19.PurePhases,"Hydrotalcite")
-#    push(sys19.PurePhases,"Hydrotalcite-CO3")
-#    push(sys19.PurePhases,"MSH0.8")
-#    push(sys19.PurePhases,"MSH1.1")
-#    push(sys19.PurePhases,"Ettringite")
-#    push(sys19.PurePhases,"Ettringite-Fe")
-#    push(sys19.PurePhases,"Ferrihydrite(am)")
-#    push(sys19.PurePhases,"CSH1.6")
-#    push(sys19.PurePhases,"CSH1.2")
-#    push(sys19.PurePhases,"CSH0.8")  
-#    push(sys19.PurePhases,"Friedel-salt")   
-#    push(sys19.PurePhases,"mononitrate") 
-#    if (get_varexist("Cement::Model::Zeolites::Na") = 0) then
-#        if (get_var("Cement::Model::Zeolites::Na") = 1) then
-#            push(sys19.PurePhases,"Analcime")
-#            push(sys19.PurePhases,"Clinoptilolite_Na")
-#            push(sys19.PurePhases,"Heulandite_Na")
-#            push(sys19.PurePhases,"Phillipsite_Na")
-#            push(sys19.PurePhases,"Natrolite")
-#            push(sys19.PurePhases,"Merlinoite_Na")
-#        endif 
-#    endif
-#    if (get_varexist("Cement::Model::Zeolites::K") = 0) then
-#        if (get_var("Cement::Model::Zeolites::K") = 1) then
-#            push(sys19.PurePhases,"Clinoptilolite_K")
-#            push(sys19.PurePhases,"Merlinoite_K")
-#            push(sys19.PurePhases,"Phillipsite_K")
-#        endif 
-#    endif
-#    if (get_varexist("Cement::Model::Zeolites::Ca") = 0) then
-#        if (get_var("Cement::Model::Zeolites::Ca") = 1) then
-#            push(sys19.PurePhases,"Chabazite")
-#            push(sys19.PurePhases,"Clinoptilolite_Ca")
-#            push(sys19.PurePhases,"Gismondine")
-#            push(sys19.PurePhases,"Heulandite_Ca")
-#            push(sys19.PurePhases,"Laumontite")
-#            push(sys19.PurePhases,"Mordenite_Ca")
-#            push(sys19.PurePhases,"Phillipsite_Ca")
-#            push(sys19.PurePhases,"Scolecite")
-#            push(sys19.PurePhases,"Stellerite")
-#            push(sys19.PurePhases,"Wairakite")
-#            push(sys19.PurePhases,"Zeolite_CaP")
-#        endif 
-#    endif
-#    set(CementModels,19,sys19)
-#
     
 endclass 

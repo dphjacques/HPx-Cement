@@ -2,7 +2,7 @@ INCLUDE$ ModuleCement_UserPunch_Generic.hps
 
 USER_PUNCH 
 -mybasic
--headings Amount OPC GBFS SF FA LS wc
+-headings Amount OPC GBFS SF FA LS MK wc
 -headings @Output::Oxides 
 -headings water T pH mu
 -headings @Output::Elements
@@ -21,18 +21,23 @@ include$ _txtheading._in
     else
         punch(0)
     endif 
-        if(get_varexist("SF::Amount") > -1) then
+    if(get_varexist("SF::Amount") > -1) then
         punch( get_var("SF::Amount") )
     else
         punch(0)
     endif 
-        if(get_varexist("FA::Amount") > -1) then
+    if(get_varexist("FA::Amount") > -1) then
         punch( get_var("FA::Amount") )
     else
         punch(0)
     endif 
-        if(get_varexist("LS::Amount") > -1) then
+    if(get_varexist("LS::Amount") > -1) then
         punch( get_var("LS::Amount") )
+    else
+        punch(0)
+    endif  
+    if(get_varexist("MK::Amount") > -1) then
+        punch( get_var("MK::Amount") )
     else
         punch(0)
     endif 

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Items>
+	<Item>Full Reactivity<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
+	<Item>Bulk Reactivity<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
+	<Item>Oxide Specific<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
+</Items>
