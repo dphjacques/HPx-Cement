@@ -34,7 +34,66 @@ class HydrationSCM(Hydration)
         put_var(SCM+"::BulkDensity",MolarMass) 
     enddef
     
-    import "ModuleCement_Reactivity.hpi"
+    #import "ModuleCement_Reactivity.hpi"
+    def Reactivity(react)
+    write(react + eol)
+        if(react = "Full Reactivity") then
+            write("returning " + eol)
+            return -1
+        elseif(react = "Bulk Reactivity") then
+            return -2
+        elseif(react = "Oxide Specific") then
+            return -3
+        else
+        
+            return -1
+        endif
+        return -1
+    enddef
+    
+    def ReactivityValueTot(r,db,rowlabel)
+        if(r = -1) then
+            return 1
+        elseif (r = -2) then
+            if(get_defexist(db,"Rtot",rowlabel) = 0) then
+                react = get_def(db,"Rtot",rowlabel)
+                if(react < 0) then 
+                    return 0
+                elseif(react > 100) then
+                    return 1
+                else 
+                    return react/100
+                endif
+            else
+                return 1
+            endif
+        else
+            return r
+        endif
+        return r
+    enddef
+    
+    def ReactivityValueTotOx(r,db,rowlabel,oxide) 
+        if (r > 0 ) then
+            return r
+        elseif (r=0) then
+            return 0
+        else
+            if(get_defexist(db,"R"+oxide,rowlabel) = 0) then
+                react = get_def(db,"R"+oxide,rowlabel)
+                if(react < 0) then 
+                    return 0
+                elseif(react > 100) then
+                    return 1
+                else 
+                    return react/100
+                endif
+            else
+                return 1
+            endif
+        endif
+        return 0
+    enddef
     
     def FindIndex(db,parindex,oxide)
         nrrec = get_defnrrec(db)
@@ -53,7 +112,7 @@ class HydrationSCM(Hydration)
         txt = "" 
         
         Initiate()
-        
+
         db_param = SCM + "_"
         var param = list()
         
@@ -66,20 +125,17 @@ class HydrationSCM(Hydration)
         endif
         
         dbscm = SCM
-
         if(get_varexist(SCM + "::Amount") = 0 ) then
             if(get_var(SCM + "::Amount") > 0) then
                 if(get_varexist(SCM + "::Reactivity$") = 0) then
                     name = get_var(SCM + "::Reactivity$")
                     reactedamount = Reactivity(name) #check: why is Reactivity(get_var(SCM + "::Reactivity$")) not working
                     reactedamount = ReactivityValueTot(reactedamount,dbscm,rowindex)#check: why is RReactivityValueTot(reactedamount,SCM,rowindex) not working
-                endif
+                 endif
              endif 
         endif
         
         #KINETICS
-        #oxides = list("SiO2","CaO","Al2O3","SO3")
-        
         parindex = get_var("Cement::Hydration::" +SCM + "::" + model + "::Parameters$")
         
         it = iterator(cemsys.Oxides)
@@ -110,7 +166,6 @@ class HydrationSCM(Hydration)
             
             endif
         wend
-
         if(get_var("Cement::Hydration::" +SCM + "::Type$") = "Bulk") then
             txt = txt + SCM + "Rate" + eol
             txt = txt + "-formula " + txt1 + eol
@@ -120,7 +175,6 @@ class HydrationSCM(Hydration)
             molvolume = get_def(db_param,"MolarVolume",parindexnr)
             molenthalpy = get_def(db_param,"MolarEnthalpy",parindexnr)           
             push_def("Db_Kinetics",SCM + "Rate",molarmass,molvolume,molenthalpy)
-        endif
         return txt
     enddef
 

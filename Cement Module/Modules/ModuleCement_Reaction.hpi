@@ -28,44 +28,64 @@ class CementModel
             endif
         endif
         if(get_varexist("GBFS::BulkDensity") <> 0) then
-            rowlabel = get_var("GBFS::Reference$")
-            if(get_defexist("GBFS","BulkDensity",rowlabel) = 0) then
-                put_var("GBFS::BulkDensity",get_def("GBFS","BulkDensity",rowlabel)))
-            else
-                put_var("GBFS::BulkDensity",-1)
-            endif
-        endif
+			if( get_varexist("GBFS::Reference$") = 0 ) then
+				rowlabel = get_var("GBFS::Reference$")
+				if(get_defexist("GBFS","BulkDensity",rowlabel) = 0) then
+					put_var("GBFS::BulkDensity",get_def("GBFS","BulkDensity",rowlabel)))
+				else
+					put_var("GBFS::BulkDensity",-1)
+				endif
+			else
+					put_var("GBFS::BulkDensity",-1)			
+			endif
+        endif		
         if(get_varexist("SF::BulkDensity") <> 0) then
-            rowlabel = get_var("SF::Reference$")
-            if(get_defexist("SF","BulkDensity",rowlabel) = 0) then
-                put_var("SF::BulkDensity",get_def("SF","BulkDensity",rowlabel)))
-            else
-                put_var("SF::BulkDensity",-1)
-            endif
-        endif
+			if( get_varexist("SF::Reference$") = 0) then
+				rowlabel = get_var("SF::Reference$")
+				if(get_defexist("SF","BulkDensity",rowlabel) = 0) then
+					put_var("SF::BulkDensity",get_def("SF","BulkDensity",rowlabel)))
+				else
+					put_var("SF::BulkDensity",-1)
+				endif
+			else
+				put_var("SF::BulkDensity",-1)
+			endif
+        endif		
         if(get_varexist("FA::BulkDensity") <> 0) then
-            rowlabel = get_var("FA::Reference$")
-            if(get_defexist("FA","BulkDensity",rowlabel) = 0) then
-                put_var("FA::BulkDensity",get_def("FA","BulkDensity",rowlabel)))
-            else
-                put_var("FA::BulkDensity",-1)
-            endif
+			if( get_varexist("FA::Reference$") = 0 ) then
+				rowlabel = get_var("FA::Reference$")
+				if(get_defexist("FA","BulkDensity",rowlabel) = 0) then
+					put_var("FA::BulkDensity",get_def("FA","BulkDensity",rowlabel)))
+				else
+					put_var("FA::BulkDensity",-1)
+				endif
+			else
+				put_var("FA::BulkDensity",-1)
+			endif
         endif
         if(get_varexist("LS::BulkDensity") <> 0) then
-            rowlabel = get_var("LS::Reference$")
-            if(get_defexist("LS","BulkDensity",rowlabel) = 0) then
-                put_var("LS::BulkDensity",get_def("LS","BulkDensity",rowlabel)))
-            else
-                put_var("LS::BulkDensity",-1)
-            endif
+			if( get_varexist("LS::Reference$") = 0 ) then
+				rowlabel = get_var("LS::Reference$")
+				if(get_defexist("LS","BulkDensity",rowlabel) = 0) then
+					put_var("LS::BulkDensity",get_def("LS","BulkDensity",rowlabel)))
+				else
+					put_var("LS::BulkDensity",-1)
+				endif
+			else
+				put_var("LS::BulkDensity",-1)
+			endif
         endif
         if(get_varexist("MK::BulkDensity") <> 0) then
-            rowlabel = get_var("MK::Reference$")
-            if(get_defexist("MK","BulkDensity",rowlabel) = 0) then
-                put_var("MK::BulkDensity",get_def("MK","BulkDensity",rowlabel)))
-            else
-                put_var("MK::BulkDensity",-1)
-            endif
+			if( get_varexist("MK::Reference$")=0) then
+				rowlabel = get_var("MK::Reference$")
+				if(get_defexist("MK","BulkDensity",rowlabel) = 0) then
+					put_var("MK::BulkDensity",get_def("MK","BulkDensity",rowlabel)))
+				else
+					put_var("MK::BulkDensity",-1)
+				endif
+			else
+				put_var("MK::BulkDensity",-1)
+			endif
         endif
     enddef
     
@@ -142,7 +162,7 @@ class CementModel
         endif
         return txt
     enddef
-    
+    write("Impmort 1")
 	import "ModuleCement_Reactivity.hpi"
     
     def WritePhreeqcCementReaction(entitynr)

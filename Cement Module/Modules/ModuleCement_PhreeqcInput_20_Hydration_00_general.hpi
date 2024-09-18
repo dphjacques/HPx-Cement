@@ -69,7 +69,11 @@ CementHydrationInitiate
     ostr = ostr + "Kinetics" + eol
     ostr = ostr + opckin.WriteKinetics(cemsys) + eol
     if (bFA=1) then
+    write("writein fa " + eol)
+    
+    write(fakin.WriteKinetics(cemsys) )
         ostr = ostr + fakin.WriteKinetics(cemsys) + eol  
+        write("end wirting " + eol)
     endif    
     
     

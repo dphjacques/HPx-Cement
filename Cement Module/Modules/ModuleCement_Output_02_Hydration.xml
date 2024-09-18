@@ -566,8 +566,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Figures::Water::Elements::ShowZero]]></Cell>
 						<Cell>
-							<Check>True</Check>
-							<Default>True</Default>
+							<Check>False</Check>
+							<Default>False</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -774,8 +774,8 @@
 						<Export>True</Export>
 						<Cell><![CDATA[Cement::Figures::Solids::ShowZero]]></Cell>
 						<Cell>
-							<Check>True</Check>
-							<Default>True</Default>
+							<Check>False</Check>
+							<Default>False</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
