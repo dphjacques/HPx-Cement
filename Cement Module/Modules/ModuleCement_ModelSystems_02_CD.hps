@@ -133,10 +133,12 @@ class CementModelSystem
                 txt = txt + i + " "
                 txtv = txtv + "v" + i + " "
                 txtw = txtw + "w" + i + " "
-				txtsh = txtsh + "h" + i + " "
-				if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
-					txtsh  = txtsh + "ch" + i + " "
-				endif
+		txtsh = txtsh + "h" + i + " "
+		if(get_varexist("Cement::Output::Hydrates::CumHeat") = 0 ) then
+			if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+				txtsh  = txtsh + "ch" + i + " "
+			endif
+		endif
                 push_def("Db_SolidSolutions",i)
                 put_def("Db_SolidSolutions_Comp",i,nr,nri)
                 nri = nri+1
