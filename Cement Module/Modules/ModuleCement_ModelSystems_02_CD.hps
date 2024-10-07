@@ -110,6 +110,11 @@ class CementModelSystem
         put_var("Output::Phases",txt)
         put_var("Output::Phasesv",txtv)
         put_var("Output::Phasesw",txtw)
+		
+		bheat = 0
+		if(get_varexist("Cement::Output::Hydrates::CumHeat") = 0) then
+		   bheat = get_var("Cement::Output::Hydrates::CumHeat")
+		endif
         txt = ""
         txtv = ""
         txtw = ""
@@ -134,7 +139,7 @@ class CementModelSystem
                 txtv = txtv + "v" + i + " "
                 txtw = txtw + "w" + i + " "
 				txtsh = txtsh + "h" + i + " "
-				if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+				if(bheat = 1 ) then
 					txtsh  = txtsh + "ch" + i + " "
 				endif
                 push_def("Db_SolidSolutions",i)
@@ -171,14 +176,14 @@ class CementModelSystem
                 txt = " "
                 for i in cemsys.PurePhases
                     txt = txt + "h" + i + " "
-					if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+					if(bheat = 1 ) then
 						txt  = txt + "ch" + i + " "
 					endif
                 next i 
                 put_var("Output::HeatPhases",txt)
             endif
 			txtheata = "hHydrates hCement  hTotal"
-			if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+			if(bheat = 1 ) then
 				txtheata  = txtheata + " chHydrates chCement  chTotal"
 			endif
 			put_var("Output::HeatSums",txtheata)

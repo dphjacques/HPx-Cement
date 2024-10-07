@@ -1,6 +1,4 @@
-    write("importing reactivity" + eol)
-    
-    def Reactivity(react)
+     def Reactivity(react)
     write(react + eol)
         if(react = "Full Reactivity") then
             write("returning " + eol)

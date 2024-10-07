@@ -162,7 +162,7 @@ class CementModel
         endif
         return txt
     enddef
-    write("Impmort 1")
+	
 	import "ModuleCement_Reactivity.hpi"
     
     def WritePhreeqcCementReaction(entitynr)
