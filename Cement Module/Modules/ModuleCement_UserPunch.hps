@@ -240,7 +240,6 @@ include$ _txtheading._in
                     Q = Q /timestep
                 endif
                 punch(Q)
-		write("here 6" + eol)
                 if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
                    punch(get_var("cCumQ" + phase))
                 endif
@@ -264,7 +263,6 @@ include$ _txtheading._in
                     Q = Q /timestep
                 endif
                 punch(Q)
-		write("here 7" + eol)
                 if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
                    punch(get_var("cCumQ" + phase))
                 endif
@@ -392,7 +390,6 @@ include$ _txtheading._in
                         Q = Q /timestep
                     endif
                     punch(Q)
-		write("here 8" + eol)
                     if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
                        punch(get_var("cCumQ" + phase))
                     endif

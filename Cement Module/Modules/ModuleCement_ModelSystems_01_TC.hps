@@ -133,7 +133,7 @@ class CementModelSystem
                 put_var("Output::Phasessi",txt)
             endif
         endif
-		write("here 1" + eol)
+		
 		if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
             if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then
                 txt = " "

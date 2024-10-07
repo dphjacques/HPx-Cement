@@ -97,8 +97,6 @@ CementHydrationInitiate
        hwtxt = hwtxt + "w" + get_def(db,"kin",i) + " "
        hhtxt = hhtxt + "h" + get_def(db,"kin",i) + " "
 	   if(get_varexist("Cement::Output::Hydrates::CumHeat") = 0 ) then
-	   
-		write("here 5" + eol)
 		   if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
 			hhtxt  = hhtxt + "ch" + get_def(db,"kin",i) + " "
 		   endif
