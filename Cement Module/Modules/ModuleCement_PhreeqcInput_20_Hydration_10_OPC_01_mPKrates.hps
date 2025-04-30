@@ -5,9 +5,13 @@ CalculateHydrationDegreeTotalOPC
 #Calculation of hydration degree
 -mybasic
 -start
-    total = kin("HydrationRateAlite") + kin("HydrationRateBelite") + kin("HydrationRateAluminate") + kin("HydrationRateFerrite")
-    w0 = get_var("Cement::Composition::Clinker::Moles0")
-    hydrationdegree = (w0-total)/w0
+    total = kin("OPCAlite")*228 + kin("OPCBelite")*172 + kin("OPCFerrite")*645.2 + kin("OPCAluminate")*269.96
+    w0 = get_var("Cement::Composition::Clinker::Weight0")
+	if(w0 > 0) then
+		hydrationdegree = (w0-total)/w0
+	else
+		hydrationdegree = 0
+	endif
     save(hydrationdegree)
 -end 
 
@@ -27,13 +31,9 @@ OPCAlite
 # 9 w/c
 
 #calculation degree of hydration of parameters for all clinkers
-    hda = calc_value("CalculateHydrationDegreeTotalOPC") #used in wc correction
-    hd  = calc_value("CalculateHydrationDegree",m0(),m()) #used in mpK rates
-    
+    hd  = calc_value("CalculateHydrationDegree",m0(),m()) #used in mpK rates 	
     import "ModuleCement_PhreeqcInput_20_Hydration_00_general_01_mPK_00_rate.hps"
-    #997 put(rate1*wc,101)
-    #998 put(wc,102)
-    #999 put(hd,103)
+	
 -end
 
 OPCBelite
@@ -51,13 +51,9 @@ OPCBelite
 # 9 w/c
 
 #calculation of parameters for all clinkers
-    hda = calc_value("CalculateHydrationDegreeTotalOPC")
     hd  = calc_value("CalculateHydrationDegree",m0(),m())
-    
     import "ModuleCement_PhreeqcInput_20_Hydration_00_general_01_mPK_00_rate.hps"
-    #997 put(rate1*wc,101)
-    #998 put(wc,102)
-    #999 put(hd,103)
+	
 -end
  
 OPCFerrite
@@ -75,11 +71,9 @@ OPCFerrite
 # 9 w/c
 
 #calculation of parameters for all clinkers
-    hda = calc_value("CalculateHydrationDegreeTotalOPC")
     hd  = calc_value("CalculateHydrationDegree",m0(),m())
-    
     import "ModuleCement_PhreeqcInput_20_Hydration_00_general_01_mPK_00_rate.hps"
-    #999 put(hd,103)
+
 -end
 
  OPCAluminate
@@ -97,9 +91,8 @@ OPCFerrite
 # 9 w/c
 
 #calculation of parameters for all clinkers
-    hda = calc_value("CalculateHydrationDegreeTotalOPC")
     hd  = calc_value("CalculateHydrationDegree",m0(),m())
-    
+
     import "ModuleCement_PhreeqcInput_20_Hydration_00_general_01_mPK_00_rate.hps"
     
 -end

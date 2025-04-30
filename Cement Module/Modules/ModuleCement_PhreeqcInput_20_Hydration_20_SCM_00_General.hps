@@ -6,39 +6,169 @@ class HydrationSCM(Hydration)
     
     var Amount = 0
     var rowindex = 0
-    var MolarMass = -2
     
-    def Initiate()
+    var MolarMass = -2
+    var MolarVolume = -2
+    var WeightFractionReactive = 1
+    
+    def Initiate(cemsys) 
         amount = get_var("Cement::Recipe::Amount")*get_var(SCM + "::Amount")/100
         rowindex = get_var(SCM + "::Reference$")
         
-        if(get_var("Cement::Hydration::" +SCM + "::Type$") = "Bulk") then
-            if(get_var(SCM + "::Reactivity$") = "Oxide Specific") then
-              etxt = "Error in definition of hydration of SCM " + SCM + eol
-              etxt = etxt + "Options in Reactivity$ (recipe tab) and Type$ (hydration tab) are not compatible:" + eol
-              etxt = etxt + "Bulk hydration Type$ cannot be combined with the option Oxide specfiic Reactivity$."+eol)
-              err(etxt)
+        #Chemical formula
+        phtxt = "PHASES " + eol
+        phtxt = phtxt + "SCM" + SCM + eol
+        it = iterator(cemsys.Oxides)
+        nrmol = 0
+        oxid= dict()
+        mass = 0
+        mass1 = 0
+        write("Chemical Formula of " + SCM + eol)
+        while move_next(it) 
+            ox = get(it)
+            am = get_def(SCM,ox, rowindex)/gfw(ox)
+            mass1 = mass1 + am*gfw(ox)
+            if(get_varexist(SCM + "::Reactivity$") = 0) then
+                react = get_var(SCM + "::Reactivity$")
+                if(string.comparenocase(react,"Oxide Specific") = 0 ) then
+                   if(get_defexist(SCM,"R"+ox, rowindex)  = 0 ) then
+                       am = am * get_def(SCM,"R"+ox, rowindex)/100
+                       mass = mass + am*gfw(ox)
+                   endif
+                endif
+            endif
+            set(oxid,ox,am)
+            #need to add - correction for partly reactivity
+            nrmol = nrmol+ am      
+        wend
+        if(mass > 0) then
+            WeightFractionReactive = mass/100
+        endif
+        write("Mass tot " + str(mass1)+eol)
+        write("Mass react " + str(mass)+eol)
+        write("mass% " + str(WeightFractionReactive) + eol)
+        oxid1= dict()
+        sio2=1
+        for ox in oxid 
+            a=get(oxid,ox)/nrmol
+            set(oxid1,ox,a)
+            if(ox="SiO2") then
+                sio2 = a
+            endif
+        next
+        oxid2 = dict()
+        txt = ""
+        txt1= ""
+        oh = 0
+        h2o= 0
+        h = 0
+        df = 0
+        hf = 0
+        mm = 0
+        dbt = "Thermo_CD"
+        for ox in oxid
+            a = get(oxid1,ox)/sio2
+            if(a>0) then
+                set(oxid2,ox,a)
+                mm = mm + a*gfw(ox)
+                txt = txt + "(" + ox + ")" + str(a)
+                if(get_defexist(dbt,"Oxide",ox) = 0) then
+                    stoich = get_def(dbt,"stoich",ox)
+                    if(stoich*a < 0) then
+                        txt1 = txt1 + " "
+                    else
+                        txt1 = txt1 + " + "
+                    endif
+                    txt1 = txt1 + str(stoich*a) + get_def(dbt,"Aqueous",ox) 
+                    oh = oh + a*get_def(dbt,"OH",ox)
+                    h2o = h2o + a*get_def(dbt,"H2O",ox)
+                    h = h + a*get_def(dbt,"H",ox)
+                    df = df + stoich*a*get_def(dbt,"Gf",ox)
+                    hf = hf + stoich*a*get_def(dbt,"Hf",ox)
+                endif    
+            endif
+        next
+        if(h2o < 0) then
+            strh2o = " " 
+        else
+            strh2o = "+ "
+        endif
+        if(OH < 0) then
+            stroh = " "
+        else
+            stroh = "+ "
+        endif
+        if(h < 0) then
+            strh = " "
+        else
+            strh = "+ " 
+        endif
+        df = df + oh*get_def(dbt,"Gf","OH") + h2o*get_def(dbt,"Gf","H2O")
+        hf = hf + oh*get_def(dbt,"Hf","OH") + h2o*get_def(dbt,"Hf","H2O")
+        txt1 = txt1 + strh2o + str(h2o) + " H2O " + stroh + str(OH) + " OH- " + strh +  str(h) + "H+"
+        phtxt = phtxt + txt + " = " + txt1 + eol
+        phtxt = phtxt + "-no_check" + eol #not sure that mass balance is ok (rounding errors)
+        gibb = false
+        if( get_defexist(SCM,"GibbsFormation", rowindex) = 0) then
+            if(get_def(SCM,"GibbsFormation", rowindex) <> 0) then
+                phtxt = phtxt +  chr(35) + "Change in Gibbs free Energy of reaction - reactants " + str(df) + " J/mole" + eol
+                df = df - get_def(SCM,"GibbsFormation", rowindex)
+                gibb = true
             endif
         endif
-        
+        k = -df / 8.314472 / (273.15+25) / 2.303
+        if(gibb) then
+            phtxt = phtxt +  chr(35) + "Change in Gibbs free Energy of reaction " + str(df) + " J/mole" + eol
+            phtxt = phtxt + "-log_k " + str(k) + eol
+        else
+            phtxt = phtxt +  chr(35) + "Gibbs free Energy of formation of " + SCM " is not available. Log_k is not defined." + eol
+            phtxt = phtxt + "-log_k 0" +eol
+        endif
+        enthalpy = false
+        if(get_defexist(SCM,"EnthalpyFormation", rowindex) = 0) then
+            if(get_def(SCM,"EnthalpyFormation", rowindex) <> 0) then
+                
+                phtxt = phtxt +  chr(35) + "Change in Enthalpy - reactants " + str(hf) + " J/mole" + eol
+                hf = hf - get_def(SCM,"EnthalpyFormation", rowindex)
+                enthalpy = true
+            endif
+        endif
+        if(enthalpy) then
+            phtxt = phtxt +  chr(35) + "Change in Enthalpy of reaction " + str(hf) + " J/mole" + eol
+            phtxt = phtxt + "-delta_h " + str(hf) + " joules/mol" + eol
+        else
+            phtxt = phtxt +  chr(35) + "Entalphy of formation of " + SCM " is not available. Log_k is not defined." + eol
+        endif
         #obtain molarmass
         if(get_defexist(SCM,"MolarMass",rowindex)<0) then
-            MolarMass = 100
+            MolarMass = mm
         else
             if(get_def(SCM,"MolarMass",rowindex)<0) then
-                MolarMass = 100
+                MolarMass = mm
             else
                 MolarMass = get_def(SCM,"MolarMass",rowindex)
             endif
-        endif
-        put_var(SCM+"::BulkDensity",MolarMass) 
+        endif       
+        put_var(SCM+"::MolarMass",MolarMass)   
+        #molar volume
+        #for Full Reactivity
+        if(get_defexist(SCM,"BulkDensity",rowindex)<0) then
+            MolarVolume = -1
+        else
+            MolarVolume = MolarMass / get_def(SCM,"BulkDensity",rowindex) 
+            phtxt = phtxt + "-Vm " + str(MolarVolume) + eol
+        endif      
+
+        write(phtxt)
+        openf("Reaction_"+SCM+"._in")
+        writef(phtxt)
+        closef()
+
     enddef
     
     #import "ModuleCement_Reactivity.hpi"
     def Reactivity(react)
-    write(react + eol)
         if(react = "Full Reactivity") then
-            write("returning " + eol)
             return -1
         elseif(react = "Bulk Reactivity") then
             return -2
@@ -110,8 +240,8 @@ class HydrationSCM(Hydration)
 
     def WriteKinetics(cemsys)
         txt = "" 
-        
-        Initiate()
+     
+        Initiate(cemsys)
 
         db_param = SCM + "_"
         var param = list()
@@ -133,49 +263,49 @@ class HydrationSCM(Hydration)
                     reactedamount = ReactivityValueTot(reactedamount,dbscm,rowindex)#check: why is RReactivityValueTot(reactedamount,SCM,rowindex) not working
                  endif
              endif 
-        endif
-        
+        endif      
         #KINETICS
         parindex = get_var("Cement::Hydration::" +SCM + "::" + model + "::Parameters$")
         
-        it = iterator(cemsys.Oxides)
-        txt1 = " "
-        while move_next(it) 
-            ox = get(it)
-            if(get_var("Cement::Hydration::" +SCM + "::Type$") = "Bulk") then
-                if(get_defexist(SCM,ox, rowindex)=0) then
-                    toich = get_def(SCM,ox, rowindex) / gfw(ox) /100 * molarmass  #check units !!!!
-                    txt1 = txt1 + " " + ox + " " + str(toich)
-                endif
-            else 
-                parindexnr =  FindIndex(db_param,parindex,ox) 
-                if(parindexnr > -1) then
-                    molarmass = gfw(ox)
-                    ratename = SCM + ox
-                    txt = txt + ratename + eol
-                    txt = txt + "-formula H 0 " + ox + " 1" + eol
-                    oxamount = amount * get_def(SCM,ox, rowindex)/100
-                    oxamount = oxamount*ReactivityValueTotOx(reactedamount,dbscm,rowindex,ox)
-                    txt = txt + "-m0 " + str(oxamount/molarmass) + eol
-                    txt = txt + "-parms " + WriteKineticParameters(db_param,parindexnr,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol
-                    molarmass = get_def(db_param,"MolarMass",parindexnr)
-                    molvolume = get_def(db_param,"MolarVolume",parindexnr)
-                    molenthalpy = get_def(db_param,"MolarEnthalpy",parindexnr)                   
-                    push_def("Db_Kinetics",ratename,molarmass,molvolume,molenthalpy)
-                endif
-            
-            endif
-        wend
         if(get_var("Cement::Hydration::" +SCM + "::Type$") = "Bulk") then
-            txt = txt + SCM + "Rate" + eol
-            txt = txt + "-formula " + txt1 + eol
-            txt = txt + "-m0 " + str(amount*reactedamount/molarmass) + eol
+            if(reactedamount>-1) then
+                oxamount = amount*reactedamount
+            else #oxide specific
+                oxamount = amount*WeightFractionReactive
+            endif
+            write(str(oxamount) + eol)
+            write(str(oxamount/molarmass) + eol)
+            write(str(oxamount/molarmass*MolarVolume) + eol)
+            txt = txt + "SCM" + SCM + eol
+            txt = txt + "-m0 " + str(oxamount/molarmass) + eol
+                    write("here2b"+eol)   
             txt = txt + "-parms " + WriteKineticParameters(db_param,parindexnr,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol 
-            molarmass = get_def(db_param,"MolarMass",parindexnr)
-            molvolume = get_def(db_param,"MolarVolume",parindexnr)
-            molenthalpy = get_def(db_param,"MolarEnthalpy",parindexnr)           
-            push_def("Db_Kinetics",SCM + "Rate",molarmass,molvolume,molenthalpy)
+            push_def("Db_Kinetics","SCM" + SCM,MolarMass,MolarVolume,"SCM" + SCM,oxamount/MolarMass,oxamount/MolarMass*MolarVolume,oxamount) 
+            write("here2c"+eol) 
+        else 
+                  
+            it = iterator(cemsys.Oxides)
+            while move_next(it) 
+            ox = get(it)
+            parindexnr =  FindIndex(db_param,parindex,ox) 
+            if(parindexnr > -1) then
+                molarmass = gfw(ox)
+                ratename = SCM + ox
+                txt = txt + ratename + eol
+                txt = txt + "-formula H 0 " + ox + " 1" + eol
+                oxamount = amount * get_def(SCM,ox, rowindex)/100
+                oxamount = oxamount*ReactivityValueTotOx(reactedamount,dbscm,rowindex,ox)
+                txt = txt + "-m0 " + str(oxamount/molarmass) + eol
+                txt = txt + "-parms " + WriteKineticParameters(db_param,parindexnr,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol
+                molarmass = get_def(db_param,"MolarMass",parindexnr)
+                molvolume = get_def(db_param,"MolarVolume",parindexnr)
+                molenthalpy = get_def(db_param,"MolarEnthalpy",parindexnr)                   
+                push_def("Db_Kinetics",ratename,molarmass,molvolume,molenthalpy,oxamount/molarmass,oxamount/molarmass*molvolume,oxamount)
+            endif
+            wend
+        endif                
         return txt
+        
     enddef
 
     def WriteIncludeRates(cemsys)
@@ -190,7 +320,7 @@ class HydrationSCM(Hydration)
         endif
         parindex = get_var("Cement::Hydration::" +SCM + "::" + model + "::Parameters$")
         if(get_var("Cement::Hydration::" +SCM + "::Type$") = "Bulk") then
-            txt = txt + SCM + "Rate" + eol
+            txt = txt + "SCM" + SCM + eol
             txt = txt + "-mybasic " + eol
             txt = txt + "-start " + eol 
             txt = txt + "import " +  chr(34) + "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_01_mPKrates.hps" +  chr(34) + eol
@@ -212,7 +342,7 @@ class HydrationSCM(Hydration)
             wend       
         endif
         
-        
+
         return txt
     enddef
     

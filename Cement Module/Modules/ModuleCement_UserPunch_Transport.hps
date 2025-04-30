@@ -313,7 +313,7 @@ ExtrOutputPunch_Profiles
       unit = "m"
   elseif (conv_x("c") = 1) then
       unit = "cm"
-  elseif (conv_x("mm") = 1 then
+  elseif (conv_x("mm") = 1) then
       unit = "mm"
   else
     unit = "cm"

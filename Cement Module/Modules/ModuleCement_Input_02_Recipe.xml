@@ -976,7 +976,7 @@
 						<ID><![CDATA[2024-09-06T9:35:1992]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>
-						<Cell><![CDATA[MK::AmountReacted]]></Cell>
+						<Cell><![CDATA[MK::Reacted  ]]></Cell>
 						<Cell>
 							<Text>100</Text>
 							<Default>100</Default>

@@ -1,7 +1,5 @@
      def Reactivity(react)
-    write(react + eol)
         if(react = "Full Reactivity") then
-            write("returning " + eol)
             return -1
         elseif(react = "Bulk Reactivity") then
             return -2

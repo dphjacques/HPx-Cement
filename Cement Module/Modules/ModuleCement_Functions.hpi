@@ -48,9 +48,9 @@ zeol 0 0 0 0 0
 -end
 Db_Kinetics
 -casesensitive false
--headings kin gfw volume enthalpy
+-headings kin gfw volume enthalpy inimol  inivol iniweight
 -start
-opc 0 0 0 
+opc 0 0 0  0 0 0
 -end
 
 CALCULATE_VALUES

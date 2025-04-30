@@ -1,0 +1,16 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fswiss\fprq2\fcharset0 Calibri;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fmodern\fprq1\fcharset0 Courier New;}{\f3\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\sa160\sl252\slmult1\qj\lang1033\kerning2\f0\fs22 The cement model is selected based on the oxides/elements the user considers. Following systems are available:\par
+\pard\fi-360\li720\sa160\sl252\slmult1\qj\f1\'b7\tab\f0 System 1\par
+\f1\'b7\tab\f0\'85\par
+\pard\sa160\sl252\slmult1\qj A default cement model is defined for each system for the CEMDATA and the ThermoChimie databases. The list of pure solid phases and solid solutions for each cement system are listed below. The user can decide to use this default system or to adapt it by:\par
+\pard\fi-360\li720\sa160\sl252\slmult1\qj\f1\'b7\tab\f0 Adding additional cement phases or removing existing phases\par
+\f1\'b7\tab\f0 Defining a completely new cement system\par
+\pard\sa160\sl252\slmult1\qj via the dropdown menu \f2 ChangeDefaultModel\f0 . If a default model is adapted, the user selects the adapted model via the dropdown menu \f2 AdaptedModel\f0 . \par
+\par
+\b DEFAULT CEMENT SYSTEMS - CEMDATA\par
+\b0 System 1\par
+\par
+\b DEFAULT CEMENT SYSTEMS - THERMOCHIMIE\par
+\b0 System 1\par
+\pard\lang2067\kerning0\f3\fs16\par
+}

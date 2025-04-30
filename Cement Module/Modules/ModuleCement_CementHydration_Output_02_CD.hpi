@@ -367,7 +367,7 @@ if(bmk = 1) then
     writef(string.format("%20.2f",( unreacted_mk)/inivolume)+eol)
 endif
 ssSi = sum_s_s("CSH","Si")
-gelpor = calc_value("VolumeGelPores",sum_s_s("CSH","Ca"),sum_s_s("CSH","Si"))
+gelpor = calc_value("VolumeGelPores",sum_s_s("CSH","Ca"),ssSi)
 gelpor = gelpor*ssSi
 writef(string.format("%30s","Gel pores"))
 writef(string.format("%20.2f",gelpor))
@@ -385,6 +385,7 @@ writef(string.format("%20.2f",totpor/inivolume)+eol)
 
 
 writef(eol + eol +eol + txtss +eol)
+closef()
 
 endif
 -end 

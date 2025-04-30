@@ -244,8 +244,9 @@ writef(string.format("%20s","Volume (cm3)"))
 writef(string.format("%20s","Volume Fraction")+eol)
 
 writef(string.format("%30s","Initial volume"))
+inivolume = 0
 if(bopc=1) then
-    inivolume =  get_var("Cement::Clinker::Amount") / get_var("Cement::Clinker::BulkDensity") 
+    inivolume =  inivolume + get_var("Cement::Clinker::Amount") / get_var("Cement::Clinker::BulkDensity") 
 endif
 if(bgbfs = 1) then
     inivolume = inivolume +  get_var("GBFS::Amount") / get_var("GBFS::BulkDensity") 

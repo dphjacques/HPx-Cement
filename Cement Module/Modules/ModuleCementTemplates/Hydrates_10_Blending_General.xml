@@ -1,85 +1,85 @@
 <Template>
-	<Description>Blending OPC with supplementary materials</Description>
-	<MetaData> </MetaData>
-	<Databases>
-		<DatabaseGroup>_managed_</DatabaseGroup>
-		<DatabaseName>_CEMDATA_CEMDATA18-31-03-2022-phaseVol.dat</DatabaseName>
-	</Databases>
-	<ThermodynamicData>
-		<ImportFiles>
-			<ImportFile>
-				<Name>Zeolite-Na-Ca-K-Phreeqc version_2021.txt</Name>
-				<ProjectGroup>false</ProjectGroup>
-				<RelativePath>true</RelativePath>
-				<Use>true</Use>
-				<Directory>3003</Directory>
-				<Format>1001</Format>
-				<Type>2000</Type>
-			</ImportFile>
-		</ImportFiles>
-	</ThermodynamicData>
-	<InputTable>
-		<File>ModuleCement_Input_01_ModelSystem.xml</File>
-		<File>ModuleCement_Input_02_Recipe.xml</File>
-		<File>ModuleCement_Output_01_General.xml</File>
-	</InputTable>
-	<DataBlocks>
-		<DataBlock>
-			<Name>OPC</Name>
-			<Description>Chemical composition of Ordinary Portland Cement</Description>
-			<Use>true</Use>
-			<Import>true</Import>
-			<RelPath>true</RelPath>
-			<Folder>Data</Folder>
-			<File>OPC.xml</File>
-		</DataBlock>
-		<DataBlock>
-			<Name>GBFS</Name>
-			<Description>Chemical composition of Granulated blast furnance slag</Description>
-			<Use>true</Use>
-			<Import>true</Import>
-			<RelPath>true</RelPath>
-			<Folder>Data</Folder>
-			<File>GBFS.xml</File>
-		</DataBlock>
-		<DataBlock>
-			<Name>SF</Name>
-			<Description>Chemical composition of Silica Fume</Description>
-			<Use>true</Use>
-			<Import>true</Import>
-			<RelPath>true</RelPath>
-			<Folder>Data</Folder>
-			<File>SF.xml</File>
-		</DataBlock>
-		<DataBlock>
-			<Name>FA</Name>
-			<Description>Chemical composition of Fly-ash</Description>
-			<Use>true</Use>
-			<Import>true</Import>
-			<RelPath>true</RelPath>
-			<Folder>Data</Folder>
-			<File>FA.xml</File>
-		</DataBlock>
-		<DataBlock>
-			<Name>LS</Name>
-			<Description>Chemical composition of Limestone</Description>
-			<Use>true</Use>
-			<Import>true</Import>
-			<RelPath>true</RelPath>
-			<Folder>Data</Folder>
-			<File>LS.xml</File>
-		</DataBlock>
-		<DataBlock>
-			<Name>MK</Name>
-			<Description>Chemical composition of Metakaolin</Description>
-			<Use>true</Use>
-			<Import>true</Import>
-			<RelPath>true</RelPath>
-			<Folder>Data</Folder>
-			<File>MK.xml</File>
-		</DataBlock>
-	</DataBlocks>
-	<Transformation></Transformation>
-	<Additions><![CDATA[include$ ModuleCement_PhreeqcInput_01_AdditionsToDatabase.hpi]]></Additions>
-	<Geochemistry><![CDATA[include$ ModuleCement_PhreeqcInput_10_Geochemistry_01_HydratesAssemblages.hpi]]></Geochemistry>
+    <Description>Blending OPC with supplementary materials</Description>
+    <MetaData> </MetaData>
+    <Databases>
+        <DatabaseGroup>_managed_</DatabaseGroup>
+        <DatabaseName>_CEMDATA_CEMDATA18-31-03-2022-phaseVol.dat</DatabaseName>
+    </Databases>
+    <ThermodynamicData>
+        <ImportFiles>
+            <ImportFile>
+                <Name>Zeolite-Na-Ca-K-Phreeqc version_2021.txt</Name>
+                <ProjectGroup>false</ProjectGroup>
+                <RelativePath>true</RelativePath>
+                <Use>true</Use>
+                <Directory>3003</Directory>
+                <Format>1001</Format>
+                <Type>2000</Type>
+            </ImportFile>
+        </ImportFiles>
+    </ThermodynamicData>
+    <InputTable>
+        <File>ModuleCement_Input_01_ModelSystem.xml</File>
+        <File>ModuleCement_Input_02_Recipe.xml</File>
+        <File>ModuleCement_Output_01_General.xml</File>
+    </InputTable>
+    <DataBlocks>
+        <DataBlock>
+            <Name>OPC</Name>
+            <Description>Chemical composition of Ordinary Portland Cement</Description>
+            <Use>true</Use>
+            <Import>true</Import>
+            <RelPath>true</RelPath>
+            <Folder>Data</Folder>
+            <File>OPC.xml</File>
+        </DataBlock>
+        <DataBlock>
+            <Name>GBFS</Name>
+            <Description>Chemical composition of Granulated blast furnance slag</Description>
+            <Use>true</Use>
+            <Import>true</Import>
+            <RelPath>true</RelPath>
+            <Folder>Data</Folder>
+            <File>GBFS.xml</File>
+        </DataBlock>
+        <DataBlock>
+            <Name>SF</Name>
+            <Description>Chemical composition of Silica Fume</Description>
+            <Use>true</Use>
+            <Import>true</Import>
+            <RelPath>true</RelPath>
+            <Folder>Data</Folder>
+            <File>SF.xml</File>
+        </DataBlock>
+        <DataBlock>
+            <Name>FA</Name>
+            <Description>Chemical composition of Fly-ash</Description>
+            <Use>true</Use>
+            <Import>true</Import>
+            <RelPath>true</RelPath>
+            <Folder>Data</Folder>
+            <File>FA.xml</File>
+        </DataBlock>
+        <DataBlock>
+            <Name>LS</Name>
+            <Description>Chemical composition of Limestone</Description>
+            <Use>true</Use>
+            <Import>true</Import>
+            <RelPath>true</RelPath>
+            <Folder>Data</Folder>
+            <File>LS.xml</File>
+        </DataBlock>
+        <DataBlock>
+        <Name>MK</Name>
+        <Description>Chemical composition of Metakaolin</Description>
+            <Use>true</Use>
+            <Import>true</Import>
+            <RelPath>true</RelPath>
+            <Folder>Data</Folder>
+            <File>MK.xml</File>
+        </DataBlock>
+    </DataBlocks>
+    <Transformation></Transformation>
+    <Additions><![CDATA[include$ ModuleCement_PhreeqcInput_01_AdditionsToDatabase.hpi]]></Additions>
+    <Geochemistry><![CDATA[include$ ModuleCement_PhreeqcInput_10_Geochemistry_01_HydratesAssemblages.hpi]]></Geochemistry>
 </Template>

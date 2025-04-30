@@ -1,16 +1,27 @@
-INCLUDE$ ModuleCement_Functions.hpi
+CALCULATE_VALUES
+CementFunctionsRead
+-state definition
+-mybasic
+-start 
+    if(get_varexist("_ReadCementModels") = 0) then
+        txt = " "
+    else
+        txt = "INCLUDE$ ModuleCement_Functions.hpi"
+    endif
+    put_var("_readcementmodel$",txt)
+-end
+
+@_readcementmodel$
 
 CALCULATE_VALUES
 CementHydrationInitiate
 -mybasic
 -state definition
 -start
-    
     import "ModuleCement_ModelSystems_02_CD.hps"
     import "ModuleCement_PhreeqcInput_20_Hydration_01_hydration.hps"
     
     import "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_00_General.hps"
-    
 
     entitynr = 1
     
@@ -26,7 +37,8 @@ CementHydrationInitiate
     cemmodel = new(CementModelSystem)
     cemsys = cemmodel.GetCementModel(systemnr)
     cemmodel.CreateHeadings(systemnr)
-    
+ 
+    write("here6"+eol)   
     opckin = new(HydrationOPCmPK)
     if(bFA = 1) then         
             fakin = new(HydrationSCM)
@@ -34,21 +46,23 @@ CementHydrationInitiate
             fakin.Model = get_var("Cement::Hydration::FA::Model$")
             fakin.RunType = get_var("Cement::Hydration::FA::Type$")
     endif
-    
+  
     
     put_var("Cement::_hydration",1)
     clear_def("Db_Kinetics")
+    put_var("_timestep",0)
     put_var("Cement::Figures::Lead$","time")
     put_var("Cement::Figures::X::Title$","Time [d]")
     
-    
+  
     #rates
     ostr = opckin.WriteIncludeRates() + eol + "END" + eol 
     if (bFA=1) then
+		ostr = ostr + "INCLUDE$ " + "Reaction_FA._in" + eol
         ostr = ostr + fakin.WriteIncludeRates(cemsys) + eol + "END" + eol 
     endif
     
-    
+
     
     ostr = ostr + cemsys.WritePhreeqcSolution(entitynr,false,false,0)
     ostr = ostr + "USE SOLUTION " + str(entitynr) + eol
@@ -62,21 +76,17 @@ CementHydrationInitiate
     ostr = ostr + "save equilibrium_phases " + str(entitynr) + eol
     ostr = ostr + "save solid_solutions " + str(entitynr) + eol
     ostr = ostr + "END " + eol
-    
+  
     ostr = ostr + "use solution " + str(entitynr) + eol
     ostr = ostr + "use equilibrium_phases " + str(entitynr) + eol
     ostr = ostr + "use solid_solutions " + str(entitynr) + eol
     ostr = ostr + "Kinetics" + eol
     ostr = ostr + opckin.WriteKinetics(cemsys) + eol
+	
     if (bFA=1) then
-    write("writein fa " + eol)
-    
-    write(fakin.WriteKinetics(cemsys) )
         ostr = ostr + fakin.WriteKinetics(cemsys) + eol  
-        write("end wirting " + eol)
     endif    
-    
-    
+	
     ostr = ostr + opckin.WriteKineticSteps()
     
     #save options to be added
@@ -91,16 +101,22 @@ CementHydrationInitiate
     hvtxt = ""
     hwtxt = ""
     hhtxt = ""
+	hdtxt = ""
     for i = 0 to count 
        htxt = htxt + get_def(db,"kin",i) + " "
        hvtxt = hvtxt + "v" + get_def(db,"kin",i) + " "
        hwtxt = hwtxt + "w" + get_def(db,"kin",i) + " "
        hhtxt = hhtxt + "h" + get_def(db,"kin",i) + " "
-	   if(get_varexist("Cement::Output::Hydrates::CumHeat") = 0 ) then
-		   if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
-			hhtxt  = hhtxt + "ch" + get_def(db,"kin",i) + " "
-		   endif
-	   endif       
+       if(get_varexist("Cement::Output::Hydrates::CumHeat") = 0 ) then
+           if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+            hhtxt  = hhtxt + "ch" + get_def(db,"kin",i) + " "
+           endif
+       endif  
+		if(get_varexist("Cement::Output::Hydration::HydrationDegree") = 0 ) then
+			if(get_var("Cement::Output::Hydration::HydrationDegree") = 1 ) then
+				hdtxt = hdtxt + "hd" + get_def(db,"kin",i) + " "
+			endif
+    endif	   
     next i
     put_var("Output::Kinetics",htxt)
     put_var("Output::Kineticsv",hvtxt)
@@ -110,10 +126,14 @@ CementHydrationInitiate
              put_var("Output::HeatKin",hhtxt)
          endif
     endif
-    
+	
+    if(get_varexist("Cement::Output::Hydration::HydrationDegree") = 0 ) then
+         if(get_var("Cement::Output::Hydration::HydrationDegree") = 1 ) then
+             put_var("Output::HydrationDegree",hdtxt + "hdTotal")
+         endif
+    endif
     
     vol = get_var("Cement::Composition::Clinker::Volume0")
-    put_var("Cement::Composition::Volume0",vol+get_var("AmountWater")*1000)
     
 
 -end

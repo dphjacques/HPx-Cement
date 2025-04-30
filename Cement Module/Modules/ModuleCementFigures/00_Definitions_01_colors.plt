@@ -49,6 +49,7 @@ set style line 850 lc rgb "#ffff33" lw 3 dt 1 pt 6 pn -8 ps 2
 
 #cementhydrates
 set style line 1001 lc rgb "sandybrown" lw lwvalue pn -pnvalue ps psvalue pt ptvalue
+
 #aggregates
 set style line 1050 lc rgb "brown" lw lwvalue pn -pnvalue ps psvalue pt ptvalue
 #clinkers
@@ -58,6 +59,7 @@ set style line 902 lc rgb "gray70" #belite
 set style line 903 lc rgb "gray50" #aluminate
 set style line 904 lc rgb "gray30" #ferrite
 set style line 905 lc rgb "black" lw 6
+set style line 906 lc rgb "black" 
 #FA componets
 set style line 912 lc rgb '#FEE6CE' # 
 set style line 913 lc rgb '#FDD0A2' # 

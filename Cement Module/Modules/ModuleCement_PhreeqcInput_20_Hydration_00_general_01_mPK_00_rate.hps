@@ -1,8 +1,13 @@
+	if (m0() = 0 ) then
+		save(0)
+	else
 #calculation minimal rate
+
     rate1 = calc_value("RateHydrationParrotKillohNucleation",hd,parm(1),parm(2))
     rate2 = calc_value("RateHydrationParrotKillohDiffusion",hd,parm(3))
     rate3 = calc_value("RateHydrationParrotKillohShellFormation",hd,parm(4),parm(5))
     area = 1
+	
     rate1 = rate1*area
     if rate1<rate2 then 
        rate=rate1 
@@ -15,13 +20,16 @@
 #Rate Limiting Factors
 #w/c dependency
 #RH (not implemented)
-#Area
+
 #Temperature (not implemented)
-    wc = calc_value("RateHydrationParrotKillohWaterCement",hda,parm(6),parm(9))
+    wc = calc_value("RateHydrationParrotKillohWaterCement",hd,parm(6),parm(9))
     rh = 1
     tem = calc_value("RateHydrationParrotKillohTemperature",parm(7),parm(8))
 #Rate and mass
-    rate = rate*wc*rh*tem
+
+    rate = rate*wc*rh*tem*401.7/385
     dhd = rate*time()
+	putval(dhd,2)
     moles = m0()*dhd
     save(moles)
+endif

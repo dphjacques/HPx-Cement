@@ -98,8 +98,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -114,8 +114,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -130,8 +130,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -146,8 +146,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -162,8 +162,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -178,8 +178,24 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
+						</Cell>
+					</Record>
+					<Record>
+						<ID><![CDATA[2025-01-14T12:33:4826]]></ID>
+						<Visible>True</Visible>
+						<Export>True</Export>
+						<Cell><![CDATA[Cement::Output::Hydration::HydrationDegree]]></Cell>
+						<Cell>
+							<Check>True</Check>
+							<Default>True</Default>
+						</Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[]]></Cell>
+						<Cell>
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 				</Records>
@@ -263,8 +279,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -277,15 +293,15 @@
 								<List>
 									<Item>Linear<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Logscale<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Both<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Default>2</Default>
 									<Dynamic>False</Dynamic>
@@ -295,8 +311,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -309,23 +325,23 @@
 								<List>
 									<Item>None<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Major<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Both<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Major Log<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Both Log<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Default>4</Default>
 									<Dynamic>False</Dynamic>
@@ -335,8 +351,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -351,8 +367,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -365,23 +381,23 @@
 								<List>
 									<Item>None<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Major<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Both<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Major Log<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Both Log<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Default>1</Default>
 									<Dynamic>False</Dynamic>
@@ -391,8 +407,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 				</Records>
@@ -476,8 +492,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -492,8 +508,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -506,15 +522,15 @@
 								<List>
 									<Item>Moles<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Milligrams<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Both<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Default>2</Default>
 									<Dynamic>False</Dynamic>
@@ -524,8 +540,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -538,15 +554,15 @@
 								<List>
 									<Item>Linear<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Logscale<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Item>Both<Visible>True</Visible>
 										<ReadOnly>True</ReadOnly>
-										<Tag0 />
+										<Tag0/>
 									</Item>
 									<Default>1</Default>
 									<Dynamic>False</Dynamic>
@@ -556,8 +572,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -572,8 +588,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -584,182 +600,6 @@
 						<Cell>
 							<Check>True</Check>
 							<Default>True</Default>
-						</Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell>
-							<Text />
-							<Default />
-						</Cell>
-					</Record>
-					<Record>
-						<ID><![CDATA[2024-03-17T16:53:1355]]></ID>
-						<Visible>True</Visible>
-						<Export>True</Export>
-						<Cell><![CDATA[Cement::Figures::Solids::Detail$]]></Cell>
-						<Cell>
-							<Text>
-								<List>
-									<Item>Simple<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Detail<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Both<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Default>1</Default>
-									<Dynamic>False</Dynamic>
-								</List>
-							</Text>
-						</Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell>
-							<Text />
-							<Default />
-						</Cell>
-					</Record>
-					<Record>
-						<ID><![CDATA[2024-03-17T16:53:4056]]></ID>
-						<Visible>True</Visible>
-						<Export>True</Export>
-						<Cell><![CDATA[Cement::Figures::Solids::Unit$]]></Cell>
-						<Cell>
-							<Text>
-								<List>
-									<Item>Total<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Per100g<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Both<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Default>0</Default>
-									<Dynamic>False</Dynamic>
-								</List>
-							</Text>
-						</Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell>
-							<Text />
-							<Default />
-						</Cell>
-					</Record>
-					<Record>
-						<ID><![CDATA[2024-03-17T16:54:1257]]></ID>
-						<Visible>True</Visible>
-						<Export>True</Export>
-						<Cell><![CDATA[Cement::Figures::Soilds::Value$]]></Cell>
-						<Cell>
-							<Text>
-								<List>
-									<Item>Moles<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Grams<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Volumes<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Moles+Grams<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Moles+Volumes<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Grams+Volumes<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>All<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Default>6</Default>
-									<Dynamic>False</Dynamic>
-								</List>
-							</Text>
-						</Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell>
-							<Text />
-							<Default />
-						</Cell>
-					</Record>
-					<Record>
-						<ID><![CDATA[2024-03-17T16:59:5358]]></ID>
-						<Visible>True</Visible>
-						<Export>True</Export>
-						<Cell><![CDATA[Cement::Figures::Solids::Type$]]></Cell>
-						<Cell>
-							<Text>
-								<List>
-									<Item>Lines<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Stacked<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Both<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Default>2</Default>
-									<Dynamic>False</Dynamic>
-								</List>
-							</Text>
-						</Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell>
-							<Text />
-							<Default />
-						</Cell>
-					</Record>
-					<Record>
-						<ID><![CDATA[2024-03-17T17:16:2669]]></ID>
-						<Visible>True</Visible>
-						<Export>True</Export>
-						<Cell><![CDATA[Cement::Figures::Solids::StackType$]]></Cell>
-						<Cell>
-							<Text>
-								<List>
-									<Item>Filled<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Lines<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Item>Filled&amp;Lines<Visible>True</Visible>
-										<ReadOnly>True</ReadOnly>
-										<Tag0 />
-									</Item>
-									<Default>2</Default>
-									<Dynamic>False</Dynamic>
-								</List>
-							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
@@ -780,8 +620,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 					<Record>
@@ -796,8 +636,8 @@
 						<Cell><![CDATA[]]></Cell>
 						<Cell><![CDATA[]]></Cell>
 						<Cell>
-							<Text />
-							<Default />
+							<Text/>
+							<Default/>
 						</Cell>
 					</Record>
 				</Records>

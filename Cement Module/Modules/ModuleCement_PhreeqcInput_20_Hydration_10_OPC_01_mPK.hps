@@ -21,10 +21,10 @@ class HydrationOPCmPK(HydrationOPC)
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
             molesclinker = molesclinker + clinamount/molarmass
             molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
-            molesclinkerw = molesclinkerw + molarmass
+            molesclinkerw = molesclinkerw + clinamount
             clinindex =  get_var("Cement::Hydration::Alite::Par$") 
             txt = txt + "-parms " + WriteKineticParameters("OPC_alite_PK",clinindex,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol            
-            push_def("Db_Kinetics","OPCAlite",molarmass,molvolume,molenthalpy)
+            push_def("Db_Kinetics","OPCAlite",molarmass,molvolume,molenthalpy,clinamount/molarmass,clinamount/molarmass*molvolume,clinamount)
             #belite
             txt = txt + "OPCBelite" + eol
             clinindex =  get_var("Cement::Clinker::Belite$")   
@@ -36,10 +36,10 @@ class HydrationOPCmPK(HydrationOPC)
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
             molesclinker = molesclinker + clinamount/molarmass
             molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
-            molesclinkerw = molesclinkerw + molarmass
+            molesclinkerw = molesclinkerw + clinamount
             clinindex =  get_var("Cement::Hydration::Belite::Par$")   
             txt = txt + "-parms " + WriteKineticParameters("OPC_belite_PK",clinindex,param)  + " " +  str(get_var("Cement::Recipe::w_c"))  + eol
-            push_def("Db_Kinetics","OPCBelite",molarmass,molvolume,molenthalpy)
+            push_def("Db_Kinetics","OPCBelite",molarmass,molvolume,molenthalpy,clinamount/molarmass,clinamount/molarmass*molvolume,clinamount)
             #aluminate
             txt = txt + "OPCAluminate" + eol
             clinindex =  get_var("Cement::Clinker::Aluminate$")   
@@ -51,10 +51,10 @@ class HydrationOPCmPK(HydrationOPC)
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
             molesclinker = molesclinker + clinamount/molarmass
             molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
-            molesclinkerw = molesclinkerw + molarmass
+            molesclinkerw = molesclinkerw + clinamount
             clinindex =  get_var("Cement::Hydration::Aluminate::Par$")   
             txt = txt + "-parms " + WriteKineticParameters("OPC_aluminate_PK",clinindex,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol
-            push_def("Db_Kinetics","OPCAluminate",molarmass,molvolume,molenthalpy)
+            push_def("Db_Kinetics","OPCAluminate",molarmass,molvolume,molenthalpy,clinamount/molarmass,clinamount/molarmass*molvolume,clinamount)
             ##alite
             txt = txt + "OPCFerrite" + eol
             clinindex =  get_var("Cement::Clinker::Ferrite$")   
@@ -66,14 +66,16 @@ class HydrationOPCmPK(HydrationOPC)
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
             molesclinker = molesclinker + clinamount/molarmass
             molesclinkerv = molesclinkerv + clinamount/molarmass*molvolume
-            molesclinkerw = molesclinkerw + molarmass
+            molesclinkerw = molesclinkerw + clinamount
             clinindex =  get_var("Cement::Hydration::Ferrite::Par$")   
             txt = txt + "-parms " + WriteKineticParameters("OPC_ferrite_PK",clinindex,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol
-            push_def("Db_Kinetics","OPCFerrite",molarmass,molvolume,molenthalpy)
+            push_def("Db_Kinetics","OPCFerrite",molarmass,molvolume,molenthalpy,clinamount/molarmass,clinamount/molarmass*molvolume,clinamount)
             
             put_var("Cement::Composition::Clinker::Moles0", molesclinker)
             put_var("Cement::Composition::Clinker::Volume0", cemamount/ get_var("Cement::Clinker::BulkDensity") )
+			put_var("Cement::Composition::VolumeTot0",cemamount/ get_var("Cement::Clinker::BulkDensity")+get_var("AmountWater")*1000)
             put_var("Cement::Composition::Clinker::Weight0", molesclinkerw)
+			put_var("Cement::Composition::Clinker::WeightTot0", get_var("Cement::Recipe::Amount") + get_var("AmountWater")*1000)
             return txt
             
             

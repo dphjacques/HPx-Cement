@@ -69,5 +69,7 @@ ExtrOutputPunch
     put_var("_leadnr",0)
     
     put_var("Output::Kineticsh",ktxt)
-    
+    if(get_varexist("Output::HydrationDegree")<0) then
+        put_var("Output::HydrationDegree","") 
+    endif
 -end 

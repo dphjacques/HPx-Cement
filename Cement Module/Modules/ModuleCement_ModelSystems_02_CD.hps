@@ -110,18 +110,18 @@ class CementModelSystem
         put_var("Output::Phases",txt)
         put_var("Output::Phasesv",txtv)
         put_var("Output::Phasesw",txtw)
-		
-		bheat = 0
-		if(get_varexist("Cement::Output::Hydrates::CumHeat") = 0) then
-		   bheat = get_var("Cement::Output::Hydrates::CumHeat")
-		endif
+        
+        bheat = 0
+        if(get_varexist("Cement::Output::Hydrates::CumHeat") = 0) then
+           bheat = get_var("Cement::Output::Hydrates::CumHeat")
+        endif
         txt = ""
         txtv = ""
         txtw = ""
         txts = ""
         txtsv = ""
         txtsw = ""
-		txtsh = ""
+        txtsh = ""
         clear_def("Db_SolidSolutions")
         clear_def("Db_SolidSolutions_Def")
         if(get_defexist("Db_SolidSolutions_Comp",0,0)>-2) then 
@@ -138,10 +138,10 @@ class CementModelSystem
                 txt = txt + i + " "
                 txtv = txtv + "v" + i + " "
                 txtw = txtw + "w" + i + " "
-				txtsh = txtsh + "h" + i + " "
-				if(bheat = 1 ) then
-					txtsh  = txtsh + "ch" + i + " "
-				endif
+                txtsh = txtsh + "h" + i + " "
+                if(bheat = 1 ) then
+                    txtsh  = txtsh + "ch" + i + " "
+                endif
                 push_def("Db_SolidSolutions",i)
                 put_def("Db_SolidSolutions_Comp",i,nr,nri)
                 nri = nri+1
@@ -155,7 +155,7 @@ class CementModelSystem
         put_var("Output::SolidSolutionsComp",txts)
         put_var("Output::SolidSolutionsCompv",txtsv)
         put_var("Output::SolidSolutionsCompw",txtsw)
-		if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+        if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
             if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then
                 put_var("Output::HeatSolSol",txtsh)
             endif
@@ -169,30 +169,31 @@ class CementModelSystem
                 next i 
                 put_var("Output::Phasessi",txt)
             endif
-        endif		
-		
-		if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+        endif       
+        
+        if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
             if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then
                 txt = " "
                 for i in cemsys.PurePhases
                     txt = txt + "h" + i + " "
-					if(bheat = 1 ) then
-						txt  = txt + "ch" + i + " "
-					endif
+                    if(bheat = 1 ) then
+                        txt  = txt + "ch" + i + " "
+                    endif
                 next i 
                 put_var("Output::HeatPhases",txt)
             endif
-			txtheata = "hHydrates hCement  hTotal"
-			if(bheat = 1 ) then
-				txtheata  = txtheata + " chHydrates chCement  chTotal"
-			endif
-			put_var("Output::HeatSums",txtheata)
-		else
-			put_var("Output::HeatSums"," ")
-		endif
+            txtheata = "hHydrates hCement  hTotal"
+            if(bheat = 1 ) then
+                txtheata  = txtheata + " chHydrates chCement  chTotal"
+            endif
+            put_var("Output::HeatSums",txtheata)
+        else
+            put_var("Output::HeatSums"," ")
+        endif
+
         
        #zeolites
-	   txt = " "
+       txt = " "
        clear_def("Db_ZeolitesNa")
        if (get_varexist("Cement::Model::Zeolites::Na") = 0) then
         if (get_var("Cement::Model::Zeolites::Na") = 1) then
@@ -339,7 +340,7 @@ class CementModelSystem
         endif
     next i
 
-	sysnr.CheckBulkdensity()
+    sysnr.CheckBulkdensity()
     sysnr.SetOxides()
     
     colindex = get_defheading("Phases_CD",system)
@@ -377,15 +378,15 @@ class CementModelSystem
                              set(sysnr.SolidSolution,"AFT",aft)
                         endif                     
                 else
-					sprinta = get_def("SS_CD",1,i)
-					sprintb = get_def("SS_CD",0,i)
+                    sprinta = get_def("SS_CD",1,i)
+                    sprintb = get_def("SS_CD",0,i)
                     #set(sysnr.SolidSolution,get_def("SS_CD",1,i),get(s_sModels,get_def("SS_CD",0,i)))
-					set(sysnr.SolidSolution,sprinta,get(s_sModels,get_def("SS_CD",0,i)))
+                    set(sysnr.SolidSolution,sprinta,get(s_sModels,get_def("SS_CD",0,i)))
                 endif
         endif 
     
     next i
-	
+    
     if (get_varexist("Cement::Model::Zeolites::Na") = 0) then
           if (get_var("Cement::Model::Zeolites::Na") = 1) then
            for zeo in ZeolitesNa

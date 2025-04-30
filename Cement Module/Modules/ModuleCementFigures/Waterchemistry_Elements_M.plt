@@ -5,3 +5,5 @@
 -fig_start 
 
 -fig_end 
+
+-fig_variant x "per hour"   "_THIS * 24" "Time [hour]"

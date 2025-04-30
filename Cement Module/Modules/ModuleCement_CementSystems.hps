@@ -56,10 +56,10 @@ Fe-hemicarbonate   none                0 0 1 0 0 1 0 1
 Femonocarbonate    none                0 0 1 0 0 1 0 1
 Fe-monosulphate    none                0 0 1 0 0 1 0 1
 Gp                 Gypsum              1 1 1 1 1 1 1 1
-Hemicarbonate      AFmhemiCO3          1 1 1 1 1 1 1 1
+Hemicarbonate      AFmCO3_{0.5}        1 1 1 1 1 1 1 1
 hemihydrate        none                1 1 1 1 1 1 1 1
 Hydrotalcite       Hydrotalcite        1 1 1 1 1 1 1 1
-Monocarbonate      AFmmonoCO3          1 1 1 1 1 1 1 1
+Monocarbonate      AFmCO3          1 1 1 1 1 1 1 1
 mononitrate        AFmNO3              0 0 0 0 0 0 1 1 
 mononitrite        none                0 0 0 0 0 0 1 1
 Monosulphate16     AFmSO4              1 1 1 1 1 1 1 1
@@ -72,7 +72,7 @@ SS_CD
 -rowid S_S
 -start
     #7 9 11 13 15 17 43 47
-    cshq          CSH1               1 1 1  0  0  0  0  0
+cshq          CSH               1 1 1  0  0  0  0  0
 cshqnk        CSH               0 0 0  1  1  1  1  1
 msh           MSH               1 1 1  1  1  1  1  1
 aft           AFT               1 1 1  1  1  1  1  1
@@ -121,8 +121,6 @@ MSH1.1              none                1 1 1 1 1 1 1 1
 -end 
 
 
-
-
 SS_TC
 -casesensitive false
 -headings S_S name sys07 sys09 sys11 sys13 sys15 sys17 sys43 sys47 
@@ -130,4 +128,34 @@ SS_TC
 -start
     #7 9 11 13 15 17 43 47
 none          none               0 0 0  0  0  0  0  0
+-end 
+
+PhaseName_kin
+-casesensitive false
+-headings Mineral Name 
+-rowid Mineral
+-start
+OPCAlite     Alite 
+OPCBelite    Belite
+OPCAluminate Aluminate
+OPCFerrite   Ferrite
+SCMFA        FA     
+-end
+
+Thermo_CD
+-casesensitive false
+-headings Oxide Aqueous stoich OH H H2O Gf Hf #j/mole
+-rowid Oxide
+#Gf and Hf from Table D1 in Lothenbach et al., 2018
+-start
+    SiO2  SiO2   1  0 0  0 -833410 -887860
+    Al2O3 AlO2-  2 -2 0  1 -827480 -925570
+    CaO   Ca+2   1  2 0 -1 -552790 -543070
+    MgO   Mg+2   1  2 0 -1 -453990 -465930
+    Fe2O3 FeO2-  2 -2 0  1 -368260 -443820
+    SO3   SO4-2  1  0 2 -1 -74446 -909700
+    Na2O  Na+    2  2 0 -1 -261880 -240280
+    K2O   K+     2  2 0 -1 -282460 -252140
+    OH    OH-    1 0 0 0  -157270 -230010 
+    H2O   H2O    1 0 0 0  -237180 -285880   
 -end 
