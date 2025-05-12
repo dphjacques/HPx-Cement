@@ -8,5 +8,6 @@
 		<Template>Hydrates_30_Leaching_General.xml</Template>
 		<Template>Hydration_10_CEM-I.xml</Template>
 		<Template>Hydration_20_SCM.xml</Template>
+		<Template>Hydration_20_SCM_01_FA_OPC_minerals.xml</Template>
 	</Templates>
 </Module>
