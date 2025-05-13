@@ -18,20 +18,24 @@ Bulk Density \tab kg/dm3\par
 \par
 
 \pard\f0\fs19\lang2067\par
-}
-]]><Visible>False</Visible>
+}]]><Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 			<Type>1</Type>
 			<ExternalFile>False</ExternalFile>
-			<ParentFolder />
-			<RelativePath />
-			<ParentName />
+			<ParentFolder/>
+			<RelativePath/>
+			<ParentName/>
 		</Info>
 		<Export>true</Export>
 		<Headings>
 			<Heading>Name</Heading>
 			<Heading>Unit</Heading>
 			<Heading>BulkDensity</Heading>
+			<Heading>MolarMass</Heading>
+			<Heading>MolarVolume</Heading>
+			<Heading>GibbsFormation</Heading>
+			<Heading>EnthalpyFormation</Heading>
+			<Heading>MolarEnthalpy</Heading>
 			<Heading>CaO</Heading>
 			<Heading>SiO2</Heading>
 			<Heading>Al2O3</Heading>
@@ -54,13 +58,18 @@ Bulk Density \tab kg/dm3\par
 		</Headings>
 		<Origin>0</Origin>
 		<RowId>Name</RowId>
-		<InfoId></InfoId>
+		<InfoId/>
 		<CaseSensitive>false</CaseSensitive>
 		<Records>
 			<Record>
 				<Value>DeWeerdt11</Value>
 				<Value>%mass</Value>
 				<Value>2.49</Value>
+				<Value>-1</Value>
+				<Value>-1</Value>
+				<Value>-1.5E6</Value>
+				<Value>-1.5E6</Value>
+				<Value>SCMFA</Value>
 				<Value>6.3</Value>
 				<Value>50.0</Value>
 				<Value>23.9</Value>

@@ -121,7 +121,7 @@ class HydrationSCM(Hydration)
             phtxt = phtxt +  chr(35) + "Change in Gibbs free Energy of reaction " + str(df) + " J/mole" + eol
             phtxt = phtxt + "-log_k " + str(k) + eol
         else
-            phtxt = phtxt +  chr(35) + "Gibbs free Energy of formation of " + SCM " is not available. Log_k is not defined." + eol
+            phtxt = phtxt +  chr(35) + "Gibbs free Energy of formation of " + SCM + " is not available. Log_k is not defined." + eol
             phtxt = phtxt + "-log_k 0" +eol
         endif
         enthalpy = false
