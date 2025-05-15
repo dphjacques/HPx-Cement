@@ -277,11 +277,9 @@ class HydrationSCM(Hydration)
             write(str(oxamount/molarmass) + eol)
             write(str(oxamount/molarmass*MolarVolume) + eol)
             txt = txt + "SCM" + SCM + eol
-            txt = txt + "-m0 " + str(oxamount/molarmass) + eol
-                    write("here2b"+eol)   
+            txt = txt + "-m0 " + str(oxamount/molarmass) + eol  
             txt = txt + "-parms " + WriteKineticParameters(db_param,parindexnr,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol 
-            push_def("Db_Kinetics","SCM" + SCM,MolarMass,MolarVolume,"SCM" + SCM,oxamount/MolarMass,oxamount/MolarMass*MolarVolume,oxamount) 
-            write("here2c"+eol) 
+            push_def("Db_Kinetics","SCM" + SCM,MolarMass,MolarVolume,1E99,oxamount/MolarMass,oxamount/MolarMass*MolarVolume,oxamount) 
         else 
                   
             it = iterator(cemsys.Oxides)
@@ -297,7 +295,6 @@ class HydrationSCM(Hydration)
                 oxamount = oxamount*ReactivityValueTotOx(reactedamount,dbscm,rowindex,ox)
                 txt = txt + "-m0 " + str(oxamount/molarmass) + eol
                 txt = txt + "-parms " + WriteKineticParameters(db_param,parindexnr,param)  + " " +  str(get_var("Cement::Recipe::w_c")) + eol
-                molarmass = get_def(db_param,"MolarMass",parindexnr)
                 molvolume = get_def(db_param,"MolarVolume",parindexnr)
                 molenthalpy = get_def(db_param,"MolarEnthalpy",parindexnr)                   
                 push_def("Db_Kinetics",ratename,molarmass,molvolume,molenthalpy,oxamount/molarmass,oxamount/molarmass*molvolume,oxamount)

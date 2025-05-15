@@ -471,7 +471,7 @@ include$ _txtheading._in
                     if(total_time() = 0 ) then
                         punch(0)
                     else 
-                        punch(calc_value("CalculateHydrationDegree",get_def(db,"inimol",i),kin(get_def(db,"kin",i))))
+						punch(calc_value("CalculateHydrationDegree",get_def(db,"inimol",i),kin(get_def(db,"kin",i))))
                     endif
                 next i
                 if(total_time() = 0 ) then
