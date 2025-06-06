@@ -14,11 +14,11 @@
 				</ToolTip>
 				<Visible>True</Visible>
 				<Export>True</Export>				
-				<Info><![CDATA[]]><Visible>True</Visible>
+				<Info><![CDATA[]]><Visible>False</Visible>
 					<ReadOnly>False</ReadOnly>
 					<Type>1</Type>
 					<ExternalFile>True</ExternalFile>
-					<RelativePath>ModuleHelp\Cement_Properties_Tortuosity_Aggregates.rtf</RelativePath>
+					<RelativePath>ModuleCementHelp\ModuleCement_Input_50_Transport_01_TransportProperties_00_Main.htm</RelativePath>
 					<ParentName>Modules</ParentName>
 				</Info>
 				<Groups>
@@ -185,14 +185,6 @@
 						</ToolTip>
 						<Visible>True</Visible>
 						<Export>True</Export>
-						<Info><![CDATA[]]><Visible>False</Visible>
-							<ReadOnly>False</ReadOnly>
-							<Type>1</Type>
-							<ExternalFile>True</ExternalFile>
-							<ParentFolder>C:\Virtual-D\HP Projects\2024 - Tutorials\30_Projects\00_Tutorials_10_CementModule\12_modules</ParentFolder>
-							<RelativePath>ModuleHelp\Cement_Properties_Tortuosity_Aggregates.hlp</RelativePath>
-							<ParentName>Modules</ParentName>
-						</Info>
 						<Columns>
 							<Column>
 								<Name>Name<Visible>False</Visible>

@@ -471,7 +471,7 @@ include$ _txtheading._in
                     if(total_time() = 0 ) then
                         punch(0)
                     else 
-						punch(calc_value("CalculateHydrationDegree",get_def(db,"inimol",i),kin(get_def(db,"kin",i))))
+                        punch(calc_value("CalculateHydrationDegree",get_def(db,"inimol",i),kin(get_def(db,"kin",i))))
                     endif
                 next i
                 if(total_time() = 0 ) then
@@ -538,6 +538,7 @@ include$ _txtheading._in
         punch(inivolume+  get_var("Cement::Recipe::Amount") * get_var("Cement::Recipe::w_c") -volclink-volhyd-VolumeGelPores-tot("water")*1000)
     endif
     
+    punch(delta_h_phase("C2S"),gfw(phase_formula("C2S")))
 -end
 END 
 INCLUDE$ ModuleCementFigures/00_Definitions_02_LineStyleNumbers.hpi
@@ -905,18 +906,19 @@ ExtrOutputPunch
         endif
     endif
     
-    #General volumes or Fractions    
-    if( get_varexist("Cement::_hydration") = 0 ) then    
-        WriteFigure("VolumeFraction",xtype)
-    else  
-        WriteFigure("VolumeFraction_Eq",xtype)
-    endif
-    txt = txt + "-fig_name " + chr(34) + "Volumes" + chr(34) + " " + eol                
-    if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
-      txt = txt + "-fig_showzero false " + eol
-    endif
-    txt = txt + eol     
-
+    #General volumes or Fractions 
+    if(get_varexist("Cement::Leaching::Type$") <> 0 ) then
+		if( get_varexist("Cement::_hydration") = 0 ) then    
+			WriteFigure("VolumeFraction",xtype)
+		else  
+			WriteFigure("VolumeFraction_Eq",xtype)
+		endif
+		txt = txt + "-fig_name " + chr(34) + "Volumes" + chr(34) + " " + eol                
+		if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
+		  txt = txt + "-fig_showzero false " + eol
+		endif
+		txt = txt + eol     
+	endif
     
         #General / volumes
     if( get_varexist("Cement::_hydration") = 0 ) then        
