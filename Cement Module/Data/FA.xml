@@ -4,7 +4,7 @@
 		<Name>FA</Name>
 		<Description>Chemical composition of Fly-ash</Description>
 		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Segoe UI;}}
-{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
 \pard\b\fs24 Table\b0\fs19\par
 \par
 Default unit: \par
@@ -22,9 +22,9 @@ Bulk Density \tab kg/dm3\par
 			<ReadOnly>False</ReadOnly>
 			<Type>1</Type>
 			<ExternalFile>False</ExternalFile>
-			<ParentFolder/>
-			<RelativePath/>
-			<ParentName/>
+			<ParentFolder />
+			<RelativePath />
+			<ParentName />
 		</Info>
 		<Export>true</Export>
 		<Headings>
@@ -58,7 +58,7 @@ Bulk Density \tab kg/dm3\par
 		</Headings>
 		<Origin>0</Origin>
 		<RowId>Name</RowId>
-		<InfoId/>
+		<InfoId></InfoId>
 		<CaseSensitive>false</CaseSensitive>
 		<Records>
 			<Record>
@@ -89,6 +89,64 @@ Bulk Density \tab kg/dm3\par
 				<Value>100</Value>
 				<Value>100</Value>
 				<Value>100</Value>
+			</Record>
+			<Record>
+				<Value>Yuefeng</Value>
+				<Value>%mass</Value>
+				<Value>2.49</Value>
+				<Value>-1</Value>
+				<Value>-1</Value>
+				<Value>-1.4E6</Value>
+				<Value>-1.37E6</Value>
+				<Value>SCMFA</Value>
+				<Value>5.52</Value>
+				<Value>47.37</Value>
+				<Value>22.8</Value>
+				<Value>0</Value>
+				<Value>2.08</Value>
+				<Value>0.68</Value>
+				<Value>15.79</Value>
+				<Value>0.34</Value>
+				<Value>1.77</Value>
+				<Value>100</Value>
+				<Value>89.3</Value>
+				<Value>75.6</Value>
+				<Value>62.2</Value>
+				<Value>100</Value>
+				<Value>78.8</Value>
+				<Value>45.5</Value>
+				<Value>94.4</Value>
+				<Value>82.35</Value>
+				<Value>100</Value>
+			</Record>
+			<Record>
+				<Value>Yuefeng_exp01</Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
+				<Value></Value>
 			</Record>
 		</Records>
 	</DataBlock>

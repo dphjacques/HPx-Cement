@@ -1,0 +1,15 @@
+GLOBAL_VARIABLE Hydration::OutputNr 1
+INCLUDE$ ModuleCement_PhreeqcInput_20_Hydration_00_general.hpi
+END
+SELECTED_OUTPUT @Hydration::OutputNr
+-active false
+END
+GLOBAL_VARIABLE Hydration::OutputNr 2
+GLOBAL_VARIABLE Cement::_hydration 0
+GLOBAL_VARIABLE Cement::Figures::X::Title$ "Amount of water [kg]"
+GLOBAL_VARIABLE Cement::Figures::Time::hour -1
+GLOBAL_VARIABLE Cement::Figures::Time::Second -1
+#Degradation
+GLOBAL_VARIABLE Cement::Figures::Water::Elements::Y::Scale$ "Linear"
+GLOBAL_VARIABLE Cement::Figures::X::Scale$ "Linear"
+INCLUDE$ ModuleCement_DegradationLeaching.hpi

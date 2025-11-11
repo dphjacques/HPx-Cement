@@ -1,7 +1,8 @@
 INCLUDE$ ModuleCement_UserPunch_Generic.hps
 
 
-USER_PUNCH 
+
+USER_PUNCH @Hydration::OutputNr
 -mybasic
 
 -headings Amount OPC GBFS SF FA LS MK wc
@@ -78,14 +79,29 @@ include$ _txtheading._in
     
     #print lead
     timestep = 0
-    if(get_varexist("Cement::Leaching::Type$") = 0 ) then
-        if(get_varexist("Leaching::Run::AddedWater")=0) then
-            addedwater = get_var("Leaching::Run::TotalAmountAddedWater") + get_var("Leaching::Run::AddedWater")
-            punch(addedwater)
-            put_var("Leaching::Run::TotalAmountAddedWater",addedwater )
-        else
-          punch(0)
+    if(get_varexist("Cement::Leaching::Type$") = 0 ) then #Leaching calculations
+        bhyd = 1
+        if(get_varexist("Cement::_hydration")=0) then #Transport simulation with pre-hydration
+            if(get_var("Cement::_hydration") = 1) then
+                bhyd = 0
+                punch(total_time()) 
+            endif 
+        endif 
+        if(bhyd = 1) then 
+            if(get_varexist("Transport::Leaching::Hydration")=0) then #Pre-hydration calculations (transport or batch)
+                punch(total_time()) 
+            elseif(get_varexist("Leaching::Run::AddedWater")=0) then #batch
+                addedwater = get_var("Leaching::Run::TotalAmountAddedWater") + get_var("Leaching::Run::AddedWater")
+                punch(addedwater)
+                put_var("Leaching::Run::TotalAmountAddedWater",addedwater )
+            else
+              punch(0)
+            endif
         endif
+    elseif(get_varexist("Cement::_hydration")=0) then #Transport simulation with pre-hydration
+        if(get_var("Cement::_hydration") = 1) then
+            punch(total_time()) 
+        endif 
     elseif (get_varexist("Cement::Ingress::Type$") = 0 ) then
         _step = sys("[_step]")
         if ( get_var("Cement::Figures::Lead$") <> "null" ) then
@@ -109,7 +125,6 @@ include$ _txtheading._in
     elseif ( get_var("Cement::Figures::Lead$") <> "null" ) then
         leadvar = get_var("Cement::Figures::Lead$")
         if(string.comparenocase(leadvar,"time") = 0) then
-            punch(total_time())
             timestep= total_time() - get_var("_timestep")
             put_var("_timestep",total_time())
         elseif(get_varexist(leadvar) = 0) then
@@ -424,7 +439,7 @@ include$ _txtheading._in
                     if(timestep>0) then
                         Q = Q /timestep
                     endif
-                    punch(Q)
+                    punch(dh)
                     if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
                        punch(cumq)
                     endif
@@ -485,7 +500,14 @@ include$ _txtheading._in
     
     #Summary graphs AggVol CemVol HydratesVol  ChemShrink
     #get_var("Cement::Composition::Volume0")
-    punch(0) #aggregates - not included
+    AggVol = 0
+    if(get_varexist("Aggregates::Volume") = 0 ) then
+        AggVol = get_var("Aggregates::Volume")
+        if(AggVol < 0) then
+            AggVol = get_var("Aggregate::Weight")/get_var("Aggregate::BulkDensity")
+        endif
+    endif
+    punch(AggVol)
     db = "Db_Minerals"
     count = get_defnrrec(db)-1
     volhyd = 0
@@ -512,7 +534,7 @@ include$ _txtheading._in
         punch(get_var("Cement::Composition::VolumeTot0"),volclink, volhyd) 
         punch(get_var("Cement::Composition::VolumeTot0")-volclink-volhyd-VolumeGelPores-tot("water")*1000)      
     else
-        inivolume = 0
+    inivolume = 0
         if(bopc=1) then
             if(get_var("Cement::Clinker::BulkDensity") < 0) then bbulkdensity = 0
             inivolume = inivolume + get_var("Cement::Clinker::Amount") / get_var("Cement::Clinker::BulkDensity") 
@@ -538,13 +560,12 @@ include$ _txtheading._in
         punch(inivolume+  get_var("Cement::Recipe::Amount") * get_var("Cement::Recipe::w_c") -volclink-volhyd-VolumeGelPores-tot("water")*1000)
     endif
     
-    punch(delta_h_phase("C2S"),gfw(phase_formula("C2S")))
 -end
 END 
 INCLUDE$ ModuleCementFigures/00_Definitions_02_LineStyleNumbers.hpi
 
 CALCULATE_VALUES
-ExtrOutputPunch
+ExtraOutputPunch
 -state Definition
 -mybasic
 -start 
@@ -560,7 +581,8 @@ ExtrOutputPunch
   bsolid100 = 0
   convert =  get_var("Cement::Recipe::Amount") /100
   convertstr = " t " + chr(34) + "_THIS/" + str(convert) + chr(34) + " " 
-  bylogscale = 0
+  
+  TextFigureGroup = "DefaultGraphs"
   
   def WriteListElements()
     #print solution
@@ -684,11 +706,11 @@ ExtrOutputPunch
 
   enddef
   
-  def WriteFigure(name, xtype)
+  def WriteFigure(name)
           txt = txt + "-fig_nr " + str(fignr) + eol
+          txt = txt + "-fig_group " + TextFigureGroup + eol
           txt1 = "INCLUDE$ " + name + ".plt " 
           txt = txt + txt1  + eol
-          txt = txt + "-fig_variabletype " + chr(34) + xtype + chr(34)  + " " + eol
           if(get_varexist("Cement::Figures::X::Column") > -1) then
              txt = txt + "-fig_x " + get_var("Cement::Figures::X::Column$") + eol    
           endif
@@ -699,70 +721,18 @@ ExtrOutputPunch
           if(bsolids = 1) then
               WriteListSolids()
           endif
-       
-          txt = txt + "-fig_start " + eol
-          bgrid = 0
-          if(xtype = "Logscale") then
-             txt = txt + "set logscale x " + eol
-             txt = txt + "set mxtics 10 " + eol
-             txt = txt + "set xtics format " + chr(34) + "10^{%T}" + chr(34) + " " + eol
-             txt = txt + "set xtics 10 logscale " + eol
-             txt = txt + "set grid "
-             if( get_var("Cement::Figures::X::Grid$") = "Both" or get_var("Cement::Figures::X::Grid$") = "Both log" ) then
-                 txt = txt + " xtics mxtics " 
-                 bgrid = 1
-             elseif (get_var("Cement::Figures::X::Grid$") = "Major" or get_var("Cement::Figures::X::Grid$") = "Major log") then
-                 txt = txt + " xtics nomxtics " 
-                 bgrid = 1
-             else
-                txt = txt + " noxtics nomxtics " 
-             endif
-          else
-             txt = txt + "set grid "
-             if( get_var("Cement::Figures::X::Grid$") = "Both" ) then
-                 txt = txt + " xtics mxtics " 
-                 bgrid = 1
-             elseif (get_var("Cement::Figures::X::Grid$") = "Major" ) then
-                 txt = txt + " xtics nomxtics " 
-                 bgrid = 1
-             else
-                txt = txt + " noxtics nomxtics " 
-             endif
+          
+          #Add time transformations
+          if(get_varexist("Cement::Figures::Time::hour") = 0) then
+              if(get_var("Cement::Figures::Time::hour")>0) then
+                  txt = txt + "-fig_variant x " +  chr(34) +  "per hour"  + chr(34) + " " +  chr(34) + "_THIS * 24"  + chr(34) + " " +  chr(34) + "Time [hour]" +  chr(34) + eol
+              endif
           endif
-                
-          if(bylogscale = 1) then
-              if( get_var("Cement::Figures::Y::Grid$") = "Both" or get_var("Cement::Figures::Y::Grid$") = "Both Log" ) then
-                  txt = txt + " ytics mytics " 
-                  bgrid = 1
-              elseif (get_var("Cement::Figures::Y::Grid$") = "Major" or get_var("Cement::Figures::Y::Grid$") = "Major Log" ) then
-                  txt = txt + " ytics nomytics " 
-                  bgrid = 1
-              else
-                  txt = txt + " noytics nomytics " 
-              endif 
-          else 
-              if( get_var("Cement::Figures::Y::Grid$") = "Both" ) then
-                  txt = txt + " ytics mytics " 
-                  bgrid = 1
-              elseif (get_var("Cement::Figures::Y::Grid$") = "Major" ) then
-                  txt = txt + " ytics nomytics " 
-                  bgrid = 1
-              else
-                  txt = txt + " noytics nomytics " 
-              endif 
-          endif                
-
-          txt = txt + " lt 1001, lt 1002 " + eol
-          if (bgrid = 0) then
-              txt = txt + "unset grid " + eol
+          if(get_varexist("Cement::Figures::Time::Second") = 0) then
+              if(get_var("Cement::Figures::Time::Second")>0) then
+                  txt = txt + "-fig_variant x " +  chr(34) +  "per second"  + chr(34) + " " +  chr(34) + "_THIS * 86400"  + chr(34) + " " +  chr(34) + "Time [second]" +  chr(34) + eol
+              endif
           endif
-          if(bylogscale = 1) then
-              txt = txt + "set logscale y" + eol
-              txt = txt + "set mytics 10 " + eol
-              txt = txt + "set ytics format " + chr(34) + "10^{%T}" + chr(34) + " " + eol
-              txt = txt + "set ytics 10 logscale " + eol
-          endif
-          txt = txt + "-fig_end " + eol
           
           fignr = fignr+1
        
@@ -783,7 +753,7 @@ ExtrOutputPunch
     else
         swater = "- no water"
     endif
-            WriteFigure("Solids_Moles_Eq"+un,xtype)
+            WriteFigure("Solids_Moles_Eq"+un)
             txt = txt + "-fig_name " + chr(34) + "SolidsMoles " + una + swater + chr(34) + " " + eol                 
             if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
               txt = txt + "-fig_showzero false " + eol
@@ -791,7 +761,7 @@ ExtrOutputPunch
             txt = txt + eol
 
             bsolidgram = 1
-            WriteFigure("Solids_Grams_Eq"+un,xtype)
+            WriteFigure("Solids_Grams_Eq"+un)
             bsolidgram = 0
             txt = txt + "-fig_name " + chr(34) + "SolidsGrams" + una + swater + chr(34) + " " + eol                   
             if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
@@ -800,7 +770,7 @@ ExtrOutputPunch
             txt = txt + eol
  
             bsolidvol = 1
-            WriteFigure("Solids_Volume_Eq"+un,xtype)
+            WriteFigure("Solids_Volume_Eq"+un)
             bsolidvol = 0
             txt = txt + "-fig_name " + chr(34) + "SolidsVolume" + una + swater + chr(34) + " " + eol                   
             if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
@@ -825,58 +795,37 @@ ExtrOutputPunch
  
   enddef 
   
-  def WriteFigures(xtype)
+  def WriteFigures()
 
     if( get_var("Cement::Figures::pH") = 1) then 
-        WriteFigure("Waterchemistry_pH",xtype)
+        WriteFigure("Waterchemistry_pH")
         txt = txt + eol
     endif
 
     if( get_var("Cement::Figures::Water::Elements") = 1) then 
         belements = 1
-        if( get_var("Cement::Figures::Water::Elements::Y::Scale$") = "Linear") then
-            _is = 1
-            _ie = 1
-        elseif ( get_var("Cement::Figures::Water::Elements::Y::Scale$") = "Logscale") then
-            _is = 2
-            _ie = 2
-        else
-            _is = 1
-            _ie = 2
-        endif
-        for i = _is to _ie
-        
-            bylogscale = i- 1
-            if( get_var("Cement::Figures::Water::Elements::Unit$") = "Moles" or  get_var("Cement::Figures::Water::Elements::Unit$") = "Both") then
-                belements_mg = 0
-                WriteFigure("Waterchemistry_Elements_M",xtype)
-                if(bylogscale = 0) then
-                    txt = txt + "-fig_name " + chr(34) + "Elements - M" + chr(34) + " " + eol
-                else
-                    txt = txt + "-fig_name " + chr(34) + "Elements - M - Log" + chr(34) + " " + eol
-                endif
-                if( get_var("Cement::Figures::Water::Elements::ShowZero") = 0 ) then
-                    txt = txt + "-fig_showzero false " + eol
-                endif
-                txt = txt + eol
-            endif    
-            if( get_var("Cement::Figures::Water::Elements::Unit$") = "Milligrams" or  get_var("Cement::Figures::Water::Elements::Unit$") = "Both") then
-                belements_mg = 1  
-                WriteFigure("Waterchemistry_Elements_mg",xtype) 
-                if(bylogscale = 0) then 
-                    txt = txt + "-fig_name " + chr(34) + "Elements - mg" + chr(34) + " " + eol
-                else
-                    txt = txt + "-fig_name " + chr(34) + "Elements - mg - Log" + chr(34) + " " + eol
-                endif 
-                if( get_var("Cement::Figures::Water::Elements::ShowZero") = 0 ) then
-                    txt = txt + "-fig_showzero false " + eol
-                endif
-                txt = txt + eol    
+        if( get_var("Cement::Figures::Water::Elements::Unit$") = "Moles" or  get_var("Cement::Figures::Water::Elements::Unit$") = "Both") then
+            belements_mg = 0
+            WriteFigure("Waterchemistry_Elements_M")
+            txt = txt + "-fig_name " + chr(34) + "Elements - M" + chr(34) + " " + eol
+            if( get_var("Cement::Figures::Water::Elements::ShowZero") = 0 ) then
+                txt = txt + "-fig_showzero false " + eol
             endif
-        next i
+            txt = txt + eol
+        endif    
+        if( get_var("Cement::Figures::Water::Elements::Unit$") = "Milligrams" or  get_var("Cement::Figures::Water::Elements::Unit$") = "Both") then
+            belements_mg = 1  
+            WriteFigure("Waterchemistry_Elements_mg") 
+            txt = txt + "-fig_name " + chr(34) + "Elements - mg" + chr(34) + " " + eol
+            if( get_var("Cement::Figures::Water::Elements::ShowZero") = 0 ) then
+                txt = txt + "-fig_showzero false " + eol
+            endif
+            txt = txt + eol    
+        endif
+
         belements = 0
         belements_mg = 0
-        bylogscale = 0
+
     endif
     
 
@@ -893,14 +842,11 @@ ExtrOutputPunch
     
     if(get_varexist("Cement::Figures::Heat") = 0) then
         if( get_var("Cement::Figures::Heat") = 1) then 
-            WriteFigure("Heat_rate_system",xtype)
+            WriteFigure("Heat_rate")
             txt = txt + eol 
-            WriteFigure("Heat_rate_binder",xtype)
-            txt = txt + eol
+
             if( get_var("Cement::Output::Hydrates::CumHeat") = 1) then 
-                WriteFigure("Heat_cum_system",xtype)
-                txt = txt + eol
-                WriteFigure("Heat_cum_binder",xtype)
+                WriteFigure("Heat_cum")
                 txt = txt + eol
             endif
         endif
@@ -908,28 +854,29 @@ ExtrOutputPunch
     
     #General volumes or Fractions 
     if(get_varexist("Cement::Leaching::Type$") <> 0 ) then
-		if( get_varexist("Cement::_hydration") = 0 ) then    
-			WriteFigure("VolumeFraction",xtype)
-		else  
-			WriteFigure("VolumeFraction_Eq",xtype)
-		endif
-		txt = txt + "-fig_name " + chr(34) + "Volumes" + chr(34) + " " + eol                
-		if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
-		  txt = txt + "-fig_showzero false " + eol
-		endif
-		txt = txt + eol     
-	endif
+        if(get_varexist("Cement::Figures::Summary") = 0 ) then
+            if(get_var("Cement::Figures::Summary") = 1 ) then
+                if( get_varexist("Cement::_hydration") = 0 ) then    
+                    WriteFigure("VolumeFraction")
+                else  
+                    WriteFigure("VolumeFraction_Eq")
+                endif               
+                if(  get_var("Cement::Figures::Summary::ShowZero")  = 0 ) then
+                  txt = txt + "-fig_showzero false " + eol
+                endif
+                txt = txt + eol 
+             endif 
+        endif 
+    endif
     
-        #General / volumes
+    #General / volumes for hydration
     if( get_varexist("Cement::_hydration") = 0 ) then        
-        WriteFigure("HydrationDegree",xtype)
-        txt = txt + "-fig_name " + chr(34) + "Hydration Degree" + chr(34) + " " + eol                
+        WriteFigure("HydrationDegree")           
         if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
           txt = txt + "-fig_showzero false " + eol
         endif
         txt = txt + eol 
-        WriteFigure("ChemicalShrinkage",xtype)
-        txt = txt + "-fig_name " + chr(34) + "Chemical shrinkage" + chr(34) + " " + eol                
+        WriteFigure("ChemicalShrinkage")             
         if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
           txt = txt + "-fig_showzero false " + eol
         endif
@@ -955,7 +902,7 @@ ExtrOutputPunch
   
   if(get_var("Cement::Figures::Ternary::pH") = 1) then
     txt = txt + "-fig_nr " + str(fignr) + eol
-    txt = txt + "-fig_group " + chr(34) + "Water chemistry" + chr(34) + eol
+    txt = txt + "-fig_variabletype " + chr(34) + "Water chemistry" + chr(34) + eol
     txt = txt + "-fig_name " + chr(34) + "pH" + chr(34) + eol
     txt = txt + txt_axis
     txt = txt + "-fig_map pH < k " + chr(34) + "pH" + chr(34) + "> "+ eol + eol   
@@ -968,7 +915,7 @@ ExtrOutputPunch
     count = get_defnrrec(db)-1
     for i = 0 to count 
         txt = txt + "-fig_nr " + str(fignr) + eol
-        txt = txt + "-fig_group " + chr(34) + "Water chemistry" + chr(34) + eol
+        txt = txt + "-fig_variabletype " + chr(34) + "Water chemistry" + chr(34) + eol
         txt = txt + "-fig_name " + chr(34) + "Element - Mol - " + get_def(db,i) + chr(34) + eol
         txt = txt + txt_axis 
         txt = txt + "-fig_map " + get_def(db,i) + " < k " +  chr(34) + get_def(db,i) + " [mol/l]" + chr(34) + " > " + eol+ eol
@@ -985,7 +932,7 @@ ExtrOutputPunch
     count = get_defnrrec(db)-1
     for i = 0 to count 
         txt = txt + "-fig_nr " + str(fignr) + eol
-        txt = txt + "-fig_group " + chr(34) + "Solids - Mol/dm3" + chr(34) + eol
+        txt = txt + "-fig_variabletype " + chr(34) + "Solids - Mol/dm3" + chr(34) + eol
         txt = txt + "-fig_name " + chr(34) + get_def(db,0,i) + chr(34) + eol
         txt = txt + txt_axis 
         txt = txt + "-fig_map " + get_def(db,0,i) + " < k " +  chr(34) + get_def(db,0,i) + " [mol/dm^3]" + chr(34) + " > " + eol+ eol
@@ -996,7 +943,7 @@ ExtrOutputPunch
     count = get_defnrrec(db)-1
     for i = 0 to count 
         txt = txt + "-fig_nr " + str(fignr) + eol
-        txt = txt + "-fig_group " + chr(34) + "Solids - Mol/dm3" + chr(34) + eol
+        txt = txt + "-fig_variabletype " + chr(34) + "Solids - Mol/dm3" + chr(34) + eol
         txt = txt + "-fig_name " + chr(34) + get_def(db,i) + chr(34) + eol
         txt = txt + txt_axis 
         txt = txt + "-fig_map " + get_def(db,i) + " < k " +  chr(34) + get_def(db,i) + " [mol/dm^3]" + chr(34) + " > " + eol+ eol
@@ -1011,67 +958,80 @@ ExtrOutputPunch
 
 
 #Main
+ bhyd = 1
+ if(get_varexist("Cement::_hydration")=0) then 
+    if(get_var("Cement::_hydration") = 1) then
+        bhyd= 0
+        TextFigureGroup = "Hydration"
+    endif 
+ endif
+ if(bhyd = 1) then
+    if(get_varexist("Cement::Leaching::Type$") = 0 ) then
+        TextFigureGroup = "Leaching"    
+    endif
+ endif   
+
  figures = false  
- if( get_varexist("Cement::Figures") = 0 ) then
-      if( get_var("Cement::Figures") = 1 ) then
-          figures = true
-      endif
-  endif
-  if( get_varexist("Cement::Figures::Ternary") = 0 ) then
-      if( get_var("Cement::Figures::Ternary") = 1 ) then
-          figures = true
-      endif
-  endif
-  if(figures) then
-          dir = get_var("_Managed$") + "12_modules/ModuleCementFigures"
-          txt = txt + "INCLUDEPATH " +  dir + eol
-
-
-          dir = dir + "\"
-          
-          txt = txt + "SELECTED_GRAPH " + eol 
-          
-          txt = txt + "-include " + dir + "00_Definitions_01_colors.plt"  + eol
+ figures1 = false
+ if( get_varexist("Cement::Figures") = 0 ) then #for batch reactions
+     if( get_var("Cement::Figures") = 1 ) then
+         figures = true
+         figures1 = true
      endif
-  if( get_varexist("Cement::Figures") = 0 ) then
-      if( get_var("Cement::Figures") = 1 ) then       
-          txt = txt + "-start " + eol
-          if (get_var("Cement::Figures::X::Reverse") = 1 ) then
-              txt = txt + " set xrange reverse " + eol
-          endif
-          txt = txt + "-end " + eol
-          
-          
-          if(  get_var("Cement::Figures::X::Scale$") = "Linear" or get_var("Cement::Figures::X::Scale$") = "Both") then
-              xtype = "Linear"
-              WriteFigures(xtype)
-          endif
-          if(  get_var("Cement::Figures::X::Scale$") = "Logscale" or get_var("Cement::Figures::X::Scale$") = "Both") then
-              xtype = "Logscale"
-              WriteFigures(xtype)
-          endif    
-              
-      endif
-  endif
-    if( get_varexist("Cement::Figures::Ternary") = 0 ) then
-      if( get_var("Cement::Figures::Ternary") = 1 ) then
-         txt = txt + "-start" + eol
-         txt = txt + "set palette maxcolors 10" +eol
-         txt = txt + "set palette model RGB" +eol
-         txt = txt + "set palette defined (0 " + chr(34) + "web-blue" + chr(34) + " , 0.25 " + chr(34) + "light-blue" + chr(34) + ", 0.5 " + chr(34) + "web-green" + chr(34) + ", 0.75 " + chr(34) + "yellow" + chr(34) + " , 1.0 " + chr(34) + "red" + chr(34) + ")" +eol
-         txt = txt + "-end" + eol
-         WriteTernaryFigures();          
-      endif
-  endif
+ endif  
+ if( get_varexist("Transport::Hydration::Figures") = 0 ) then #for transport
+     if( get_var("Transport::Hydration::Figures") = 1 ) then
+         figures = true
+         figures1 = true
+     endif
+ endif
+ if( get_varexist("Cement::Figures::Ternary") = 0 ) then
+     if( get_var("Cement::Figures::Ternary") = 1 ) then
+         figures = true
+     endif
+ endif
+ if(figures) then
+         dir = get_var("_Managed$") + "12_modules/ModuleCementFigures"
+         txt = txt + "INCLUDEPATH " +  dir + eol
 
-  openf("_graphs._in")
-  writef(txt)
-  closef()
+
+         dir = dir + "\"
+         
+         txt = txt + "SELECTED_GRAPH " + str(get_var("Hydration::OutputNr")) + eol 
+         
+         txt = txt + "-include " + dir + "00_Definitions_01_colors.plt"  + eol
+    endif
+ if( figures1) then
+    txt = txt + "-start " + eol
+    if (get_varexist("Cement::Figures::X::Reverse") = 0 ) then
+        if (get_var("Cement::Figures::X::Reverse") = 1 ) then
+            txt = txt + " set xrange reverse " + eol
+        endif
+    endif
+    txt = txt + "-end " + eol
+    WriteFigures()
+ endif
+ if( get_varexist("Cement::Figures::Ternary") = 0 ) then
+   if( get_var("Cement::Figures::Ternary") = 1 ) then
+        txt = txt + "-start" + eol
+        txt = txt + "set palette maxcolors 10" +eol
+        txt = txt + "set palette model RGB" +eol
+        txt = txt + "set palette defined (0 " + chr(34) + "web-blue" + chr(34) + " , 0.25 " + chr(34) + "light-blue" + chr(34) + ", 0.5 " + chr(34) + "web-green" + chr(34) + ", 0.75 " + chr(34) + "yellow" + chr(34) + " , 1.0 " + chr(34) + "red" + chr(34) + ")" +eol
+        txt = txt + "-end" + eol
+        WriteTernaryFigures();          
+     endif
+ endif
+
+ graphname = "_graphs" + TextFigureGroup + "._in"
+ openf(graphname)
+ writef(txt)
+ closef()
+ put_var("_graphs_in$",graphname)
     
 -end
 
 
-include$ _graphs._in
+include$ @_graphs_in$
 
 #
 #calculate_values

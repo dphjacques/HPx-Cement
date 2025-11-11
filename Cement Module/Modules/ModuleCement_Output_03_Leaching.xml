@@ -236,38 +236,6 @@
 						</Cell>
 					</Record>
 					<Record>
-						<ID><![CDATA[2024-03-14T7:10:0720]]></ID>
-						<Visible>True</Visible>
-						<Export>True</Export>
-						<Cell><![CDATA[Cement::Figures::Lead$]]></Cell>
-						<Cell>
-							<Text>null</Text>
-							<Default>null</Default>
-						</Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell>
-							<Text />
-							<Default />
-						</Cell>
-					</Record>
-					<Record>
-						<ID><![CDATA[2024-03-14T8:20:3431]]></ID>
-						<Visible>True</Visible>
-						<Export>True</Export>
-						<Cell><![CDATA[Cement::Figures::X::Title$]]></Cell>
-						<Cell>
-							<Text>Amount of water [kg]</Text>
-							<Default>Amount of water [kg]</Default>
-						</Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
-						<Cell>
-							<Text />
-							<Default />
-						</Cell>
-					</Record>
-					<Record>
 						<ID><![CDATA[2024-03-17T8:25:0424]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>

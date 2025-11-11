@@ -4,7 +4,7 @@
 		<Name>OPC_alite_PK</Name>
 		<Description>Parameters for the Parrot-Killoch model for hydration of alite</Description>
 		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
-{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
 \pard\b\fs24 Table\b0\fs19\par
 \par
 \b\fs24 Origin of the data\b0\fs19\par
@@ -49,6 +49,18 @@
 				<Value>1.1</Value>
 				<Value>3.3</Value>
 				<Value>2</Value>
+				<Value>41570</Value>
+				<Value>25</Value>
+			</Record>
+			<Record>
+				<Value>AnCalibration</Value>
+				<Value>day</Value>
+				<Value>0.2526</Value>
+				<Value>0.0578</Value>
+				<Value>0.1</Value>
+				<Value>0.1</Value>
+				<Value>2.6</Value>
+				<Value>2.599</Value>
 				<Value>41570</Value>
 				<Value>20</Value>
 			</Record>

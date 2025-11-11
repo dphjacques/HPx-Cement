@@ -1,4 +1,4 @@
--fig_group "Solids"
+-fig_variabletype "Solids"
 
 -fig_x Lead
 -fig_yt "Volume [cm^3]" 

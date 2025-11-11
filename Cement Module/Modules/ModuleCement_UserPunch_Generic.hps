@@ -72,4 +72,8 @@ ExtrOutputPunch
     if(get_varexist("Output::HydrationDegree")<0) then
         put_var("Output::HydrationDegree","") 
     endif
+    
+    if(get_varexist("Hydration::OutputNr") < 0) then
+        put_var("Hydration::OutputNr",1)
+    endif
 -end 

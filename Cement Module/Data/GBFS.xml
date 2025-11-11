@@ -4,7 +4,7 @@
 		<Name>GBFS</Name>
 		<Description>Chemical composition of Granulated blast furnance slag</Description>
 		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
-{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
 \pard\b\fs24 Table\b0\fs19\par
 \par
 Default unit: \par
@@ -71,6 +71,30 @@ Bulk Density \tab kg/dm3\par
 				<Value>0.07</Value>
 				<Value>0.47</Value>
 				<Value>50</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+			</Record>
+			<Record>
+				<Value>Ducrete</Value>
+				<Value>%mass</Value>
+				<Value>2.88</Value>
+				<Value>17.5</Value>
+				<Value>18</Value>
+				<Value>18.7</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>17.4</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>7</Value>
+				<Value>100</Value>
 				<Value>100</Value>
 				<Value>100</Value>
 				<Value>100</Value>

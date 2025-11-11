@@ -4,7 +4,7 @@
 		<Name>OPC_alite</Name>
 		<Description>Oxide composition of alite</Description>
 		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}{\f2\fnil\fcharset0 Calibri;}}
-{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
 \pard\b\fs24 Table\b0\fs19\par
 \par
 MolEnthalpy: Molar Enthalpy: J/mol\par
@@ -68,6 +68,60 @@ Entalpy\par
 				<Value>0.1</Value>
 				<Value>0.1</Value>
 				<Value>0.2</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+			</Record>
+			<Record>
+				<Value>Taylor1989_CD</Value>
+				<Value>228</Value>
+				<Value>73.18</Value>
+				<Value>C3S</Value>
+				<Value>%mass</Value>
+				<Value>71.6</Value>
+				<Value>25.2</Value>
+				<Value>1.0</Value>
+				<Value>0.7</Value>
+				<Value>1.1</Value>
+				<Value>0</Value>
+				<Value>0.1</Value>
+				<Value>0.1</Value>
+				<Value>0.2</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+			</Record>
+			<Record>
+				<Value>B_01</Value>
+				<Value>228</Value>
+				<Value>73.18</Value>
+				<Value>C3S</Value>
+				<Value>%mass</Value>
+				<Value>99.999</Value>
+				<Value>0.001</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+			</Record>
+			<Record>
+				<Value>B_02</Value>
+				<Value>228</Value>
+				<Value>73.18</Value>
+				<Value>C3S</Value>
+				<Value>%mass</Value>
+				<Value>75</Value>
+				<Value>25</Value>
+				<Value>00</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
 				<Value>0</Value>
 				<Value>0</Value>
 			</Record>

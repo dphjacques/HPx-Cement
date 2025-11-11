@@ -4,7 +4,7 @@
 		<Name>OPC_belite_PK</Name>
 		<Description>Parameters for the Parrot-Killoch model for hydration of belite</Description>
 		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
-{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
 \pard\b\fs24 Table\b0\fs19\par
 \par
 \b\fs24 Origin of the data\b0\fs19\par
@@ -44,7 +44,19 @@
 				<Value>Par1984</Value>
 				<Value>day</Value>
 				<Value>0.5</Value>
-				<Value>1.0</Value>
+				<Value>1</Value>
+				<Value>0.02</Value>
+				<Value>0.7</Value>
+				<Value>5.0</Value>
+				<Value>1.55</Value>
+				<Value>20785</Value>
+				<Value>25</Value>
+			</Record>
+			<Record>
+				<Value>AnCalibration</Value>
+				<Value>day</Value>
+				<Value>0.5</Value>
+				<Value>1</Value>
 				<Value>0.02</Value>
 				<Value>0.7</Value>
 				<Value>5.0</Value>

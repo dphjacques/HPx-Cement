@@ -16,7 +16,7 @@
 		<Export>True</Export>
 		<Groups>
 			<Group>
-				<Name>Elements<Visible>True</Visible>
+				<Name>Cement System<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
 				<Heading>

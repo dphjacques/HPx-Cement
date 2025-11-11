@@ -16,7 +16,7 @@ class HydrationOPCmPK(HydrationOPC)
             molarmass = get_def("OPC_alite","MolarMass",clinindex)
             molvolume = get_def("OPC_alite","MolarVolume",clinindex)
             molenthalpy = get_def("OPC_alite","MolarEnthalpy",clinindex)   
-            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_alite",index,cemsys,molarmass) + eol
+            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_alite",clinindex,cemsys,molarmass) + eol
             clinamount = cemamount * get_def("OPC_min","Alite", cemrowindex)/100
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
             molesclinker = molesclinker + clinamount/molarmass
@@ -31,7 +31,7 @@ class HydrationOPCmPK(HydrationOPC)
             molarmass = get_def("OPC_belite","MolarMass",clinindex) 
             molvolume = get_def("OPC_belite","MolarVolume",clinindex)
             molenthalpy = get_def("OPC_belite","MolarEnthalpy",clinindex) 
-            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_belite",index,cemsys,molarmass) + eol
+            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_belite",clinindex,cemsys,molarmass) + eol
             clinamount = cemamount * get_def("OPC_min","Belite", cemrowindex)/100
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
             molesclinker = molesclinker + clinamount/molarmass
@@ -46,7 +46,7 @@ class HydrationOPCmPK(HydrationOPC)
             molarmass = get_def("OPC_aluminate","MolarMass",clinindex)  
             molvolume = get_def("OPC_aluminate","MolarVolume",clinindex)
             molenthalpy = get_def("OPC_aluminate","MolarEnthalpy",clinindex)
-            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_aluminate",index,cemsys,molarmass) + eol
+            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_aluminate",clinindex,cemsys,molarmass) + eol
             clinamount = cemamount * get_def("OPC_min","Aluminate", cemrowindex)/100
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
             molesclinker = molesclinker + clinamount/molarmass
@@ -61,7 +61,7 @@ class HydrationOPCmPK(HydrationOPC)
             molarmass = get_def("OPC_ferrite","MolarMass",clinindex)  
             molvolume = get_def("OPC_ferrite","MolarVolume",clinindex)
             molenthalpy = get_def("OPC_ferrite","MolarEnthalpy",clinindex)
-            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_ferrite",index,cemsys,molarmass) + eol
+            txt = txt + "-formula H 0 " +  WriteKineticFormula("OPC_ferrite",clinindex,cemsys,molarmass) + eol
             clinamount = cemamount * get_def("OPC_min","Ferrite", cemrowindex)/100
             txt = txt + "-m0 " + str(clinamount/molarmass) + eol
             molesclinker = molesclinker + clinamount/molarmass

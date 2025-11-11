@@ -23,7 +23,16 @@ CementHydrationInitiate
     
     import "ModuleCement_PhreeqcInput_20_Hydration_20_SCM_00_General.hps"
 
-    entitynr = 1
+    if(get_varexist("Transport::SolutionNr") = 0) then
+        entitynr = get_var("Transport::SolutionNr") 
+    else
+        entitynr = 1001
+    endif
+    if(get_varexist("Transport::Leaching::Hydration") = 0 ) then
+        put_var("Hydration::OutputNr",100001)
+    else
+    put_var("Hydration::OutputNr",1)
+        endif
     
     if(get_varexist("FA::Amount")>-1) then
       if(get_var("FA::Amount")>0) then
@@ -37,8 +46,7 @@ CementHydrationInitiate
     cemmodel = new(CementModelSystem)
     cemsys = cemmodel.GetCementModel(systemnr)
     cemmodel.CreateHeadings(systemnr)
- 
-    write("here6"+eol)   
+  
     opckin = new(HydrationOPCmPK)
     if(bFA = 1) then         
             fakin = new(HydrationSCM)
@@ -58,7 +66,7 @@ CementHydrationInitiate
     #rates
     ostr = opckin.WriteIncludeRates() + eol + "END" + eol 
     if (bFA=1) then
-		ostr = ostr + "INCLUDE$ " + "Reaction_FA._in" + eol
+        ostr = ostr + "INCLUDE$ " + "Reaction_FA._in" + eol
         ostr = ostr + fakin.WriteIncludeRates(cemsys) + eol + "END" + eol 
     endif
     
@@ -80,17 +88,31 @@ CementHydrationInitiate
     ostr = ostr + "use solution " + str(entitynr) + eol
     ostr = ostr + "use equilibrium_phases " + str(entitynr) + eol
     ostr = ostr + "use solid_solutions " + str(entitynr) + eol
-    ostr = ostr + "Kinetics" + eol
+    ostr = ostr + "Kinetics " + str(entitynr) +  eol
     ostr = ostr + opckin.WriteKinetics(cemsys) + eol
-	
+    
     if (bFA=1) then
         ostr = ostr + fakin.WriteKinetics(cemsys) + eol  
     endif    
-	
+    
     ostr = ostr + opckin.WriteKineticSteps()
     
-    #save options to be added
+    #save options 
+    ostr = ostr + "save SOLUTION " + str(entitynr) + eol
+    ostr = ostr + "save EQUILIBRIUM_PHASES " + str(entitynr) + eol
+    ostr = ostr + "save SOLID_SOLUTIONS " + str(entitynr) + eol
+     
+    txt = "use SOLUTION " + str(entitynr) + eol
+    txt = txt + "use EQUILIBRIUM_PHASES " + str(entitynr) + eol
+    txt = txt + "use SOLID_SOLUTIONS " + str(entitynr) + eol
+    put_var("Cement::Identity::_LastSaved$",txt)
     
+    txt = "use EQUILIBRIUM_PHASES " + str(entitynr) + eol
+    txt = txt + "use SOLID_SOLUTIONS " + str(entitynr) + eol
+    txt = txt + "save EQUILIBRIUM_PHASES " + str(entitynr) + eol
+    txt = txt + "save SOLID_SOLUTIONS " + str(entitynr) + eol
+    put_var("Cement::Identity::_LastSavedUsed$",txt)
+        
     openf("Hydration._in")
     writef(ostr)
     closef() 
@@ -101,7 +123,7 @@ CementHydrationInitiate
     hvtxt = ""
     hwtxt = ""
     hhtxt = ""
-	hdtxt = ""
+    hdtxt = ""
     for i = 0 to count 
        htxt = htxt + get_def(db,"kin",i) + " "
        hvtxt = hvtxt + "v" + get_def(db,"kin",i) + " "
@@ -112,11 +134,11 @@ CementHydrationInitiate
             hhtxt  = hhtxt + "ch" + get_def(db,"kin",i) + " "
            endif
        endif  
-		if(get_varexist("Cement::Output::Hydration::HydrationDegree") = 0 ) then
-			if(get_var("Cement::Output::Hydration::HydrationDegree") = 1 ) then
-				hdtxt = hdtxt + "hd" + get_def(db,"kin",i) + " "
-			endif
-    endif	   
+        if(get_varexist("Cement::Output::Hydration::HydrationDegree") = 0 ) then
+            if(get_var("Cement::Output::Hydration::HydrationDegree") = 1 ) then
+                hdtxt = hdtxt + "hd" + get_def(db,"kin",i) + " "
+            endif
+    endif      
     next i
     put_var("Output::Kinetics",htxt)
     put_var("Output::Kineticsv",hvtxt)
@@ -126,7 +148,7 @@ CementHydrationInitiate
              put_var("Output::HeatKin",hhtxt)
          endif
     endif
-	
+    
     if(get_varexist("Cement::Output::Hydration::HydrationDegree") = 0 ) then
          if(get_var("Cement::Output::Hydration::HydrationDegree") = 1 ) then
              put_var("Output::HydrationDegree",hdtxt + "hdTotal")
@@ -135,11 +157,17 @@ CementHydrationInitiate
     
     vol = get_var("Cement::Composition::Clinker::Volume0")
     
+    if(get_varexist("Cement::Figures::Time::hour")<0) then
+        put_var("Cement::Figures::Time::hour",1)
+    endif 
+    if(get_varexist("Cement::Figures::Time::Second")<0) then
+        put_var("Cement::Figures::Time::Second",1)
+    endif 
 
 -end
 
 #output
-selected_output
+selected_output @Hydration::OutputNr
 -file CementHydrationResults.out
 -reset false
 -active true 

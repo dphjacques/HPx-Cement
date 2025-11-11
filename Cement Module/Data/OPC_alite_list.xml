@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <Items>
 	<Item>Taylor1989</Item>
+	<Item>Taylor1989_CD</Item>
+	<Item>B_01</Item>
+	<Item>B_02</Item>
 </Items>
 <Readonly>false</Readonly>

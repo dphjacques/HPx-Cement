@@ -1,4 +1,4 @@
--fig_group "Miscellaneous"
+-fig_variabletype "Miscellaneous"
 -fig_name "Hydration Degree"
 -fig_x Lead
 -fig_y hdOPCAlite <k "Alite" style lines ls @nrOPCAlitehd >
@@ -8,8 +8,6 @@
 -fig_y hdTotal < k "Clinker"  style lines  ls @nrOPCTotalhd >
 
 -fig_yt "Hydration degree [-]" 
-
--fig_variant x "per hour"   "_THIS * 24" "Time [hour]"
 
 -fig_start 
 set yrange [0:1]

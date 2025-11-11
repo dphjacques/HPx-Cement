@@ -1,4 +1,4 @@
--fig_group "Miscellaneous"
+-fig_variabletype "Miscellaneous"
 -fig_name "Volumes"
 -fig_x Lead
 -fig_y AggVol       <k "Aggregates"               style lines ls @nraggvol >

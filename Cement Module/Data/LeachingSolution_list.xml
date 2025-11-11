@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <Items>
-	<Item>pH3_Cl</Item>
+	<Item>pH3_Cl<Visible>False</Visible>
+		<ReadOnly>False</ReadOnly>
+		<Tag0></Tag0>
+	</Item>
 </Items>
-<Readonly>false</Readonly>

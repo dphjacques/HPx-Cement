@@ -4,7 +4,7 @@
 		<Name>OPC</Name>
 		<Description>Chemical composition of Ordinary Portland Cement</Description>
 		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
-{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
 \pard\b\fs24 Table\b0\fs19\par
 \par
 Default unit: \par
@@ -59,6 +59,20 @@ Bulk Density in kg/dm3\par
 				<Value>1.85</Value>
 				<Value>0.08</Value>
 				<Value>1.12</Value>
+			</Record>
+			<Record>
+				<Value>GLO2021</Value>
+				<Value>%mass</Value>
+				<Value>3.1</Value>
+				<Value>61.63</Value>
+				<Value>20.9</Value>
+				<Value>3.62</Value>
+				<Value>0</Value>
+				<Value>2.13</Value>
+				<Value>3.20</Value>
+				<Value>3.20</Value>
+				<Value>0.14</Value>
+				<Value>0.53</Value>
 			</Record>
 		</Records>
 	</DataBlock>

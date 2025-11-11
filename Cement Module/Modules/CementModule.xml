@@ -6,6 +6,8 @@
 		<Template>Hydrates_10_Blending_General.xml</Template>
 		<Template>Hydrates_20_Ingress_General.xml</Template>
 		<Template>Hydrates_30_Leaching_General.xml</Template>
+		<Template>Hydrates_30_Leaching_Hydration_CEMI.xml</Template>
+		<Template>Hydrates_30_Leaching_Hydration_CEMII-V.xml</Template>
 		<Template>Hydration_10_CEM-I.xml</Template>
 		<Template>Hydration_20_SCM.xml</Template>
 	</Templates>

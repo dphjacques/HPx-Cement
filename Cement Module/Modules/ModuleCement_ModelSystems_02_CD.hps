@@ -172,6 +172,7 @@ class CementModelSystem
         endif       
         
         if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+			txtheata = " "
             if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then
                 txt = " "
                 for i in cemsys.PurePhases
@@ -181,8 +182,8 @@ class CementModelSystem
                     endif
                 next i 
                 put_var("Output::HeatPhases",txt)
+				txtheata = txtheata + "hHydrates hCement  hTotal"
             endif
-            txtheata = "hHydrates hCement  hTotal"
             if(bheat = 1 ) then
                 txtheata  = txtheata + " chHydrates chCement  chTotal"
             endif

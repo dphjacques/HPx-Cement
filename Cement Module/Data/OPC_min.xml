@@ -3,20 +3,51 @@
 	<DataBlock>
 		<Name>OPC_min</Name>
 		<Description>Chemical composition of Ordinary Portland Cement in mineral amounts</Description>
-		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Segoe UI;}{\f2\fnil\fcharset0 Calibri;}}
-{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}}
+{\colortbl ;\red0\green0\blue255;\red0\green0\blue0;}
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
 \pard\b\fs24 Table\b0\fs19\par
 \par
-Default unit: \par
-%mass\tab\tab %mass of oxides (g/100g)\par
-\par
+\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl\f1\fs20\lang0 Name\cell Unique identifier of the OPC composition.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl Unit\cell 
+\pard\intbl\sa90\qj Defines the used unit. Only mass% (i.e. g/100 g OPC clinker) is valid. Not used.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl Alite\cell The mass percentage of alite in the OPC cement.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl Belite\cell 
+\pard\intbl\sa90\qj The mass percentage of alite in the OPC cement.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl Aluminate\cell 
+\pard\intbl\sa90\qj The mass percentage of alite in the OPC cement.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl Ferrite\cell 
+\pard\intbl\sa90\qj The mass percentage of alite in the OPC cement.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl CaO\cell 
+\pard\intbl\sa90\qj The mass percentage of CaO in the OPC cement.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl CaSO4\cell 
+\pard\intbl\sa90\qj The mass percentage of CaSO\sub 4\nosupersub  in the OPC cement.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl CaCO3\cell 
+\pard\intbl\sa90\qj The mass percentage of CaCO\sub 3 \nosupersub in the OPC cement.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl Na2SO4\cell 
+\pard\intbl\sa90\qj The mass percentage of Na\sub 2\nosupersub SO\sub 4\nosupersub  in the OPC cement.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl K2SO4\cell 
+\pard\intbl\sa90\qj The mass percentage of K\sub 2\nosupersub SO\sub 4\nosupersub  in the OPC cement.\cell\row\trowd\trgaph45\trbrdrl\brdrs\brdrw15\brdrcf2 \trbrdrt\brdrs\brdrw15\brdrcf2 \trbrdrr\brdrs\brdrw15\brdrcf2 \trbrdrb\brdrs\brdrw15\brdrcf2 \trpaddl45\trpaddr45\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx1965\clbrdrl\brdrw15\brdrs\brdrcf2\clbrdrt\brdrw15\brdrs\brdrcf2\clbrdrr\brdrw15\brdrs\brdrcf2\clbrdrb\brdrw15\brdrs\brdrcf2 \cellx13485 
+\pard\intbl MgO\cell 
+\pard\intbl\sa90\qj The mass percentage of MgO in the OPC cement.\cell\row 
+\pard\f0\fs19\lang2067\par
 \b\fs24 Origin of the data\b0\fs19\par
 \par
-\b\lang1033 Weerdt11\b0\tab Table 1 in \f1\fs22 De Weerdt, K., Haha, M.B., Le Saout, G., Kjellsen, K.O., Justnes, H. and Lothenbach, B.  2011.  Hydration mechanisms of ternary Portland cements containing limestone powder and fly ash. Cement and Concrete Research 41(3), 279-291.\f0\fs19\lang2067\par
-
-\pard\fi-720\li720\f2\fs22\lang1033\par
-
-\pard\f0\fs19\lang2067\par
+\b\lang1033 Lot06   \tab\tab\b0 Lothenbach, B. and Winnefeld, F. 2006. Thermodynamic \f1\fs20\lang0 modelling of the hydration of Portland cement. Cement and Concrete Research 36, 209-226.\par
+\b\f0\lang1033 CEMGEMS\tab {\b0{\field{\*\fldinst{HYPERLINK https://cemgems.app/ }}{\fldrslt{https://cemgems.app/\ul0\cf0}}}}\b0\f0\fs19\lang2067\par
 }
 ]]><Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
@@ -58,6 +89,48 @@ Default unit: \par
 				<Value>4.4</Value>
 				<Value>0.096</Value>
 				<Value>1.6</Value>
+				<Value>0</Value>
+			</Record>
+			<Record>
+				<Value>CEMGEMS</Value>
+				<Value>mass%</Value>
+				<Value>64.5</Value>
+				<Value>9.3</Value>
+				<Value>7.4</Value>
+				<Value>7.8</Value>
+				<Value>0.46</Value>
+				<Value>4.2</Value>
+				<Value>4.4</Value>
+				<Value>0.096</Value>
+				<Value>1.6</Value>
+				<Value>0</Value>
+			</Record>
+			<Record>
+				<Value>Alite</Value>
+				<Value>mass%</Value>
+				<Value>100</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+			</Record>
+			<Record>
+				<Value>Alite-Aluminate</Value>
+				<Value>mass%</Value>
+				<Value>80</Value>
+				<Value>0</Value>
+				<Value>20</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0</Value>
 				<Value>0</Value>
 			</Record>
 		</Records>

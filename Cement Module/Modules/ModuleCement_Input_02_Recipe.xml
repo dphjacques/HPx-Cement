@@ -14,9 +14,17 @@
 		</ToolTip>
 		<Visible>True</Visible>
 		<Export>True</Export>
+						
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<Type>0</Type>
+					<ExternalFile>True</ExternalFile>
+					<RelativePath>ModuleCementHelp\ModuleCement_Input_50_Transport_01_TransportProperties_00_Main.htm</RelativePath>
+					<ParentName>Modules</ParentName>
+				</Info>
 		<Groups>
 			<Group>
-				<Name>Properties<Visible>True</Visible>
+				<Name>Recipe<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
 				<Heading>
@@ -140,7 +148,7 @@
 				<Name>Aggregates<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>WARNING - Only relevant for transport calculations<Visible>True</Visible>
+				<Heading>INFO - Only relevant for transport calculations<Visible>True</Visible>
 					<ReadOnly>True</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -149,6 +157,13 @@
 				</ToolTip>
 				<Visible>True</Visible>
 				<Export>True</Export>
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<Type>0</Type>
+					<ExternalFile>True</ExternalFile>
+					<RelativePath>ModuleCementHelp\ModuleCement_Input_50_Transport_01_TransportProperties_00_Main.htm</RelativePath>
+					<ParentName>Modules</ParentName>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>

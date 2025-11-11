@@ -69,11 +69,17 @@ CementHydration
     put_var("Cement::Hydration::Output$", "Cement_Hydration_"+str(1001)+".out")
     txt = ""
 
+    if(get_varexist("Transport::SolutionNr") = 0) then
+        entitynr = get_var("Transport::SolutionNr") 
+    else
+        entitynr = 1001
+    endif
+        
     cementini = new(CementHydration)
-    cementini.WriteInput(1001,1001)
+    cementini.WriteInput(entitynr,entitynr)
         
     txt = txt + "GLOBAL_VARIABLE Cement::Hydration::Output$ " + chr(34) + "Cement_Hydration_"+str(1001)+".out" +  chr(34) + eol
-    txt = txt + "INCLUDE$ Cement1001_1001._in" + eol
+    txt = txt + "INCLUDE$ Cement"+str(entitynr)+"_"+str(entitynr)+"._in" + eol
    
     openf("RunCementModels._in")
     writef(txt)

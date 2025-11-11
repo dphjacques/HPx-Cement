@@ -3,14 +3,17 @@
 	<DataBlock>
 		<Name>OPC_aluminate_PK</Name>
 		<Description>Parameters for the Parrot-Killoch model for hydration of aluminate</Description>
-		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
-\viewkind4\uc1\pard\b\fs24 Table\b0\fs19\par
+		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
+\pard\b\fs24 Table\b0\fs19\par
 \par
 \b\fs24 Origin of the data\b0\fs19\par
 \par
 \par
-\pard\fi-720\li720\lang1033\f1\fs22\par
-\pard\lang2067\f0\fs19\par
+
+\pard\fi-720\li720\f1\fs22\lang1033\par
+
+\pard\f0\fs19\lang2067\par
 }]]><Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 			<Type>1</Type>
@@ -39,6 +42,18 @@
 		<Records>
 			<Record>
 				<Value>Par1984</Value>
+				<Value>day</Value>
+				<Value>1.0</Value>
+				<Value>0.85</Value>
+				<Value>0.04</Value>
+				<Value>1.0</Value>
+				<Value>3.2</Value>
+				<Value>1.8</Value>
+				<Value>54040</Value>
+				<Value>25</Value>
+			</Record>
+			<Record>
+				<Value>AnCalibration</Value>
 				<Value>day</Value>
 				<Value>1.0</Value>
 				<Value>0.85</Value>

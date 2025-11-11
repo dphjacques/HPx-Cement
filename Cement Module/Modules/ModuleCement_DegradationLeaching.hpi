@@ -7,7 +7,10 @@ Cement_Ingress
 openf("Cement_degradation_leaching._in")
 writef("fail")
 closef()
- 
+if(get_varexist("Hydration::OutputNr") < 0) then
+    put_var("Hydration::OutputNr",1)
+endif
+
 #make reactiondefinition
 
 def WriteReactionDefinition(leachingnr,nr)
@@ -72,7 +75,7 @@ endif
       return txtquote
     enddef
 #Set up leaching solutions 
-    txt = "SELECTED_OUTPUT " + eol + "-active false " + eol 
+    txt = "SELECTED_OUTPUT " + str(get_var("Hydration::OutputNr")) + " " + eol + "-active false " + eol 
      __cemSolutionNr =  169898
     
     if(get_var("Cement::Leaching::Step0_01") > 0) then
@@ -97,7 +100,7 @@ endif
     endif
     
 #Set up leaching
-    txt = txt + "SELECTED_OUTPUT " + eol + "-active true " + eol 
+    txt = txt + "SELECTED_OUTPUT " + str(get_var("Hydration::OutputNr")) + " "  + eol + "-active true " + eol 
     txt = txt + "PRINT " + eol + " -reset false " + eol + " -echo_input true" + eol
     txt = txt + "GLOBAL_VARIABLE Leaching::Run::TotalAmountAddedWater 0" + eol
     
@@ -140,10 +143,11 @@ closef()
 put_var("Output::Lead","Lead") 
 
 endif 
+
 -end
 END
 #output
-selected_output
+selected_output @Hydration::OutputNr
 -file CementDegradationLeachingResults.out
 -reset false
 -active true 

@@ -4,7 +4,7 @@
 		<Name>OPC_ferrite</Name>
 		<Description>Oxide composition of ferrite</Description>
 		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Segoe UI;}{\f2\fnil\fcharset0 Calibri;}}
-{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
 \pard\b\fs24 Table\b0\fs19\par
 \par
 Default unit: \par
@@ -54,6 +54,24 @@ Default unit: \par
 				<Value>645.2</Value>
 				<Value>130.202</Value>
 				<Value>-288060</Value>
+				<Value>%mass</Value>
+				<Value>47.5</Value>
+				<Value>3.6</Value>
+				<Value>21.9</Value>
+				<Value>21.4</Value>
+				<Value>3.0</Value>
+				<Value>0</Value>
+				<Value>0.1</Value>
+				<Value>0.2</Value>
+				<Value>0</Value>
+				<Value>1.6</Value>
+				<Value>0.7</Value>
+			</Record>
+			<Record>
+				<Value>Taylor1989_CD</Value>
+				<Value>645.2</Value>
+				<Value>130.202</Value>
+				<Value>C4AF</Value>
 				<Value>%mass</Value>
 				<Value>47.5</Value>
 				<Value>3.6</Value>

@@ -50,18 +50,32 @@ if(includesolution=0) then
 else
     txtsol = "INCLUDE$ " + includesolfile + eol
 endif
+    
+    if(get_varexist("Transport::SolutionNr") = 0) then
+        entitynr = get_var("Transport::SolutionNr") 
+    else
+        entitynr = 1001
+    endif
+    if(get_varexist("Transport::MaterialNr") = 0) then
+        matnr= get_var("Transport::MaterialNr") 
+    else
+        matnr = 1
+    endif
 
     
-#scale water
-    txt = txt + "MIX 1001 " + eol
-    txt = txt + "1001 1 t " + eol
-    txt = txt + "SAVE Solution 1001 " + eol
+    #scale water
+    txt = txt + "MIX " + str(entitynr) + eol
+    txt = txt + str(entitynr) + " 1 t " + eol
+    txt = txt + "SAVE Solution " + str(entitynr) + eol
     txt = txt + "end" + eol
-    txt = txt + "DELETE mix 1001" + eol
+    txt = txt + "DELETE mix " + str(entitynr) + eol
     txt = txt + "end " + eol
 #copy models
-    txt = txt + "COPY equilibrium_phases 1001 1001 m 1" + eol
-    txt = txt + "copy SOLID_SOLUTIONS 1001 1001 m 1 " + eol
+    txt = txt + "COPY equilibrium_phases " + str(entitynr) + " " + str(entitynr) + " m 1" + eol
+    txt = txt + "copy SOLID_SOLUTIONS " + str(entitynr) + " " + str(entitynr) + " m 1" + eol
+    if(get_varexist("Transport::Leaching::Hydration") = 0) then
+        txt = txt + "copy Kinetics " + str(entitynr) + " " + str(entitynr) + " m 1" + eol
+    endif
     txt = txt + "end" + eol 
 
 #Set up leaching solution 

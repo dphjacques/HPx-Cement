@@ -85,6 +85,30 @@ Bulk Density\tab kg/dm3\par
 				<Value>100</Value>
 				<Value>100</Value>
 			</Record>
+			<Record>
+				<Value>Urenco</Value>
+				<Value>%mass</Value>
+				<Value>2.51</Value>
+				<Value>0.03</Value>
+				<Value>53.5</Value>
+				<Value>45.48</Value>
+				<Value>0</Value>
+				<Value>0</Value>
+				<Value>0.46</Value>
+				<Value>0.08</Value>
+				<Value>0.17</Value>
+				<Value>0.26</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+				<Value>100</Value>
+			</Record>
 		</Records>
 	</DataBlock>
 </DataBlocks>
