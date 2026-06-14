@@ -23,7 +23,6 @@ if (get_varexist("Cement::Hydration::Output$")   = 0) then
         bsf = 0
         bfa = 0
         bls = 0
-        bmk = 0
 
         if( get_varexist("Cement::Clinker::Reference$") = 0 ) then
             if(  get_var("Cement::Clinker::Amount") > 0) then
@@ -48,11 +47,6 @@ if (get_varexist("Cement::Hydration::Output$")   = 0) then
         if( get_varexist("LS::Reference$") = 0 ) then
             if(  get_var("LS::Amount") > 0) then
                 bls = 1
-            endif
-        endif
-        if( get_varexist("MK::Reference$") = 0 ) then
-            if(  get_var("MK::Amount") > 0) then
-                bmk = 1
             endif
         endif
         
@@ -137,38 +131,24 @@ enddef
 writef("CEMENT RECIPE" + eol)
 if(bopc=1) then
     writef(string.format("%35s","OPC clinkers") + string.format("%15i", get_var("Cement::Clinker::Amount") ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted OPC") + string.format("%15i", get_var("Cement::Clinker::ReactedAmount") ) + " % reacted" +eol)
-    writef(string.format("%35s","Properties") + string.format("%25s", get_var("Cement::Clinker::Reference$") ) +eol+eol)
+    writef(string.format("%35s","Reacted OPC") + string.format("%15i", get_var("Cement::Clinker::ReactedAmount") ) + " % reacted" +eol+eol)
 endif
 if(bgbfs = 1) then
     writef(string.format("%35s","GBFS") + string.format("%15i",  get_var("GBFS::Amount")  ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted GBFS") + string.format("%15i", get_var("GBFS::ReactedAmount") ) + " % reacted" +eol)
-    writef(string.format("%35s","Reactivity") + string.format("%25s", get_var("GBFS::Reactivity$") ) +eol)
-    writef(string.format("%35s","Properties") + string.format("%25s", get_var("GBFS::Reference$") ) +eol+eol)
+    writef(string.format("%35s","Reacted GBFS") + string.format("%15i", get_var("GBFS::ReactedAmount") ) + " % reacted" +eol+eol)
 endif
 if(bsf = 1) then
     writef(string.format("%35s","SF") + string.format("%15i",  get_var("SF::Amount")  ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted SF") + string.format("%15i", get_var("SF::ReactedAmount") ) + " % reacted" +eol)
-    writef(string.format("%35s","Reactivity") + string.format("%25s", get_var("SF::Reactivity$") ) +eol)
-    writef(string.format("%35s","Properties") + string.format("%25s", get_var("SF::Reference$") ) +eol+eol)
+    writef(string.format("%35s","Reacted SF") + string.format("%15i", get_var("SF::ReactedAmount") ) + " % reacted" +eol+eol)
 endif
 if(bfa = 1) then
     writef(string.format("%35s","FA") + string.format("%15i",  get_var("FA::Amount")  ) + " weight%" +eol)
     writef(string.format("%35s","Reacted FA") + string.format("%15i", get_var("FA::ReactedAmount") ) + " % reacted" +eol)
-    writef(string.format("%35s","Reactivity") + string.format("%25s", get_var("FA::Reactivity$") ) +eol)
-    writef(string.format("%35s","Properties") + string.format("%25s", get_var("FA::Reference$") ) +eol+eol)
+    writef(string.format("%35s","Reactivity") + string.format("%25s", get_var("FA::Reactivity$") ) +eol+eol)
 endif
 if(bls = 1) then
     writef(string.format("%35s","LS") + string.format("%15i",  get_var("LS::Amount")  ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted LS") + string.format("%15i", get_var("LS::ReactedAmount") ) + " % reacted" +eol)
-    writef(string.format("%35s","Reactivity") + string.format("%25s", get_var("LS::Reactivity$") ) +eol)
-    writef(string.format("%35s","Properties") + string.format("%25s", get_var("LS::Reference$") ) +eol+eol)
-endif
-if(bmk = 1) then
-    writef(string.format("%35s","MK") + string.format("%15i",  get_var("MK::Amount")  ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted MK") + string.format("%15i", get_var("MK::ReactedAmount") ) + " % reacted" +eol)
-    writef(string.format("%35s","Reactivity") + string.format("%25s", get_var("MK::Reactivity$") ) +eol)
-    writef(string.format("%35s","Properties") + string.format("%25s", get_var("MK::Reference$") ) +eol+eol)
+    writef(string.format("%35s","Reacted LS") + string.format("%15i", get_var("LS::ReactedAmount") ) + " % reacted" +eol+eol)
 endif
 
 writef(string.format("%35s","Amount of cement") + string.format("%15i",  get_var("Cement::Recipe::Amount")  ) + eol )
@@ -203,7 +183,6 @@ writef(string.format("%15s","Volume") + eol + EOL)
 
 res=sys("equi","count","name$","type$","moles") #phreeqc - different format
 writef_hydrates(count,name$,moles)
-
 calc_hydrates(count,name$,moles)
 
 res = names_s_s("counts_s","names_s$")
@@ -243,17 +222,14 @@ writef_porewater("Na")
 writef_porewater("K")
 writef(eol+eol)
 
-writef("VOLUMES" + eol + eol) #no phreeqc (replace print)
+ writef("VOLUMES" + eol + eol) #no phreeqc (replace print)
 writef(string.format("%30s","Name"))
 writef(string.format("%20s","Volume (cm3)"))
 writef(string.format("%20s","Volume Fraction")+eol)
 
-bbulkdensity = 1 
-    
-inivolume = 0
+writef(string.format("%30s","Initial volume"))
 if(bopc=1) then
-    if(get_var("Cement::Clinker::BulkDensity") < 0) then bbulkdensity = 0
-    inivolume = inivolume + get_var("Cement::Clinker::Amount") / get_var("Cement::Clinker::BulkDensity") 
+    inivolume =  get_var("Cement::Clinker::Amount") / get_var("Cement::Clinker::BulkDensity") 
 endif
 if(bgbfs = 1) then
     inivolume = inivolume +  get_var("GBFS::Amount") / get_var("GBFS::BulkDensity") 
@@ -267,18 +243,10 @@ endif
 if(bls = 1) then
     inivolume = inivolume +  get_var("LS::Amount") / get_var("LS::BulkDensity") 
 endif
-if(bmk = 1) then
-    inivolume = inivolume +  get_var("MK::Amount") / get_var("MK::BulkDensity") 
-endif
 inivolume = inivolume *  get_var("Cement::Recipe::Amount") /100
 inivolume = inivolume +  get_var("Cement::Recipe::Amount") * get_var("Cement::Recipe::w_c") 
-writef(string.format("%30s","Initial volume"))
-if(bbulkdensity = 0 ) then
-    writef("%30s","Missing data on bulk density - not calclated")
-else
-    writef(string.format("%20.2f",inivolume) + eol)
-endif
-    
+writef(string.format("%20.2f",inivolume) + eol)
+
 unreacted_opc = 0 
 if(bopc = 1) then
     unreact_rel = (100- get_var("Cement::Clinker::ReactedAmount"))/100
@@ -309,13 +277,7 @@ if(bls = 1) then
     unreacted_ls = unreact_rel *  get_var("LS::Amount")  / get_var("LS::BulkDensity") 
     unreacted_ls = unreacted_ls * get_var("Cement::Recipe::Amount") /100
 endif
-unreacted_mk = 0
-if(bmk = 1) then
-    unreact_rel = (100- get_var("MK::ReactedAmount"))/100
-    unreacted_mk = unreact_rel *  get_var("MK::Amount")  / get_var("MK::BulkDensity") 
-    unreacted_mk = unreacted_mk * get_var("Cement::Recipe::Amount") /100
-endif
-totalvolume = hydratedvolume + unreacted_opc + unreacted_gbfs + unreacted_sf + unreacted_fa + unreacted_ls + unreacted_mk + tot("water")*1000
+totalvolume = hydratedvolume + unreacted_opc + unreacted_gbfs + unreacted_sf + unreacted_fa + unreacted_ls + tot("water")*1000
 
 writef(string.format("%30s","Total volume"))
 writef(string.format("%20.2f",totalvolume) )
@@ -361,14 +323,8 @@ if(bls = 1) then
     writef(string.format("%20.2f", unreacted_ls))
     writef(string.format("%20.2f",( unreacted_ls)/inivolume)+eol)
 endif
-if(bmk = 1) then
-    writef(string.format("%30s","Unreacted MK"))
-    writef(string.format("%20.2f", unreacted_mk))
-    writef(string.format("%20.2f",( unreacted_mk)/inivolume)+eol)
-endif
 ssSi = sum_s_s("CSH","Si")
-gelpor = calc_value("VolumeGelPores",sum_s_s("CSH","Ca"),ssSi)
-gelpor = gelpor*ssSi
+gelpor = calc_value("VolumeGelPores",1,sum_s_s("CSH","Ca"),sum_s_s("CSH","Si"))
 writef(string.format("%30s","Gel pores"))
 writef(string.format("%20.2f",gelpor))
 writef(string.format("%20.2f",gelpor/inivolume)+eol) 
@@ -386,6 +342,5 @@ writef(string.format("%20.2f",totpor/inivolume)+eol)
 
 writef(eol + eol +eol + txtss +eol)
 closef()
-
 endif
 -end 

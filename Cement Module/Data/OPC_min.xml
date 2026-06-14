@@ -2,7 +2,7 @@
 <DataBlocks>
 	<DataBlock>
 		<Name>OPC_min</Name>
-		<Description>Chemical composition of Ordinary Portland Cement in mineral amounts</Description>
+		<Description>Composition of OPC CELMI in terms of weight percentages of constituents (clinkers, soluble minerals)</Description>
 		<Info><![CDATA[{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2067{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}}
 {\colortbl ;\red0\green0\blue255;\red0\green0\blue0;}
 {\*\generator Riched20 10.0.22621}\viewkind4\uc1 
@@ -48,8 +48,7 @@
 \par
 \b\lang1033 Lot06   \tab\tab\b0 Lothenbach, B. and Winnefeld, F. 2006. Thermodynamic \f1\fs20\lang0 modelling of the hydration of Portland cement. Cement and Concrete Research 36, 209-226.\par
 \b\f0\lang1033 CEMGEMS\tab {\b0{\field{\*\fldinst{HYPERLINK https://cemgems.app/ }}{\fldrslt{https://cemgems.app/\ul0\cf0}}}}\b0\f0\fs19\lang2067\par
-}
-]]><Visible>False</Visible>
+}]]><Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 			<Type>1</Type>
 			<ExternalFile>False</ExternalFile>

@@ -4,8 +4,8 @@
 		<Name>Cement Model<Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 		</Name>
-		<Heading>
-			<Visible>False</Visible>
+		<Heading>Information on the cement system and corresponding cement model
+			<Visible>True</Visible>
 			<ReadOnly>False</ReadOnly>
 		</Heading>
 		<ToolTip>
@@ -13,14 +13,18 @@
 			<ReadOnly>False</ReadOnly>
 		</ToolTip>
 		<Visible>True</Visible>
-		<Export>True</Export>
+		<Export>True</Export>		
+		<Info><![CDATA[]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/TabInformation.html</WebPage>
+		</Info>
 		<Groups>
 			<Group>
 				<Name>Cement System<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Selection of cement system
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -29,7 +33,10 @@
 				</ToolTip>
 				<Visible>True</Visible>
 				<Export>True</Export>
-				<Info></Info>
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-CementSystem.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -119,8 +126,8 @@
 				<Name>Model Options<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Adaptations to the default cement model
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -129,6 +136,10 @@
 				</ToolTip>
 				<Visible>True</Visible>
 				<Export>True</Export>
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-ModelOptions.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -208,7 +219,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Specify the model for the AFt ettringite - tricarboalu03 phases]]></Cell>
 						<Cell>
 							<Text />
 							<Default />
@@ -236,7 +247,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Specify the model for the MSH phases M075SH and M15SH]]></Cell>
 						<Cell>
 							<Text />
 							<Default />
@@ -268,7 +279,7 @@
 							<Default>False</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Including Na-zeolites]]></Cell>
 						<Cell>
 							<Text />
 							<Default />
@@ -284,7 +295,7 @@
 							<Default>False</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Including K-zeolites]]></Cell>
 						<Cell>
 							<Text />
 							<Default />
@@ -300,7 +311,7 @@
 							<Default>False</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Including Ca-zeolites]]></Cell>
 						<Cell>
 							<Text />
 							<Default />

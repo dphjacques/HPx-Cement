@@ -1,0 +1,96 @@
+CALCULATE_VALUES
+VolumeGelPores
+## Input
+## 		1	Model type
+##			0	dummy model - not calculated
+##			1	CHSQ
+##		2	moles Ca in CSH
+##		3	moles Si in SCH
+## Return 
+##		Volume of gel pores in cm3
+## Output Vector
+##		1	mass of water in gel pores in g
+-mybasic
+-start
+	cshmodel = calc_arg(1)
+    ss_ca = calc_arg(2)
+    ss_si = calc_arg(3)
+    
+	gelwater = 0
+	gelwaterm = 0
+	
+    if(ss_si > 1E-15) then
+        if(cshmodel =  1) then 
+			ca_si = ss_ca/ss_si
+			
+			a1 = -3.67474
+			a2 = 14.75335*ca_si
+			p= ca_si*ca_si
+			a3 = -19.00002*p
+			p = p*ca_si
+			a4 = 10.931594*p
+			p = p *ca_si
+			a5 = -2.266734*p
+			
+			gelwater = a1 + a2 + a3 + a4 +a5
+			gelwaterm = gelwater * ss_si * gfw("H2O") #g H2O
+			gelwater = gelwaterm / rho_0() #g * dm3/kg = cm3 
+		endif
+    endif
+    
+	calc_out(gelwaterm)
+    save(gelwater) #cm3
+-end
+
+VolumeBulkPores
+-mybasic
+-start
+    ss_ca = calc_arg(1)
+    ss_si = calc_arg(2)
+    
+    if(ss_si < 1E-15) then
+        bulkwater = 0
+    else
+    
+        ca_si = ss_ca/ss_si
+        
+        a1 = -3.18553
+        a2 = 14.09635*ca_si
+        p= ca_si*ca_si
+        a3 = -15.24216*p
+        p = p*ca_si
+        a4 = 7.983487*p
+        p = p *ca_si
+        a5 = -1.542599*p
+        
+        bulkwater = a1 + a2 + a3 + a4 +a5
+    endif
+
+    save(bulkwater)
+-end
+
+VolumeSolidsEquilibrium
+-mybasic
+-start 
+   db = "Db_Minerals"
+   count = get_defnrrec(db)-1
+   vol=0
+   for i = 0 to count 
+       vol = vol + equi(get_def(db,i))*phase_vm(get_def(db,i))
+   next i
+   db = "Db_SolidSolutions"
+   count = get_defnrrec(db)-1
+   ssvol = 0
+   for i = 0 to count 
+    ssvol = ssvol + s_s(get_def(db,i))*phase_vm(get_def(db,i))
+   next i    
+   
+   ssCa = sum_s_s("CSH","Ca")
+   ssSi = sum_s_s("CSH","Si") 
+    
+   VolumeGelH2O = calc_value("VolumeGelPores",1,ssCa,ssSi)
+   calc_out(VolumeGelH2O)
+   
+   
+   save(vol+ssvol-VolumeGelH2O)
+-end  

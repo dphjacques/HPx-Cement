@@ -2,7 +2,7 @@ INCLUDE$ ModuleCement_UserPunch_Generic.hps
 
 USER_PUNCH 
 -mybasic
--headings Amount OPC GBFS SF FA LS MK wc
+-headings Amount OPC GBFS SF FA LS wc
 -headings @Output::Oxides 
 -headings water T pH mu
 -headings @Output::Elements
@@ -21,23 +21,18 @@ include$ _txtheading._in
     else
         punch(0)
     endif 
-    if(get_varexist("SF::Amount") > -1) then
+        if(get_varexist("SF::Amount") > -1) then
         punch( get_var("SF::Amount") )
     else
         punch(0)
     endif 
-    if(get_varexist("FA::Amount") > -1) then
+        if(get_varexist("FA::Amount") > -1) then
         punch( get_var("FA::Amount") )
     else
         punch(0)
     endif 
-    if(get_varexist("LS::Amount") > -1) then
+        if(get_varexist("LS::Amount") > -1) then
         punch( get_var("LS::Amount") )
-    else
-        punch(0)
-    endif  
-    if(get_varexist("MK::Amount") > -1) then
-        punch( get_var("MK::Amount") )
     else
         punch(0)
     endif 
@@ -174,7 +169,7 @@ include$ _txtheading._in
     sil = sum_s_s("CSH","Si")
     if(ca > 0 AND sil > 0) then
         punch(ca,sil)
-        punch(calc_value("VolumeGelPores",ca,sil))
+        punch(calc_value("VolumeGelPores",1,ca,sil))
     else
         ca =1.6* equi("CSH1.6") + 1.2* equi("CSH1.2") +0.8* equi("CSH0.8")
         sil = equi("CSH1.6") + equi("CSH1.2") + equi("CSH0.8")
@@ -313,7 +308,7 @@ ExtrOutputPunch_Profiles
       unit = "m"
   elseif (conv_x("c") = 1) then
       unit = "cm"
-  elseif (conv_x("mm") = 1) then
+  elseif (conv_x("mm") = 1 then
       unit = "mm"
   else
     unit = "cm"

@@ -1,3 +1,5 @@
+2026-06-14 Bug - calculation in gel porosity CSHQ model
+
 2025-04-30 Adaptations for plots including the variant option
 
 2024-09-12 Add MetaKaolin

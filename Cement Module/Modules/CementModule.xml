@@ -1,6 +1,8 @@
 
 <Module>Cement
-	<MetaData></MetaData>
+	<MetaData>
+		<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Introduction.html</WebPage>
+	</MetaData>	
 	<Templates>ModuleCementTemplates
 		<Template>Hydrates_00_General.xml</Template>
 		<Template>Hydrates_10_Blending_General.xml</Template>

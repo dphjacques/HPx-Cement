@@ -4,8 +4,8 @@
 		<Name>Cement Recipe<Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 		</Name>
-		<Heading>
-			<Visible>False</Visible>
+		<Heading>Information on  the general cement recipe (temperature, w/c, and amount of cement) and the cement composition in terms of oxides for different cement constituents.
+		<Visible>True</Visible>
 			<ReadOnly>False</ReadOnly>
 		</Heading>
 		<ToolTip>
@@ -13,22 +13,18 @@
 			<ReadOnly>False</ReadOnly>
 		</ToolTip>
 		<Visible>True</Visible>
-		<Export>True</Export>
-						
-				<Info><![CDATA[]]><Visible>False</Visible>
-					<ReadOnly>False</ReadOnly>
-					<Type>0</Type>
-					<ExternalFile>True</ExternalFile>
-					<RelativePath>ModuleCementHelp\ModuleCement_Input_50_Transport_01_TransportProperties_00_Main.htm</RelativePath>
-					<ParentName>Modules</ParentName>
-				</Info>
+		<Export>True</Export>				
+		<Info><![CDATA[]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/TabInformation2.html</WebPage>
+		</Info>
 		<Groups>
 			<Group>
 				<Name>Recipe<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>General features of the cement mixture.
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -36,7 +32,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>				
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-Recipe1.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -104,7 +104,7 @@
 							<Default>25</Default>
 						</Cell>
 						<Cell><![CDATA[Celsius]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Temperature at which the recipe is hydrated]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -120,7 +120,7 @@
 							<Default>0.5</Default>
 						</Cell>
 						<Cell><![CDATA[-]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Ratio of mass of water over mass of binder]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -136,7 +136,7 @@
 							<Default>100</Default>
 						</Cell>
 						<Cell><![CDATA[g]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Mass of cement (or binder) ]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -148,7 +148,7 @@
 				<Name>Aggregates<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>INFO - Only relevant for transport calculations<Visible>True</Visible>
+				<Heading>Information on the aggregates<Visible>True</Visible>
 					<ReadOnly>True</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -156,13 +156,10 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>								
 				<Info><![CDATA[]]><Visible>False</Visible>
 					<ReadOnly>False</ReadOnly>
-					<Type>0</Type>
-					<ExternalFile>True</ExternalFile>
-					<RelativePath>ModuleCementHelp\ModuleCement_Input_50_Transport_01_TransportProperties_00_Main.htm</RelativePath>
-					<ParentName>Modules</ParentName>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-Aggregates.html</WebPage>
 				</Info>
 				<Columns>
 					<Column>
@@ -231,7 +228,7 @@
 							<Text>70</Text>
 							<Default>70</Default>
 						</Cell>
-						<Cell><![CDATA[Volume%]]></Cell>
+						<Cell><![CDATA[cm3]]></Cell>
 						<Cell><![CDATA[if negative, derived from other values]]></Cell>
 						<Cell>
 							<Text/>
@@ -247,7 +244,7 @@
 							<Text>-1</Text>
 							<Default>-1</Default>
 						</Cell>
-						<Cell><![CDATA[kg/dm3]]></Cell>
+						<Cell><![CDATA[kg]]></Cell>
 						<Cell><![CDATA[if negative, derived from other values]]></Cell>
 						<Cell>
 							<Text/>
@@ -263,13 +260,13 @@
 							<Text>2.65</Text>
 							<Default>2.65</Default>
 						</Cell>
-						<Cell><![CDATA[kg/dm³]]></Cell>
+						<Cell><![CDATA[kg/dm3]]></Cell>
 						<Cell><![CDATA[if negative, derived from other values]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
 						</Cell>
-					</Record>
+					</Record>					
 					<Record>
 						<ID><![CDATA[2024-05-17T5:37:2413]]></ID>
 						<Visible>True</Visible>
@@ -280,10 +277,10 @@
 							<Default>True</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[If checked: porosity is calculated from volume aggregates and cement hydrates. If not checked: aggregate volume is calculated from porosity and cement constituents]]></Cell>
+						<Cell><![CDATA[(only transport)If checked: porosity is calculated from volume aggregates and cement hydrates. If not checked: aggregate volume is calculated from porosity and cement constituents]]></Cell>
 						<Cell>
-							<Text/>
-							<Default/>
+							<Text />
+							<Default />
 						</Cell>
 					</Record>
 				</Records>
@@ -292,8 +289,8 @@
 				<Name>OPC Clinker<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Information of the OPC clinker in the mixture
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -301,7 +298,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>								
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-OPCClinker1.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -375,7 +376,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of OPC clinker composition in terms of oxides (see data block OPC)]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -391,7 +392,7 @@
 							<Default>100</Default>
 						</Cell>
 						<Cell><![CDATA[weight%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Weight percentage of OPC clinker in the cement mixture]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -407,7 +408,7 @@
 							<Default>100</Default>
 						</Cell>
 						<Cell><![CDATA[weight%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Reaction extent of OPC clinker in percent]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -419,8 +420,8 @@
 				<Name>GBFS<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Information of the granulated blast furnace slag in the mixture
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -428,7 +429,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>								
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-GBFS.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -502,7 +507,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of GBFS composition in terms of oxides (see data block GBFS)]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -518,7 +523,7 @@
 							<Default>0</Default>
 						</Cell>
 						<Cell><![CDATA[%mass]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Weight percentage of GBFS in the cement mixture]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -534,7 +539,7 @@
 							<Default>100</Default>
 						</Cell>
 						<Cell><![CDATA[%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Reaction extent of GBFS in percent]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -556,7 +561,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of type of reactivity.]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -568,8 +573,8 @@
 				<Name>SF<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Information on the silica fume in the mixture
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -577,7 +582,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>								
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-SF.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -651,7 +660,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of SF composition in terms of oxides (see data block SF)]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -667,7 +676,7 @@
 							<Default>0</Default>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Weight percentage of SF in the cement mixture]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -683,7 +692,7 @@
 							<Default>100</Default>
 						</Cell>
 						<Cell><![CDATA[%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Reaction extent of SF in percent]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -705,7 +714,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of type of reactivity.]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -717,8 +726,8 @@
 				<Name>FA<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Information on the fly-ash in the mixture
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -726,7 +735,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>								
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-FA.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -800,7 +813,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of FA composition in terms of oxides (see data block FA)]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -816,7 +829,7 @@
 							<Default>0</Default>
 						</Cell>
 						<Cell><![CDATA[mass%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Weight percentage of FA in the cement mixture]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -832,7 +845,7 @@
 							<Default>100</Default>
 						</Cell>
 						<Cell><![CDATA[mass%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Reaction extent of FA in percent]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -854,7 +867,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of type of reactivity.]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -866,8 +879,8 @@
 				<Name>LS<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Information on the limestone in the mixture
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -875,7 +888,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>								
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-LS.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -949,7 +966,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of LS composition in terms of oxides (see data block LS)]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -965,7 +982,7 @@
 							<Default>0</Default>
 						</Cell>
 						<Cell><![CDATA[mass%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Weight percentage of LS in the cement mixture]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -981,7 +998,7 @@
 							<Default>100</Default>
 						</Cell>
 						<Cell><![CDATA[mass%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Reaction extent of LS in percent]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -1003,7 +1020,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of type of reactivity.]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -1015,8 +1032,8 @@
 				<Name>MK<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Information on the metakaolin in the mixture
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -1024,7 +1041,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>								
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-MK.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -1102,7 +1123,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of MK composition in terms of oxides (see data block MK)]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -1118,7 +1139,7 @@
 							<Default>0</Default>
 						</Cell>
 						<Cell><![CDATA[mass%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Weight percentage of MK in the cement mixture]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -1128,13 +1149,13 @@
 						<ID><![CDATA[2024-09-06T9:35:1992]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>
-						<Cell><![CDATA[MK::Reacted  ]]></Cell>
+						<Cell><![CDATA[MK::AmountReacted]]></Cell>
 						<Cell>
 							<Text>100</Text>
 							<Default>100</Default>
 						</Cell>
 						<Cell><![CDATA[mass%]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Reaction extent of LS in percent]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
@@ -1156,7 +1177,7 @@
 							</Text>
 						</Cell>
 						<Cell><![CDATA[]]></Cell>
-						<Cell><![CDATA[]]></Cell>
+						<Cell><![CDATA[Selection of type of reactivity.]]></Cell>
 						<Cell>
 							<Text/>
 							<Default/>
