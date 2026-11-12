@@ -11,10 +11,12 @@ class CementHydration
     boutputpunchResult = 0 
 
     def WriteInput(entitynr,savenr)
-        txt = cemsys.WritePhreeqcSolution(entitynr,boutprintInitial,boutpunchInitial)
-        
+		txt = "GLOBAL_VARIABLE Cement::_leachinginivol -1" + eol
+        txt = txt + cemsys.WritePhreeqcSolution(entitynr,boutprintInitial,boutpunchInitial)
+
         txt = txt + "Print" + eol
         txt = txt + "-reset true" + eol
+		txt = txt + "-echo_input false" + eol
         txt = txt + "selected_output " + eol
         txt = txt + "-active false " + eol
         txt = txt + "INCREMENTAL_REACTIONS true" + eol

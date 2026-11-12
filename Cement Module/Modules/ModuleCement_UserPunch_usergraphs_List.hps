@@ -1,0 +1,113 @@
+def WriteListElements()
+	db = "Db_Elements"
+	count = get_defnrrec(db)-1
+	for i = 0 to count 
+		txt = txt + "-fig_y " + get_def(db,i) + " < k " +  chr(34) + get_def(db,i) + chr(34) + " "
+		if(belements_mg = 1 ) then
+			txt = txt + " t " + chr(34) + "_THIS * 1000 * " + str(gfw(get_def(db,i))) + chr(34) + " "  
+		endif
+		txt = txt + " > " + eol
+	next i
+enddef
+
+def WriteListSolids()
+	db = "Db_Kinetics"
+	dbn = "PhaseName_kin"
+	count = get_defnrrec(db)-1
+	for i = 0 to count 
+		min = get_def(db,"kin",i)
+		vary = min
+		if (bsolidgram = 1 ) then
+			if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+				vary = "w"+vary
+			endif
+		endif
+		if(bsolidvol = 1 ) then
+			if( get_var("Cement::Output::Hydrates::Volumes") = 1 ) then
+				vary = "v"+vary
+			endif
+		endif 
+		if(get_defexist(dbn,0,min) > -1) then           
+			minindex = get_deflabel(dbn,min)
+			if(get_def(dbn,1,minindex) = "none") then
+				kmin = min)
+			else
+				kmin = get_def(dbn,1,minindex)
+			endif
+		else
+			kmin = min
+		endif 
+		txt = txt + "-fig_y " + vary + " < k " +  chr(34) + kmin + chr(34) + " "
+		strvar = "nr"+get_def(db,"kin",i)
+		if(get_varexist(strvar) = 0 ) then 
+			txt = txt +  " ls " + str(get_var(strvar)) + " "
+		else
+			txt = txt + " style lines " 
+		endif
+		if(bsolid100 = 1) then
+			txt = txt + convertstr
+		endif
+		txt = txt + " > " + eol
+	next i
+	dbn = get_var("_PhaseName$")
+	db = "Db_SolidSolutions_Def"
+	count = get_defnrrec(db)-1
+	for i = 0 to count 
+		min = get_def(db,0,i)
+		vary = min
+		if(bsolidgram = 1 ) then
+			if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+				vary = "w"+vary
+			endif
+		endif
+		if(bsolidvol = 1 ) then
+			if( get_var("Cement::Output::Hydrates::Volumes") = 1 ) then
+				vary = "v"+vary
+			endif
+		endif 
+		txt = txt + "-fig_y " + vary + " < k " +  chr(34) + min + chr(34) + " "
+		strvar = "nr"+get_def(db,0,i)
+		if(get_varexist(strvar) = 0 ) then 
+			txt = txt +  " ls " + str(get_var(strvar)) + " "
+		endif
+		if(bsolid100 = 1) then
+			txt = txt + convertstr
+		endif
+		txt = txt + " > " + eol
+	next i
+	db = "Db_Minerals"
+	count = get_defnrrec(db)-1
+	for i = 0 to count 
+		min = get_def(db,i)
+		vary = min
+		if(bsolidgram = 1 ) then
+			if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+				vary = "w"+vary
+			endif
+		endif
+		if(bsolidvol = 1 ) then
+			if( get_var("Cement::Output::Hydrates::Volumes") = 1 ) then
+				vary = "v"+vary
+			endif
+		endif 
+		if(get_defexist(dbn,0,min) > -1) then           
+			minindex = get_deflabel(dbn,min)
+			if(get_def(dbn,1,minindex) = "none") then
+				kmin = min
+			else
+				kmin = get_def(dbn,1,minindex)
+			endif
+		else
+			kmin = min
+		endif        
+		txt = txt + "-fig_y " + vary + " < k " +  chr(34) + kmin + chr(34) + " "
+		strvar = "nr"+kmin
+		if(get_varexist(strvar) = 0 ) then 
+			txt = txt +  " ls " + str(get_var(strvar)) + " "
+		endif
+		if(bsolid100 = 1) then
+			txt = txt + convertstr
+		endif
+		txt = txt + " > " + eol
+	next i
+enddef

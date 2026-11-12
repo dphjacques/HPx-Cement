@@ -90,7 +90,7 @@ class CementModel
     enddef
     
     def WritePhreeqcSolution(entitynr,boutprint, boutpunch,belement)
-
+		belement = 1
         txt = "SOLUTION " + str(entitynr) + eol
         amountwater = get_Var("Cement::Recipe::Amount")*get_var("Cement::Recipe::w_c")/1000
         put_var("AmountWater",amountwater)
@@ -108,12 +108,14 @@ class CementModel
            txt = txt + "false" + eol 
         else 
            txt = txt + "true" + eol
+		   txt = txt + "-echo_input false" + eol
         endif
         txt = txt + "SELECTED_OUTPUT "+ eol + "-active " 
         if(boutpunch = 0) then 
            txt = txt + "false" + eol 
         else 
            txt = txt + "true" + eol
+		   txt = txt + "-echo_input false" + eol
         endif
         txt = txt + "END" + eol
 

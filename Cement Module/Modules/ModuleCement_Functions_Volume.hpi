@@ -2,25 +2,35 @@ CALCULATE_VALUES
 VolumeGelPores
 ## Input
 ## 		1	Model type
-##			0	dummy model - not calculated
-##			1	CHSQ
+##			0	Empirical Model (required input 4)
+##			1	CHSQ with CEMDATA (required input 2 and 3)
+##		When Model Type = 0
+##		2	volume CSH (cm3)
+##		When Model Type = 1
 ##		2	moles Ca in CSH
-##		3	moles Si in SCH
+##		3	moles Si in CSH
 ## Return 
 ##		Volume of gel pores in cm3
 ## Output Vector
-##		1	mass of water in gel pores in g
+##		1	gel porosity of C-S_H
+##		2	mass of water in gel pores in g
 -mybasic
 -start
-	cshmodel = calc_arg(1)
-    ss_ca = calc_arg(2)
-    ss_si = calc_arg(3)
+	cshmodel = calc_arg(1) 
     
 	gelwater = 0
+	gelwaterp = 0
 	gelwaterm = 0
 	
-    if(ss_si > 1E-15) then
-        if(cshmodel =  1) then 
+	if(cshmodel = 0) then
+	    volumecsh = calc_arg(2) 
+		gelwaterv = 0.23 * volumecsh
+		gelwaterm = gelwaterv * rho_0()
+		gelwater = gelwaterv /(gelwaterv + volumecsh)
+	elseif(cshmodel =  1) then
+		ss_ca = calc_arg(2)
+		ss_si = calc_arg(3)		
+		if(ss_si > 1E-15) then         
 			ca_si = ss_ca/ss_si
 			
 			a1 = -3.67474
@@ -34,39 +44,190 @@ VolumeGelPores
 			
 			gelwater = a1 + a2 + a3 + a4 +a5
 			gelwaterm = gelwater * ss_si * gfw("H2O") #g H2O
-			gelwater = gelwaterm / rho_0() #g * dm3/kg = cm3 
+			gelwaterv = gelwaterm / rho_0() #g * dm3/kg = cm3 
 		endif
     endif
     
+	calc_out(gelwater)
 	calc_out(gelwaterm)
-    save(gelwater) #cm3
+    save(gelwaterv) #cm3
 -end
 
-VolumeBulkPores
+VolumeBulkWater
+## Input
+## 		1	Model type
+##			1	CHSQ with CEMDATA (required input 2 and 3)
+##		When Model Type = 1
+##		2	moles Ca in CSH
+##		3	moles Si in CSH
+## Return 
+##		Volume of bulk water in C-S-H in cm3
+## Output Vector
+##		1	bulk water in C-S-H  
+##		2	mass of bulk water in C-S-H in g
 -mybasic
 -start
-    ss_ca = calc_arg(1)
-    ss_si = calc_arg(2)
+	cshmodel = calc_arg(1) 
     
-    if(ss_si < 1E-15) then
-        bulkwater = 0
-    else
-    
-        ca_si = ss_ca/ss_si
-        
-        a1 = -3.18553
-        a2 = 14.09635*ca_si
-        p= ca_si*ca_si
-        a3 = -15.24216*p
-        p = p*ca_si
-        a4 = 7.983487*p
-        p = p *ca_si
-        a5 = -1.542599*p
-        
-        bulkwater = a1 + a2 + a3 + a4 +a5
+	bulkwater = 0
+	bulkwaterp = 0
+	bulkwaterm = 0
+
+	if(cshmodel =  1) then
+		ss_ca = calc_arg(1)
+		ss_si = calc_arg(2)
+		if(ss_si > 1E-15) then       
+			ca_si = ss_ca/ss_si
+			
+			a1 = -3.18553
+			a2 = 14.09635*ca_si
+			p= ca_si*ca_si
+			a3 = -15.24216*p
+			p = p*ca_si
+			a4 = 7.983487*p
+			p = p *ca_si
+			a5 = -1.542599*p
+			
+			bulkwater = a1 + a2 + a3 + a4 +a5
+			bulkwaterm = bulkwater * ss_si * gfw("H2O") #g H2O
+			bulkwaterv = bulkwaterm / rho_0() #g * dm3/kg = cm3
+		endif
     endif
 
+	calc_out(bulkwater)
+	calc_out(bulkwaterm)
     save(bulkwater)
+-end
+
+VolumeInnerWater
+## Input
+## 		1	Model type
+##			1	CHSQ with CEMDATA (required input 2 and 3)
+##		When Model Type = 1
+##		2	moles Ca in CSH
+##		3	moles Si in CSH
+## Return 
+##		Volume of inner water in C-S-H in cm3
+## Output Vector
+##		1	inner water in C-S-H  
+##		2	mass of inner water in C-S-H in g
+-mybasic
+-start
+	cshmodel = calc_arg(1) 
+    
+	innerwater = 0
+	innerwaterp = 0
+	innerwaterm = 0
+
+	if(cshmodel =  1) then
+		ss_ca = calc_arg(1)
+		ss_si = calc_arg(2)
+		if(ss_si > 1E-15) then       
+			gelwaterv = calc_value("VolumeGelPores",1,ss_ca,ss_si)
+			gelwater = calc_res(1)     
+			bulkwaterv = calc_value("VolumeBulkWater",1,ss_ca,ss_si)
+			bulkwater = calc_res(1)
+			innerwater = bulkwater - gelwater
+			bulkwaterm = innerwater * ss_si * gfw("H2O") #g H2O
+			bulkwaterv = innerwaterm / rho_0() #g * dm3/kg = cm3
+		endif
+    endif
+
+	calc_out(innerwater)
+	calc_out(innerwaterm)
+    save(innerwater)
+-end
+
+InitialVolumes
+## Input
+## Return 
+##		Volume of initial mixture (cement constituents and water) cm3
+## Output Vector
+##		1	volume of initial cement constituents cm3
+##		2	volume of initial water cm3
+-mybasic
+-start
+	if(get_var("bopc")=1) then
+		inivolume =  get_var("Cement::Clinker::Amount") / get_var("Cement::Clinker::BulkDensity") 
+	endif
+	if(get_var("bgbfs") = 1) then
+		inivolume = inivolume +  get_var("GBFS::Amount") / get_var("GBFS::BulkDensity") 
+	endif
+	if(get_var("bsf") = 1) then
+		inivolume = inivolume +  get_var("SF::Amount") / get_var("SF::BulkDensity") 
+	endif
+	if(get_var("bfa") = 1) then
+		inivolume = inivolume +  get_var("FA::Amount") / get_var("FA::BulkDensity") 
+	endif
+	if(get_var("bls") = 1) then
+		inivolume = inivolume +  get_var("LS::Amount") / get_var("LS::BulkDensity") 
+	endif
+	if(get_var("bmk") = 1) then
+		inivolume = inivolume +  get_var("MK::Amount") / get_var("MK::BulkDensity") 
+	endif
+	inivolume = inivolume *  get_var("Cement::Recipe::Amount") /100
+	inivolumew = get_var("Cement::Recipe::Amount") * get_var("Cement::Recipe::w_c") / rho_0()
+	inivolumet = inivolume + inivolumew  
+	
+	calc_out(inivolume)
+	calc_out(inivolumew)
+	save(inivolumet)
+-end
+
+VolumesCementConstituents
+## Input
+## Return 
+##		Volume of cement constituents cm3
+## Output Vector
+##		1	volume of initial cement constituents cm3
+##		2	volume of initial water cm3
+-mybasic
+-start
+	unreacted_opc = 0 
+	if(get_var("bopc") = 1) then
+		unreact_rel = (100- get_var("Cement::Clinker::ReactedAmount"))/100
+		unreacted_opc = unreact_rel *  get_var("Cement::Clinker::Amount")  / get_var("Cement::Clinker::BulkDensity") 
+		unreacted_opc = unreacted_opc * get_var("Cement::Recipe::Amount") /100
+		endif 
+	unreacted_gbfs =0
+	if(get_var("bgbfs") = 1) then
+		unreact_rel = (100- get_var("GBFS::ReactedAmount"))/100
+		unreacted_gbfs = unreact_rel *  get_var("GBFS::Amount")  / get_var("GBFS::BulkDensity") 
+		unreacted_gbfs = unreacted_gbfs * get_var("Cement::Recipe::Amount") /100
+	endif
+	unreacted_sf = 0
+	if(get_var("bsf") = 1) then
+		unreact_rel = (100- get_var("SF::ReactedAmount"))/100
+		unreacted_sf = unreact_rel *  get_var("SF::Amount")  / get_var("SF::BulkDensity") 
+		unreacted_sf = unreacted_sf * get_var("Cement::Recipe::Amount") /100
+	endif
+	unreacted_fa = 0
+	if(get_var("bfa") = 1) then
+		unreact_rel = (100- get_var("FA::ReactedAmount"))/100
+		unreacted_fa = unreact_rel *  get_var("FA::Amount")  / get_var("FA::BulkDensity") 
+		unreacted_fa = unreacted_fa * get_var("Cement::Recipe::Amount") /100
+	endif
+	unreacted_ls = 0
+	if(get_var("bls") = 1) then
+		unreact_rel = (100- get_var("LS::ReactedAmount"))/100
+		unreacted_ls = unreact_rel *  get_var("LS::Amount")  / get_var("LS::BulkDensity") 
+		unreacted_ls = unreacted_ls * get_var("Cement::Recipe::Amount") /100
+	endif
+	unreacted_mk = 0
+	if(get_var("bmk") = 1) then
+		unreact_rel = (100- get_var("MK::ReactedAmount"))/100
+		unreacted_mk = unreact_rel *  get_var("MK::Amount")  / get_var("MK::BulkDensity") 
+		unreacted_mk = unreacted_mk * get_var("Cement::Recipe::Amount") /100
+	endif
+
+	calc_out(unreacted_opc)
+	calc_out(unreacted_gbfs)
+	calc_out(unreacted_sf)
+	calc_out(unreacted_fa)
+	calc_out(unreacted_ls)
+	calc_out(unreacted_mk)
+	save(unreacted_opc + unreacted_gbfs + unreacted_sf + unreacted_fa + unreacted_ls + unreacted_mk)
+
 -end
 
 VolumeSolidsEquilibrium
@@ -92,5 +253,5 @@ VolumeSolidsEquilibrium
    calc_out(VolumeGelH2O)
    
    
-   save(vol+ssvol-VolumeGelH2O)
+   save(vol+ssvol)	
 -end  

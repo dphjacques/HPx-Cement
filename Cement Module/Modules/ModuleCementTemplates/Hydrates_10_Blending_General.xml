@@ -1,6 +1,8 @@
 <Template>
     <Description>Blending OPC with supplementary materials</Description>
-    <MetaData> </MetaData>
+    <MetaData> 
+		<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Hydrates_10_Blending_general.html</WebPage>
+	</MetaData>
     <Databases>
         <DatabaseGroup>_managed_</DatabaseGroup>
         <DatabaseName>_CEMDATA_CEMDATA18-31-03-2022-phaseVol.dat</DatabaseName>
@@ -23,6 +25,25 @@
         <File>ModuleCement_Input_02_Recipe.xml</File>
         <File>ModuleCement_Output_01_General.xml</File>
     </InputTable>
+	<DefaultCase>
+		<Case>
+			<Name>DefaultCase</Name>
+			<Description>Default Case defined by Template</Description>	
+			<Save>false</Save>
+			<Run>false</Run>
+			<Mode>1000</Mode>			
+			<PasunocDef>1000<Iterations>
+					<Iteration>1000<Method>10000</Method>
+						<Use>True</Use>
+						<Model>True<Folder>Modules</Folder>
+							<File>ModuleCementParametric\Parametric_10_Hydrates.hps</File>
+							<RelPath>True</RelPath>
+						</Model>
+					</Iteration>
+				</Iterations>
+			</PasunocDef>
+		</Case>
+	</DefaultCase>
     <DataBlocks>
         <DataBlock>
             <Name>OPC</Name>

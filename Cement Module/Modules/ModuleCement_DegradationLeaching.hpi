@@ -74,8 +74,10 @@ endif
       txtquote = chr(34) + txttoquote + chr(34)
       return txtquote
     enddef
-#Set up leaching solutions 
-    txt = "SELECTED_OUTPUT " + str(get_var("Hydration::OutputNr")) + " " + eol + "-active false " + eol 
+#Set up leaching solutions 	
+    txt = "GLOBAL_VARIABLE Leaching::Run::TotalAmountAddedWater 0" + eol
+	txt = txt + "GLOBAL_VARIABLE Leaching::Run::AddedWater 0.0" + eol
+    txt = txt + "SELECTED_OUTPUT " + str(get_var("Hydration::OutputNr")) + " " + eol + "-active false " + eol 
      __cemSolutionNr =  169898
     
     if(get_var("Cement::Leaching::Step0_01") > 0) then
@@ -102,7 +104,6 @@ endif
 #Set up leaching
     txt = txt + "SELECTED_OUTPUT " + str(get_var("Hydration::OutputNr")) + " "  + eol + "-active true " + eol 
     txt = txt + "PRINT " + eol + " -reset false " + eol + " -echo_input true" + eol
-    txt = txt + "GLOBAL_VARIABLE Leaching::Run::TotalAmountAddedWater 0" + eol
     
     if(get_var("Cement::Leaching::Step0_01") > 0) then
         nrsteps =  get_var("Cement::Leaching::Step0_01") /0.01
@@ -142,6 +143,12 @@ closef()
 
 put_var("Output::Lead","Lead") 
 
+openf("Cement_degradation_leaching_direct._in")
+if(get_varexist("_CalutationType::Parametric") < 0) then
+	writef("INCLUDE$ Cement_degradation_leaching._in")
+endif 
+closef()
+
 endif 
 
 -end
@@ -154,13 +161,15 @@ selected_output @Hydration::OutputNr
 
 INCLUDE$ ModuleCement_UserPunch.hps
 
-INCLUDE$ Cement_degradation_leaching._in
+INCLUDE$ Cement_degradation_leaching_direct._in
 
 CALCULATE_VALUES
 DeleteFiles
 -state Definition
 -mybasic 
 -start 
+     #deletef("Cement_degradation_leaching_direct._in")
+    
     #deletef("leachingstep._in")
     #deletef("ReactionDefinition1._in")
     #deletef("ReactionDefinition2._in")

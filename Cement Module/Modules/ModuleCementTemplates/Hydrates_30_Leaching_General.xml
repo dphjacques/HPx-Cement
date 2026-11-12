@@ -1,6 +1,7 @@
 <Template>
 	<Description>Leaching of cementitious materials</Description>
-	<MetaData> </MetaData>
+	<MetaData>
+		<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Hydrates_10_Blending_general.html</WebPage> </MetaData>
 	<Databases>
 		<DatabaseGroup>_managed_</DatabaseGroup>
 		<DatabaseName>_CEMDATA_CEMDATA18-31-03-2022-phaseVol.dat</DatabaseName>

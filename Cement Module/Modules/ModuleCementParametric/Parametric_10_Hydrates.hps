@@ -15,7 +15,6 @@ CementHydration
 
     cementini.WriteInput(1001,1001)
     
-    
     txt = txt + "GLOBAL_VARIABLE Cement::Hydration::Output$ " + chr(34) + "Cement_Hydration_"+str(1001)+".out" +  chr(34) + eol
     txt = txt + "INCLUDE$ Cement1001_1001._in" + eol
 

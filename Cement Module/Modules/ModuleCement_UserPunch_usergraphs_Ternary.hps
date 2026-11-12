@@ -1,0 +1,238 @@
+    def WriteTernaryFigures()
+      txt_axis = "-fig_type ternary" + eol
+      txt_axis = txt_axis + "-fig_group " +  chr(34) + "Default Ternary Graphs" + chr(34) + eol
+      txt_axis = txt_axis + "-fig_x " + get_var("Cement::Figures::Ternary::X$") + eol
+      txt_axis = txt_axis + "-fig_y " + get_var("Cement::Figures::Ternary::Y$") + eol
+      txt_axis = txt_axis + "-fig_z " + get_var("Cement::Figures::Ternary::Z$") + eol     
+      txt_axis = txt_axis + "-fig_xt " + chr(34) + get_var("Cement::Figures::Ternary::TitleX$") + chr(34) + eol
+      txt_axis = txt_axis + "-fig_yt " + chr(34) + get_var("Cement::Figures::Ternary::TitleY$") + chr(34) + eol
+      txt_axis = txt_axis + "-fig_zt " + chr(34) + get_var("Cement::Figures::Ternary::TitleZ$") + chr(34) + eol  
+      if(get_var("Cement::Figures::Ternary::Grid") = 1) then
+          txt_axix = txt_axis + "-fig_grid true false true" + eol
+      endif
+      if(get_var("Cement::Figures::Ternary::pH") = 1) then
+        txt = txt + "-fig_nr " + str(fignr) + eol
+        txt = txt + "-fig_variabletype " + chr(34) + "Water chemistry" + chr(34) + eol
+        txt = txt + "-fig_name " + chr(34) + "pH" + chr(34) + eol
+        txt = txt + txt_axis
+        txt = txt + "-fig_map pH < k " + chr(34) + "pH" + chr(34) + "> "+ eol + eol
+        #if(get_varexist("_CalutationType::Parametric") = 0) then
+        #   if (get_varexist("Cement::_leaching") = 0 ) then
+              txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+              txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+        #   endif
+        #endif   
+        fignr = fignr + 1
+      endif
+      if(get_var("Cement::Figures::Ternary::Water::Elements") = 1) then
+        db = "Db_Elements"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Water chemistry" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Element - M - " + get_def(db,i) + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map " + get_def(db,i) + " < k " +  chr(34) + get_def(db,i) + " [mol/l]" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif   
+            fignr = fignr + 1
+        next i
+      endif 
+      if(get_var("Cement::Figures::Ternary::Solids") = 1) then
+        for k = 1 to 3
+            makeplot = 0
+            if(k=1) then
+                unit = "moles" 
+                if (get_var("Cement::Output::Hydrates::Moles") = 1) then makeplot = 1
+                prefix = ""
+            elseif (k=2) then
+                unit = "gram" 
+                if (get_var("Cement::Output::Hydrates::Weights") = 1) then makeplot = 1
+                prefix = "w"
+            else
+                unit = "cm^3" 
+                if (get_var("Cement::Output::Hydrates::Weights") = 1) then makeplot = 1
+                prefix = "v"
+            endif
+            if (makeplot = 1) then
+                db = "Db_SolidSolutions_Def"
+                count = get_defnrrec(db)-1
+                for i = 0 to count
+                            
+                    txt = txt + "-fig_nr " + str(fignr) + eol
+                    txt = txt + "-fig_variabletype " + chr(34) + "Solids - " + unit + chr(34) + eol
+                    txt = txt + "-fig_name " + chr(34) + get_def(db,0,i) + chr(34) + eol
+                    txt = txt + txt_axis 
+                    txt = txt + "-fig_map " + prefix + get_def(db,0,i) + " < k " +  chr(34) + get_def(db,0,i) + " [" + unit + "]" + chr(34) + " > " + eol+ eol
+                    if(get_varexist("_CalutationType::Parametric") = 0) then
+                       if (get_varexist("Cement::_leaching") = 0 ) then
+                          txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                          txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+                       endif
+                    endif   
+                    fignr = fignr + 1    
+                next i
+                db = "Db_Minerals"
+                count = get_defnrrec(db)-1
+                for i = 0 to count 
+                    txt = txt + "-fig_nr " + str(fignr) + eol
+                    txt = txt + "-fig_variabletype " + chr(34) + "Solids - " + unit + chr(34) + eol
+                    txt = txt + "-fig_name " + chr(34) + get_def(db,i) + chr(34) + eol
+                    txt = txt + txt_axis 
+                    txt = txt + "-fig_map " + prefix + get_def(db,i) + " < k " +  chr(34) + get_def(db,i) + " [" + unit + "]" + chr(34) + " > " + eol+ eol
+                    if(get_varexist("_CalutationType::Parametric") = 0) then
+                       if (get_varexist("Cement::_leaching") = 0 ) then
+                          txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                          txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+                       endif
+                    endif 
+                    fignr = fignr + 1    
+                next i
+            endif
+        next k
+      endif
+      if(get_varexist("Cement::Figures::Ternary::Summary") = 0) then
+          if(get_var("Cement::Figures::Ternary::Summary") = 1) then
+            
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Cement volume " + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map CemVol < k " +  chr(34) + "Volume cement [cm^3]" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+              
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Volume hydrates " + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map HydratesVol < k " +  chr(34) + "Volume hydrates [cm^3]" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+            
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Volume gel pores " + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map GelPores < k " +  chr(34) + "Volume Gel Pores [cm^3]" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+            
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Volume free water "  + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map water < k " +  chr(34) + "Volume Water [cm^3]" + chr(34) + " t " +  chr(34) + "_THIS*1000" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+            
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Volume chemical shirinkage " + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map ChemShrink < k " +  chr(34) + "Chemical Shrinkage [cm^3]" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+            
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Ca/Si of C-S-H "  + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map CSH_Ca < k " +  chr(34) + "Ca/Si C-S-H" + chr(34) + " t " +  chr(34) + "_THIS / _COL_CSH_Si" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+            
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Initial cement volume"  + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map IniCemVol < k " +  chr(34) + "Initial cement volume [cm^3]" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+            
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Initial water volume "  + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map wc < k " +  chr(34) + "Initial water volume [cm^3]" + chr(34) + " t " +  chr(34) + "_COL_Amount * _COL_wc" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+            
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Initial  volume "  + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map Amount < k " +  chr(34) + "Initial  volume [cm^3]" + chr(34) + " t " +  chr(34) + "_COL_Amount * _COL_wc + _COL_IniCemVol" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+            
+            txt = txt + "-fig_nr " + str(fignr) + eol
+            txt = txt + "-fig_variabletype " + chr(34) + "Summmary" + chr(34) + eol
+            txt = txt + "-fig_name " + chr(34) + "Volume Aggregates "  + chr(34) + eol
+            txt = txt + txt_axis 
+            txt = txt + "-fig_map AggVol < k " +  chr(34) + "Volume Aggregates [cm^3]" + chr(34) + " > " + eol+ eol
+            if(get_varexist("_CalutationType::Parametric") = 0) then
+               if (get_varexist("Cement::_leaching") = 0 ) then
+                  txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+                  txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+               endif
+            endif 
+            fignr = fignr + 1
+            
+            
+            
+            
+
+            
+          endif 
+      endif  
+     enddef

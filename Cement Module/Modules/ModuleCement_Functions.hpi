@@ -53,6 +53,58 @@ Db_Kinetics
 opc 0 0 0 
 -end
 
+CALCULATE_VALUES
+#Set system
+CementSetSystem
+-state definition
+-mybasic 
+-start 
+	bopc = 0
+    bgbfs = 0
+    bsf = 0
+    bfa = 0
+    bls = 0
+	bmk = 0
+
+    if( get_varexist("Cement::Clinker::Reference$") = 0 ) then
+        if(  get_var("Cement::Clinker::Amount") > 0) then
+            bopc = 1
+        endif
+    endif
+    if( get_varexist("GBFS::Reference$") = 0 ) then
+        if(  get_var("GBFS::Amount") > 0) then
+            bgbfs = 1
+        endif
+    endif
+    if( get_varexist("SF::Reference$") = 0 ) then
+        if(  get_var("SF::Amount") > 0) then
+            bsf = 1
+        endif
+    endif
+    if( get_varexist("FA::Reference$") = 0 ) then
+        if(  get_var("FA::Amount") > 0) then
+            bfa = 1
+        endif
+    endif
+    if( get_varexist("LS::Reference$") = 0 ) then
+        if(  get_var("LS::Amount") > 0) then
+            bls = 1
+        endif
+    endif
+    if( get_varexist("MK::Reference$") = 0 ) then
+        if(  get_var("MK::Amount") > 0) then
+            bmk = 1
+        endif
+    endif
+	
+	put_var("bopc",bopc)
+	put_var("bgbfs",bgbfs)
+	put_var("bsf",bsf)
+	put_var("bfa",bfa)
+	put_var("bls",bls)
+	put_var("bmk",bmk)
+-end 
+
 #volume models
 include$ ModuleCement_Functions_Volume.hpi
 

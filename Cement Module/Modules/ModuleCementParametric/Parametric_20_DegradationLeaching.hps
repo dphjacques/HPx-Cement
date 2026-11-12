@@ -1,0 +1,13 @@
+#reset
+GLOBAL_VARIABLE Leaching::Run::TotalAmountAddedWater 0
+GLOBAL_VARIABLE Leaching::Run::AddedWater 0.0
+
+#calculate new cement composition
+INCLUDE$ ModuleCementParametric\\Parametric_10_Hydrates.hps
+
+@Cement_Ingress
+
+#calculate leaching
+INCLUDE$ Cement_degradation_leaching._in
+
+

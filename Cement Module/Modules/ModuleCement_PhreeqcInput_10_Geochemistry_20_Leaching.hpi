@@ -4,4 +4,6 @@ INCLUDE$ ModuleCement_PhreeqcInput_10_Geochemistry_00_HydratesAssemblagesBasis.h
 #Degradation
 GLOBAL_VARIABLE Cement::Figures::Water::Elements::Y::Scale$ "Linear"
 GLOBAL_VARIABLE Cement::Figures::X::Scale$ "Linear"
-INCLUDE$ ModuleCement_DegradationLeaching.hpi
+GLOBAL_VARIABLE Cement::Figures::X::Title$ "Water Added [kg]"
+GLOBAL_VARIABLE Cement::_leaching 1
+INCLUDE$ ModuleCement_DegradationLeaching.hpi 

@@ -1,0 +1,172 @@
+     def WriteFigure(name)
+              txt = txt + "-fig_nr " + str(fignr) + eol
+              txt = txt + "-fig_group " + TextFigureGroup + eol
+              txt1 = "INCLUDE$ " + name + ".plt "  + eol
+              if (get_varexist("Cement::_leaching")= 0 ) then
+                  txt1 = txt1 + "INCLUDE$ Leaching_Eq_X.plt " + eol 
+              endif 
+              txt = txt + txt1  + eol
+              if(get_varexist("Cement::Figures::X::Column") > -1) then
+                 txt = txt + "-fig_x " + get_var("Cement::Figures::X::Column$") + eol    
+              endif
+              txt = txt + "-fig_xt " +  chr(34) + get_var("Cement::Figures::X::Title$") +  chr(34) + " " + eol  
+              #if(get_varexist("_CalutationType::Parametric") = 0) then
+              #   if (get_varexist("Cement::_leaching") = 0 ) then
+              #      txt = txt + "-fig_groupedby Lead " + chr(34) + "Added Water" + chr(34) + " " + chr(34) + "[kg]" + chr(34) + eol
+              #      txt = txt + "-fig_select " + chr(34) + "0.1 1 3 5 10 30 50 100 300" + chr(34) + eol 
+              #   endif
+              #endif
+              if(belements = 1) then
+                  WriteListElements()
+              endif
+              if(bsolids = 1) then
+                  WriteListSolids()
+              endif
+              if(get_varexist("Cement::Figures::Time::hour") = 0) then
+                  if(get_var("Cement::Figures::Time::hour")>0) then
+                      txt = txt + "-fig_variant x " +  chr(34) +  "per hour"  + chr(34) + " " +  chr(34) + "_THIS * 24"  + chr(34) + " " +  chr(34) + "Time [hour]" +  chr(34) + eol
+                  endif
+              endif
+              if(get_varexist("Cement::Figures::Time::Second") = 0) then
+                  if(get_var("Cement::Figures::Time::Second")>0) then
+                      txt = txt + "-fig_variant x " +  chr(34) +  "per second"  + chr(34) + " " +  chr(34) + "_THIS * 86400"  + chr(34) + " " +  chr(34) + "Time [second]" +  chr(34) + eol
+                  endif
+              endif
+              fignr = fignr+1
+      enddef
+      
+      def WriteSolidFigures(j, _is, _ie, water, xtype )
+        if (j = 1) then
+            un = ""
+            una = ""
+           bsolid100 = 0
+        else
+           un = "_100g"
+           una = " - per 100 g"
+           bsolid100 = 1
+        endif
+        if(water = 1) then
+            swater = " "
+        else
+            swater = "- no water"
+        endif
+                WriteFigure("Solids_Moles_Eq"+un)
+                txt = txt + "-fig_name " + chr(34) + "SolidsMoles " + una + swater + chr(34) + " " + eol                 
+                if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
+                  txt = txt + "-fig_showzero false " + eol
+                endif
+                txt = txt + eol
+                bsolidgram = 1
+                WriteFigure("Solids_Grams_Eq"+un)
+                bsolidgram = 0
+                txt = txt + "-fig_name " + chr(34) + "SolidsGrams" + una + swater + chr(34) + " " + eol                   
+                if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
+                  txt = txt + "-fig_showzero false " + eol
+                endif
+                txt = txt + eol
+                bsolidvol = 1
+				if (get_varexist("Cement::_leaching")= 0 ) then
+                    WriteFigure("Solids_Volume_Eq_Leaching"+un)
+                else
+					WriteFigure("Solids_Volume_Eq"+un)
+				endif
+                
+                bsolidvol = 0
+                txt = txt + "-fig_name " + chr(34) + "SolidsVolume" + una + swater + chr(34) + " " + eol                   
+                if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
+                  txt = txt + "-fig_showzero false " + eol
+                endif
+                if(water = 1 ) then
+                    if (get_varexist("Cement::_leaching") < 0 ) then
+                        txt = txt + "-fig_y water < k "      +  chr(34) + "Capillary water"    + chr(34) + " ls " + str(get_var("nrCapWat")) + " t " + chr(34) + "_THIS*1000" + chr(34) + " > " + eol
+                    endif
+                    txt = txt + "-fig_y ChemShrink < k " +  chr(34) + "Chemical Shrinkage" + chr(34) + " style lines ls @nrchemshrink > " + eol
+                elseif (get_varexist("Cement::_leaching") = 0 ) then
+                    txt = txt + "-fig_y ChemShrink < k " +  chr(34) + "Chemical Shrinkage" + chr(34) + " style lines ls @nrchemshrink > " + eol
+                endif
+                if(get_varexist("Cement::_hydration") = 0) then
+                    vola = get_var("Cement::Composition::VolumeTot0")
+                    vol = str(vola)
+                    vola = floor(vola/10)
+                    vol1 = str(10*(vola+1))
+                     txt = txt + "-fig_start " + eol
+                     txt = txt + "set arrow 901 from graph 0, first " + vol + " to graph 1, first " + vol + " lt 1003 nohead front " + eol
+                     txt = txt + "set yrange [0:" + vol1 + "] " + eol
+                     txt = txt + "-fig_end " + eol
+                     put_var("Output::InitialVolume",901)
+                endif
+                txt = txt + eol
+      enddef
+      
+      def WriteFigures()
+        if( get_var("Cement::Figures::pH") = 1) then 
+            WriteFigure("Waterchemistry_pH")
+            txt = txt + eol
+        endif
+        if( get_var("Cement::Figures::Water::Elements") = 1) then 
+            belements = 1
+            if( get_var("Cement::Figures::Water::Elements::Unit$") = "Moles" or  get_var("Cement::Figures::Water::Elements::Unit$") = "Both") then
+                belements_mg = 0
+                WriteFigure("Waterchemistry_Elements_M")
+                txt = txt + "-fig_name " + chr(34) + "Elements - M" + chr(34) + " " + eol
+                if( get_var("Cement::Figures::Water::Elements::ShowZero") = 0 ) then
+                    txt = txt + "-fig_showzero false " + eol
+                endif
+                txt = txt + eol
+            endif    
+            if( get_var("Cement::Figures::Water::Elements::Unit$") = "Milligrams" or  get_var("Cement::Figures::Water::Elements::Unit$") = "Both") then
+                belements_mg = 1  
+                WriteFigure("Waterchemistry_Elements_mg") 
+                txt = txt + "-fig_name " + chr(34) + "Elements - mg" + chr(34) + " " + eol
+                if( get_var("Cement::Figures::Water::Elements::ShowZero") = 0 ) then
+                    txt = txt + "-fig_showzero false " + eol
+                endif
+                txt = txt + eol    
+            endif
+            belements = 0
+            belements_mg = 0
+        endif
+           if(get_varexist("Cement::Figures::Soilds::Value$")=0) then
+                put_var("Cement::Figures::Solids::Value$",get_var("Cement::Figures::Soilds::Value$"))
+           endif
+           bsolids = 1
+           WriteSolidFigures(1, 1, 1, 1, xtype )
+           bsolids = 0        
+        if(get_varexist("Cement::Figures::Heat") = 0) then
+            if( get_var("Cement::Figures::Heat") = 1) then 
+                WriteFigure("Heat_rate")
+                txt = txt + eol 
+                if( get_var("Cement::Output::Hydrates::CumHeat") = 1) then 
+                    WriteFigure("Heat_cum")
+                    txt = txt + eol
+                endif
+            endif
+        endif
+        if(get_varexist("Cement::Leaching::Type$") <> 0 ) then
+            if(get_varexist("Cement::Figures::Summary") = 0 ) then
+                if(get_var("Cement::Figures::Summary") = 1 ) then
+                    if( get_varexist("Cement::_hydration") = 0 ) then    
+                        WriteFigure("VolumeFraction")
+                    else  
+                        WriteFigure("VolumeFraction_Eq")
+                    endif               
+                    if(  get_var("Cement::Figures::Summary::ShowZero")  = 0 ) then
+                      txt = txt + "-fig_showzero false " + eol
+                    endif
+                    txt = txt + eol 
+                 endif 
+            endif 
+        endif
+        if( get_varexist("Cement::_hydration") = 0 ) then        
+            WriteFigure("HydrationDegree")           
+            if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
+              txt = txt + "-fig_showzero false " + eol
+            endif
+            txt = txt + eol 
+            WriteFigure("ChemicalShrinkage")             
+            if(  get_var("Cement::Figures::Solids::ShowZero")  = 0 ) then
+              txt = txt + "-fig_showzero false " + eol
+            endif
+            txt = txt + eol     
+        endif
+      enddef

@@ -16,331 +16,287 @@ if (get_varexist("Cement::Hydration::Output$")   = 0) then
 
     txtss = ""
     res = SYS("elements", "countel" , "nameel$" , "typeel$" , "moles" )
+      
+	strzero = ""
+	def writef_hydrates(count,name$,moles)
+	   if(count>0) then
+		   for i = 1 to count
+				 phase = name$(i)
+				 amount = moles(i)
+				 if(amount>0) then
+					 writef(string.format("%15s",phase) + "    ")
+					 writef( string.format("%11."+expprec,amount))
+					writef( string.format("%15.2f",amount*gfw(phase_formula(phase)))) 
+					writef( string.format("%15.2f",amount*phase_vm(phase)) + eol)
+				 else
+					strzero  = strzero + string.format("%15s",phase) + "    "
+					strzero  = strzero + string.format("%11."+expprec,amount)
+					strzero  = strzero + string.format("%15.2f",amount*gfw(phase_formula(phase))) 
+					strzero  = strzero + string.format("%15.2f",amount*phase_vm(phase)) + eol
+				 endif          
+		   next 
+		endif    
+	enddef
 
-    #Set System
-        bopc = 0
-        bgbfs = 0
-        bsf = 0
-        bfa = 0
-        bls = 0
+	def writef_ss(ss,count,name$,moles)
+	   am = 0
+	   mo = 0
+	   we = 0 
+	   vol = 0
+	   if(count>0) then
+		   for i = 1 to count
+				 phase = name$(i)
+				 amount = moles(i)
+				 am = am + Amount 
+				 we = we + Amount *gfw(phase_formula(phase))
+				 vol = vol + Amount *  phase_vm(phase)
+			next i
+	   endif  
+	   writef(string.format("%15s",ss) + "    ") 
+	   writef( string.format("%11."+expprec,am))
+	   writef( string.format("%15.2f",we)) 
+	   writef( string.format("%15.2f",vol) + eol)  
+	   txtss = txtss + "Details solid solution " + ss + eol
+	   if(count>0) then
+		   for i = 1 to count
+				 phase = name$(i)
+				 amount = moles(i)
+				 txtss = txtss + string.format("%20s",phase)  + "    " +  string.format("%11."+expprec,amount) + eol
+			next 
+			res = SYS("elements", "countel" , "nameel$" , "typeel$" , "moles" )
+			if (countel > 0) then
+				for j = 1 to countel
+				  if(typeel$(j) = "dis" ) then
+						  elname$  = nameel$(j)
+						  amount = sum_s_s(ss,elname$)
+						  if(amount > 0 ) then 
+							  txtss = txtss + string.format("%40s","Moles of " + elname$) + string.format("%11."+expprec,amount) +  eol
+						  endif 
+				  endif 
+				next j
+			endif
+	   endif  
+	enddef
 
-        if( get_varexist("Cement::Clinker::Reference$") = 0 ) then
-            if(  get_var("Cement::Clinker::Amount") > 0) then
-                bopc = 1
-            endif
-        endif
-        if( get_varexist("GBFS::Reference$") = 0 ) then
-            if(  get_var("GBFS::Amount") > 0) then
-                bgbfs = 1
-            endif
-        endif
-        if( get_varexist("SF::Reference$") = 0 ) then
-            if(  get_var("SF::Amount") > 0) then
-                bsf = 1
-            endif
-        endif
-        if( get_varexist("FA::Reference$") = 0 ) then
-            if(  get_var("FA::Amount") > 0) then
-                bfa = 1
-            endif
-        endif
-        if( get_varexist("LS::Reference$") = 0 ) then
-            if(  get_var("LS::Amount") > 0) then
-                bls = 1
-            endif
-        endif
-        
-hydratedvolume = 0
-strzero = ""
-def writef_hydrates(count,name$,moles)
-   if(count>0) then
-       for i = 1 to count
-             phase = name$(i)
-             amount = moles(i)
-             if(amount>0) then
-                 writef(string.format("%15s",phase) + "    ")
-                 writef( string.format("%11."+expprec,amount))
-                writef( string.format("%15.2f",amount*gfw(phase_formula(phase)))) 
-                writef( string.format("%15.2f",amount*phase_vm(phase)) + eol)
-             else
-                strzero  = strzero + string.format("%15s",phase) + "    "
-                strzero  = strzero + string.format("%11."+expprec,amount)
-                strzero  = strzero + string.format("%15.2f",amount*gfw(phase_formula(phase))) 
-                strzero  = strzero + string.format("%15.2f",amount*phase_vm(phase)) + eol
-             endif          
-       next 
-    endif    
-enddef
+	def writef_porewater(name$)
+				 writef(string.format("%15s",name$) + "    ")
+				 amount = tot(name$)
+				 writef( string.format("%11."+expprec,1000*amount))
+				 writef( string.format("%15.2f",1000*amount*gfw(name$))+eol)
+	enddef
+	
+	writef("CEMENT RECIPE" + eol)
+	if(get_var("bopc")=1) then
+		writef(string.format("%35s","OPC clinkers") + string.format("%17i", get_var("Cement::Clinker::Amount") ) + " weight%" +eol)
+		writef(string.format("%35s","Reacted OPC")  + string.format("%17i", get_var("Cement::Clinker::ReactedAmount") ) + " % reacted" +eol)	
+		writef(string.format("%35s","Properties")   + string.format("%17s", get_var("Cement::Clinker::Reference$") ) +eol+eol)
+	endif
+	if(get_var("bgbfs") = 1) then
+		writef(string.format("%35s","GBFS")         + string.format("%17i", get_var("GBFS::Amount")  ) + " weight%" +eol)
+		writef(string.format("%35s","Reacted GBFS") + string.format("%17i", get_var("GBFS::ReactedAmount") ) + " % reacted" +eol+eol)	
+		writef(string.format("%35s","Properties")   + string.format("%17s", get_var("GBFS::Reference$") ) )
+		writef(string.format("%35s","Reactivity")   + string.format("%17s", get_var("GBFS::Reactivity$") ) +eol+eol)
+	endif
+	if(get_var("bsf") = 1) then
+		writef(string.format("%35s","SF")           + string.format("%17i", get_var("SF::Amount")  ) + " weight%" +eol)
+		writef(string.format("%35s","Reacted SF")   + string.format("%17i", get_var("SF::ReactedAmount") ) + " % reacted" +eol+eol)
+		writef(string.format("%35s","Properties")   + string.format("%17s", get_var("SF::Reference$") ) )
+		writef(string.format("%35s","Reactivity")   + string.format("%17s", get_var("SF::Reactivity$") ) +eol+eol)
+	endif
+	if(get_var("bfa") = 1) then
+		writef(string.format("%35s","FA")           + string.format("%17i", get_var("FA::Amount")  ) + " weight%" +eol)
+		writef(string.format("%35s","Reacted FA")   + string.format("%17i", get_var("FA::ReactedAmount") ) + " % reacted" +eol)
+		writef(string.format("%35s","Properties")   + string.format("%17s", get_var("FA::Reference$") ) )
+		writef(string.format("%35s","Reactivity")   + string.format("%17s", get_var("FA::Reactivity$") ) +eol+eol)
+	endif
+	if(get_var("bls") = 1) then
+		writef(string.format("%35s","LS")           + string.format("%17i", get_var("LS::Amount")  ) + " weight%" +eol)
+		writef(string.format("%35s","Reacted LS")   + string.format("%17i", get_var("LS::ReactedAmount") ) + " % reacted" +eol)
+		writef(string.format("%35s","Properties")   + string.format("%17s", get_var("LS::Reference$") ) )
+		writef(string.format("%35s","Reactivity")   + string.format("%17s", get_var("LS::Reactivity$") ) +eol+eol)
+	endif
+	if(get_var("bmk") = 1) then
+		writef(string.format("%35s","MK")           + string.format("%17i", get_var("MK::Amount")  ) + " weight%" +eol)
+		writef(string.format("%35s","Reacted MK")   + string.format("%17i", get_var("MK::ReactedAmount") ) + " % reacted" +eol)
+		writef(string.format("%35s","Properties")   + string.format("%17s", get_var("MK::Reference$") ) )
+		writef(string.format("%35s","Reactivity")   + string.format("%17s", get_var("MK::Reactivity$") ) +eol+eol)
+	endif
 
-def writef_ss(ss,count,name$,moles)
-   am = 0
-   mo = 0
-   we = 0 
-   vol = 0
-   if(count>0) then
-       for i = 1 to count
-             phase = name$(i)
-             amount = moles(i)
-             am = am + Amount 
-             we = we + Amount *gfw(phase_formula(phase))
-             vol = vol + Amount *  phase_vm(phase)
-        next i
-   endif  
-   writef(string.format("%15s",ss) + "    ") 
-   writef( string.format("%11."+expprec,am))
-   writef( string.format("%15.2f",we)) 
-   writef( string.format("%15.2f",vol) + eol)  
-   txtss = txtss + "Details solid solution " + ss + eol
-   if(count>0) then
-       for i = 1 to count
-             phase = name$(i)
-             amount = moles(i)
-             txtss = txtss + string.format("%20s",phase)  + "    " +  string.format("%11."+expprec,amount) + eol
-        next 
-        res = SYS("elements", "countel" , "nameel$" , "typeel$" , "moles" )
-        if (countel > 0) then
-            for j = 1 to countel
-              if(typeel$(j) = "dis" ) then
-                      elname$  = nameel$(j)
-                      amount = sum_s_s(ss,elname$)
-                      if(amount > 0 ) then 
-                          txtss = txtss + string.format("%40s","Moles of " + elname$) + string.format("%11."+expprec,amount) +  eol
-                      endif 
-              endif 
-            next j
-        endif
-   endif  
-enddef
+	writef(string.format("%35s","Amount of cement") + string.format("%17i",  get_var("Cement::Recipe::Amount")  ) + eol )
+	writef(string.format("%35s","w/c ratio")        + string.format("%17.2f", get_var("Cement::Recipe::w_c") ) + eol)
+	writef(string.format("%35s","Temperature")      + string.format("%17i", get_var("Cement::Recipe::T") ) + eol +eol)
 
-def calc_hydrates(count,name$,moles)
-   if(count>0) then
-       for i = 1 to count
-             phase = name$(i)
-             amount = moles(i)
-             hydratedvolume = hydratedvolume + amount*phase_vm(phase))
-       next 
-    endif    
-enddef
+	writef("OXIDE CONTENT" + eol)
+	writef(string.format("%15s","Name"))
+	writef(string.format("%15s","Moles Reacted"))
+	writef(string.format("%15s","Moles UnReacted"))
+	writef(string.format("%15s","Moles Total") + eol)
 
-def writef_porewater(name$)
-             writef(string.format("%15s",name$) + "    ")
-             amount = tot(name$)
-             writef( string.format("%11."+expprec,1000*amount))
-             writef( string.format("%15.2f",1000*amount*gfw(name$))+eol)
-enddef
-writef("CEMENT RECIPE" + eol)
-if(bopc=1) then
-    writef(string.format("%35s","OPC clinkers") + string.format("%15i", get_var("Cement::Clinker::Amount") ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted OPC") + string.format("%15i", get_var("Cement::Clinker::ReactedAmount") ) + " % reacted" +eol+eol)
-endif
-if(bgbfs = 1) then
-    writef(string.format("%35s","GBFS") + string.format("%15i",  get_var("GBFS::Amount")  ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted GBFS") + string.format("%15i", get_var("GBFS::ReactedAmount") ) + " % reacted" +eol+eol)
-endif
-if(bsf = 1) then
-    writef(string.format("%35s","SF") + string.format("%15i",  get_var("SF::Amount")  ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted SF") + string.format("%15i", get_var("SF::ReactedAmount") ) + " % reacted" +eol+eol)
-endif
-if(bfa = 1) then
-    writef(string.format("%35s","FA") + string.format("%15i",  get_var("FA::Amount")  ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted FA") + string.format("%15i", get_var("FA::ReactedAmount") ) + " % reacted" +eol)
-    writef(string.format("%35s","Reactivity") + string.format("%25s", get_var("FA::Reactivity$") ) +eol+eol)
-endif
-if(bls = 1) then
-    writef(string.format("%35s","LS") + string.format("%15i",  get_var("LS::Amount")  ) + " weight%" +eol)
-    writef(string.format("%35s","Reacted LS") + string.format("%15i", get_var("LS::ReactedAmount") ) + " % reacted" +eol+eol)
-endif
+	lio = list("CaO","SiO2","Al2O3","SO3","CO2","MgO","Fe2O3","Na2O","K2O")
+	for ox in lio
+	 if(get_varexist("Cement::Recipe::"+ox) = 0) then
+		 reacted = get_var("Cement::Recipe::"+ox)
+		 total = get_var("Cement::Recipe::"+ox+"::Total")
+		 unreacted = total - reacted
+		 rstring = string.format("%11."+expprec,reacted)
+		 ustring = string.format("%11."+expprec,unreacted)
+		 tstring = string.format("%11."+expprec,total)
+		 writef(string.format("%15s",ox)   + "    " + rstring  + "    " + ustring   + "    " + tstring + eol)
+	 endif
+	next ox
 
-writef(string.format("%35s","Amount of cement") + string.format("%15i",  get_var("Cement::Recipe::Amount")  ) + eol )
-writef(string.format("%35s","w/c ratio") + string.format("%15.2f", get_var("Cement::Recipe::w_c") ) + eol)
-writef(string.format("%35s","Temperature") + string.format("%15i", get_var("Cement::Recipe::T") ) + eol +eol)
+	writef(eol+"HYDRATED PHASES" + eol + eol) #no phreeqc (replace print)
+	writef(string.format("%15s","Name"))
+	writef(string.format("%15s","Moles"))
+	writef(string.format("%15s","Grams"))
+	writef(string.format("%15s","Volume") + eol + EOL)
 
-writef("OXIDE CONTENT" + eol)
-writef(string.format("%15s","Name"))
-writef(string.format("%15s","Moles Reacted"))
-writef(string.format("%15s","Moles UnReacted"))
-writef(string.format("%15s","Moles Total") + eol)
+	res=sys("equi","count","name$","type$","moles") #phreeqc - different format
+	writef_hydrates(count,name$,moles)
 
-lio = list("CaO","SiO2","Al2O3","SO3","CO2","MgO","Fe2O3","Na2O","K2O")
-for ox in lio
- if(get_varexist("Cement::Recipe::"+ox) = 0) then
-     reacted = get_var("Cement::Recipe::"+ox)
-     total = get_var("Cement::Recipe::"+ox+"::Total")
-     unreacted = total - reacted
-     rstring = string.format("%11."+expprec,reacted)
-     ustring = string.format("%11."+expprec,unreacted)
-     tstring = string.format("%11."+expprec,total)
-     writef(string.format("%15s",ox)   + "    " + rstring  + "    " + ustring   + "    " + tstring + eol)
- endif
-next ox
+	res = names_s_s("counts_s","names_s$")
+	if(count > 0) then
+		for i = 1 to counts_s
+			s_sname = names_s$(i)
+			res=list_s_s(s_sname,"count","name$","moles")
+			writef_ss(s_sname,count,name$,moles)  
+		next i
+	endif 
+
+	writef(eol+eol)
+
+	writef("Moles Ca in C-S-H     " + string.format("%15."+expprec,sum_s_s("CSH","Ca")) +  eol ) 
+	writef("Moles Si in C-S-H     " + string.format("%15."+expprec,sum_s_s("CSH","Si")) +  eol ) 
+	writef("Ca/Si ratio of C-S-H  " + strf(sum_s_s("CSH","Ca")/sum_s_s("CSH","Si"),"%4.2f") + eol+eol ) 
 
 
-writef(eol+"HYDRATED PHASES" + eol + eol) #no phreeqc (replace print)
-writef(string.format("%15s","Name"))
-writef(string.format("%15s","Moles"))
-writef(string.format("%15s","Grams"))
-writef(string.format("%15s","Volume") + eol + EOL)
+	writef("PORE WATER COMPOSITION" + eol + eol) #no phreeqc (replace print)
+	writef(string.format("%15s","pH") + string.format("%15.2f",-la("H+")) + eol)
+	writef(string.format("%15s","mu") + string.format("%15."+expprec,mu()) + eol+eol)
+	writef(string.format("%15s","Element"))
+	writef(string.format("%15s","Moles"))
+	writef(string.format("%15s","Mass")+eol)
+	writef(string.format("%15s","-"))
+	writef(string.format("%15s","(mM/l)"))
+	writef(string.format("%15s","(mg/l)")+eol)
+	writef_porewater("Ca")
+	writef_porewater("Si")
+	writef_porewater("Al")
+	writef_porewater("Fe")
+	writef_porewater("S")
+	writef_porewater("C")
+	writef_porewater("Mg")
+	writef_porewater("Na")
+	writef_porewater("K")
+	writef(eol+eol)
 
-res=sys("equi","count","name$","type$","moles") #phreeqc - different format
-writef_hydrates(count,name$,moles)
-calc_hydrates(count,name$,moles)
+	writef("VOLUMES" + eol + eol) 
+	writef(string.format("%30s","Name"))
+	writef(string.format("%20s","Volume (cm3)"))
+	writef(string.format("%20s","Volume Fraction"))
+	writef(string.format("%20s","Volume Fraction")+eol)
+	writef(string.format("%70s","(Vtot,ini)"))
+	writef(string.format("%20s","(Vtot)")+eol)
+	writef("     Cement Mixture" + eol )
 
-res = names_s_s("counts_s","names_s$")
-if(count > 0) then
-    for i = 1 to counts_s
-        s_sname = names_s$(i)
-        res=list_s_s(s_sname,"count","name$","moles")
-        writef_ss(s_sname,count,name$,moles)
-        calc_hydrates(count,name$,moles)   
-    next i
-endif 
+	writef(string.format("%30s","Volume"))
+	inivolume = calc_value("InitialVolumes")
+	writef(string.format("%20.2f",inivolume)  )
+	writef(string.format("%52s","Vtot,ini") + eol )
+	writef(string.format("%30s","Cement constituents"))
+	writef(string.format("%20.2f",calc_res(1)))
+	writef(string.format("%20.3f",calc_res(1)/inivolume) + eol)
+	writef(string.format("%30s","Water"))
+	writef(string.format("%20.2f",calc_res(2)))
+	writef(string.format("%20.3f",calc_res(2)/inivolume) + eol)
 
-writef(eol+eol)
+	writef("     Hydrated cement" + eol )
+	hydratedvolume = calc_value("VolumeSolidsEquilibrium")
+	unreacted_cc = calc_value("VolumesCementConstituents")
+	unreacted_opc = calc_res(1)
+	unreacted_gbfs = calc_res(2)
+	unreacted_sf = calc_res(3)
+	unreacted_fa = calc_res(4)
+	unreacted_ls = calc_res(5)
+	unreacted_mk = calc_res(6)
+	twater = tot("water")*1000/rho_0()
+	totalvolume = hydratedvolume + unreacted_cc + twater
 
-writef("Moles Ca in C-S-H     " + string.format("%15."+expprec,sum_s_s("CSH","Ca")) +  eol ) 
-writef("Moles Si in C-S-H     " + string.format("%15."+expprec,sum_s_s("CSH","Si")) +  eol ) 
-writef("Ca/Si ratio of C-S-H  " + strf(sum_s_s("CSH","Ca")/sum_s_s("CSH","Si"),"%4.2f") + eol+eol ) 
+	writef(string.format("%30s","Total volume"))
+	writef(string.format("%20.2f",totalvolume) )
+	writef(string.format("%20.3f",totalvolume/inivolume))
+	writef(string.format("%32s","Vtot") +eol )
 
+	chemishrink = inivolume-totalvolume
+	writef(string.format("%30s","Chemical shrinkage"))
+	writef(string.format("%20.2f",chemishrink) )
+	writef(string.format("%20.3f",chemishrink/inivolume)) 
+	writef(string.format("%32s","Vcs") +eol )
 
-writef("PORE WATER COMPOSITION" + eol + eol) #no phreeqc (replace print)
-writef(string.format("%15s","pH") + string.format("%15.2f",-la("H+")) + eol)
-writef(string.format("%15s","mu") + string.format("%15."+expprec,mu()) + eol+eol)
-writef(string.format("%15s","Element"))
-writef(string.format("%15s","Moles"))
-writef(string.format("%15s","Mass")+eol)
-writef(string.format("%15s","-"))
-writef(string.format("%15s","(mM/l)"))
-writef(string.format("%15s","(mg/l)")+eol)
-writef_porewater("Ca")
-writef_porewater("Si")
-writef_porewater("Al")
-writef_porewater("Fe")
-writef_porewater("S")
-writef_porewater("C")
-writef_porewater("Mg")
-writef_porewater("Na")
-writef_porewater("K")
-writef(eol+eol)
+	writef(string.format("%30s","Solid phases"))
+	solidphase = hydratedvolume + unreacted_cc
+	writef(string.format("%20.2f",solidphase))
+	writef(string.format("%20.3f",solidphase/inivolume))
+	writef(string.format("%20.3f",solidphase/totalvolume) )
+	writef(string.format("%12s","Vcc + Vhyd") +eol )
+	writef(string.format("%30s","Hydrated phases"))
+	writef(string.format("%20.2f",hydratedvolume ))
+	writef(string.format("%20.3f",(hydratedvolume )/inivolume))
+	writef(string.format("%20.3f",(hydratedvolume )/totalvolume))
+	writef(string.format("%12s","Vhyd") +eol )
 
- writef("VOLUMES" + eol + eol) #no phreeqc (replace print)
-writef(string.format("%30s","Name"))
-writef(string.format("%20s","Volume (cm3)"))
-writef(string.format("%20s","Volume Fraction")+eol)
+	if(get_var("bopc") = 1) then
+		writef(string.format("%30s","Unreacted Clinkers"))
+		writef(string.format("%20.2f", unreacted_opc))
+		writef(string.format("%20.3f",( unreacted_opc)/inivolume))
+		writef(string.format("%20.3f",( unreacted_opc)/totalvolume)+eol)
+	endif 
+	if(get_var("bgbfs") = 1 ) then
+		writef(string.format("%30s","Unreacted GBFS"))
+		writef(string.format("%20.2f", unreacted_gbfs))
+		writef(string.format("%20.3f",( unreacted_gbfs)/inivolume))
+		writef(string.format("%20.3f",( unreacted_gbfs)/totalvolume)+eol)
+	endif
+	if(get_var("bsf") = 1) then
+		writef(string.format("%30s","Unreacted SF"))
+		writef(string.format("%20.2f", unreacted_sf))
+		writef(string.format("%20.2f",( unreacted_sf)/inivolume)+eol)
+	endif
+	if(get_var("bfa") = 1) then
+		writef(string.format("%30s","Unreacted FA"))
+		writef(string.format("%20.2f", unreacted_fa))
+		writef(string.format("%20.2f",( unreacted_fa)/inivolume)+eol)
+	endif
+	if(get_var("bls") = 1) then
+		writef(string.format("%30s","Unreacted LS"))
+		writef(string.format("%20.2f", unreacted_ls))
+		writef(string.format("%2s.2f",( unreacted_ls)/inivolume)+eol)
+	endif
+	if(get_var("bmk") = 1) then
+		writef(string.format("%30s","Unreacted MK"))
+		writef(string.format("%20.2f", unreacted_mk))
+		writef(string.format("%20.2f",( unreacted_mk)/inivolume)+eol)
+	endif
 
-writef(string.format("%30s","Initial volume"))
-if(bopc=1) then
-    inivolume =  get_var("Cement::Clinker::Amount") / get_var("Cement::Clinker::BulkDensity") 
-endif
-if(bgbfs = 1) then
-    inivolume = inivolume +  get_var("GBFS::Amount") / get_var("GBFS::BulkDensity") 
-endif
-if(bsf = 1) then
-    inivolume = inivolume +  get_var("SF::Amount") / get_var("SF::BulkDensity") 
-endif
-if(bfa = 1) then
-    inivolume = inivolume +  get_var("FA::Amount") / get_var("FA::BulkDensity") 
-endif
-if(bls = 1) then
-    inivolume = inivolume +  get_var("LS::Amount") / get_var("LS::BulkDensity") 
-endif
-inivolume = inivolume *  get_var("Cement::Recipe::Amount") /100
-inivolume = inivolume +  get_var("Cement::Recipe::Amount") * get_var("Cement::Recipe::w_c") 
-writef(string.format("%20.2f",inivolume) + eol)
+	writef(string.format("%30s","Pore Water"))
+	writef(string.format("%20.2f",twater ))
+	writef(string.format("%20.2f",(twater )/inivolume))
+	writef(string.format("%20.2f",(twater )/totalvolume))
+	writef(string.format("%12s","Vw") +eol )
 
-unreacted_opc = 0 
-if(bopc = 1) then
-    unreact_rel = (100- get_var("Cement::Clinker::ReactedAmount"))/100
-    unreacted_opc = unreact_rel *  get_var("Cement::Clinker::Amount")  / get_var("Cement::Clinker::BulkDensity") 
-    unreacted_opc = unreacted_opc * get_var("Cement::Recipe::Amount") /10
-endif 
-unreacted_gbfs =0
-if(bgbfs = 1) then
-    unreact_rel = (100- get_var("GBFS::ReactedAmount"))/100
-    unreacted_gbfs = unreact_rel *  get_var("GBFS::Amount")  / get_var("GBFS::BulkDensity") 
-    unreacted_gbfs = unreacted_gbfs * get_var("Cement::Recipe::Amount") /100
-endif
-unreacted_sf = 0
-if(bsf = 1) then
-    unreact_rel = (100- get_var("SF::ReactedAmount"))/100
-    unreacted_sf = unreact_rel *  get_var("SF::Amount")  / get_var("SF::BulkDensity") 
-    unreacted_sf = unreacted_sf * get_var("Cement::Recipe::Amount") /100
-endif
-unreacted_fa = 0
-if(bfa = 1) then
-    unreact_rel = (100- get_var("FA::ReactedAmount"))/100
-    unreacted_fa = unreact_rel *  get_var("FA::Amount")  / get_var("FA::BulkDensity") 
-    unreacted_fa = unreacted_fa * get_var("Cement::Recipe::Amount") /100
-endif
-unreacted_ls = 0
-if(bls = 1) then
-    unreact_rel = (100- get_var("LS::ReactedAmount"))/100
-    unreacted_ls = unreact_rel *  get_var("LS::Amount")  / get_var("LS::BulkDensity") 
-    unreacted_ls = unreacted_ls * get_var("Cement::Recipe::Amount") /100
-endif
-totalvolume = hydratedvolume + unreacted_opc + unreacted_gbfs + unreacted_sf + unreacted_fa + unreacted_ls + tot("water")*1000
+	gelpor = calc_value("VolumeGelPores",1,sum_s_s("CSH","Ca"),sum_s_s("CSH","Si"))
+	writef(string.format("%30s","Gel pore water"))
+	writef(string.format("%20.2f",gelpor))
+	writef(string.format("%20.2f",gelpor/inivolume)) 
+	writef(string.format("%20.2f",gelpor/totalvolume)+eol) 
 
-writef(string.format("%30s","Total volume"))
-writef(string.format("%20.2f",totalvolume) )
-writef(string.format("%20.2f",totalvolume/inivolume)+eol) 
+	cappores= twater - gelpor
+	writef(string.format("%30s","Capillary water"))
+	writef(string.format("%20.2f",cappores))
+	writef(string.format("%20.2f",cappores/inivolume)) 
+	writef(string.format("%20.2f",cappores/totalvolume)+eol)  
 
-chemishrink = inivolume-totalvolume
-writef(string.format("%30s","Chemical shrinkage"))
-writef(string.format("%20.2f",chemishrink) )
-writef(string.format("%20.2f",chemishrink/inivolume)+eol) 
-
-inivolume = inivolume - chemishrink
-writef(string.format("%50s"," ") + "(relative to total volume)" + eol)
-
-
-writef(string.format("%30s","Solid phases"))
-writef(string.format("%20.2f",hydratedvolume + unreacted_opc + unreacted_gbfs + unreacted_sf))
-writef(string.format("%20.2f",(hydratedvolume + unreacted_opc + unreacted_gbfs + unreacted_sf)/inivolume)+eol)
-writef(string.format("%30s","Hydrated phases"))
-writef(string.format("%20.2f",hydratedvolume ))
-writef(string.format("%20.2f",(hydratedvolume )/inivolume)+eol)
-if(bopc = 1) then
-    writef(string.format("%30s","Unreacted Clinkers"))
-    writef(string.format("%20.2f", unreacted_opc))
-    writef(string.format("%20.2f",( unreacted_opc)/inivolume)+eol)
-endif 
-if(bgbfs = 1 ) then
-    writef(string.format("%30s","Unreacted GBFS"))
-    writef(string.format("%20.2f", unreacted_gbfs))
-    writef(string.format("%20.2f",( unreacted_gbfs)/inivolume)+eol)
-endif
-if(bsf = 1) then
-    writef(string.format("%30s","Unreacted SF"))
-    writef(string.format("%20.2f", unreacted_sf))
-    writef(string.format("%20.2f",( unreacted_sf)/inivolume)+eol)
-endif
-if(bfa = 1) then
-    writef(string.format("%30s","Unreacted FA"))
-    writef(string.format("%20.2f", unreacted_fa))
-    writef(string.format("%20.2f",( unreacted_fa)/inivolume)+eol)
-endif
-if(bls = 1) then
-    writef(string.format("%30s","Unreacted LS"))
-    writef(string.format("%20.2f", unreacted_ls))
-    writef(string.format("%20.2f",( unreacted_ls)/inivolume)+eol)
-endif
-ssSi = sum_s_s("CSH","Si")
-gelpor = calc_value("VolumeGelPores",1,sum_s_s("CSH","Ca"),sum_s_s("CSH","Si"))
-writef(string.format("%30s","Gel pores"))
-writef(string.format("%20.2f",gelpor))
-writef(string.format("%20.2f",gelpor/inivolume)+eol) 
-
-cappores=tot("water")*1000-gelpor
-writef(string.format("%30s","Capillary pores"))
-writef(string.format("%20.2f",cappores))
-writef(string.format("%20.2f",cappores/inivolume)+eol)  
-
-totpor = tot("water")*1000
-writef(string.format("%30s","Pores"))
-writef(string.format("%20.2f",totpor))
-writef(string.format("%20.2f",totpor/inivolume)+eol)  
-
-
-writef(eol + eol +eol + txtss +eol)
-closef()
+	writef(eol + eol +eol + txtss +eol)
+	closef()
 endif
 -end 

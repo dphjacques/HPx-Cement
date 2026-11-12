@@ -452,7 +452,7 @@
 										<ReadOnly>True</ReadOnly>
 										<Tag0 />
 									</Item>
-									<Default>0</Default>
+									<Default>1</Default>
 									<Dynamic>False</Dynamic>
 								</List>
 							</Text>
@@ -516,7 +516,7 @@
 										<ReadOnly>True</ReadOnly>
 										<Tag0 />
 									</Item>
-									<Default>2</Default>
+									<Default>1</Default>
 									<Dynamic>False</Dynamic>
 								</List>
 							</Text>
@@ -546,6 +546,507 @@
 					</Record>
 				</Records>
 			</Group>
+			<Group>		
+                <Name>Output - Figures - Plots<Visible>True</Visible>
+                    <ReadOnly>False</ReadOnly>
+                </Name>
+                <Heading>
+                    <Visible>False</Visible>
+                    <ReadOnly>False</ReadOnly>
+                </Heading>
+                <ToolTip>
+                    <Visible>False</Visible>
+                    <ReadOnly>False</ReadOnly>
+                </ToolTip>
+                <Visible>True</Visible>
+                <Export>True</Export>
+                <Columns>
+                    <Column>
+                        <Name>Name<Visible>False</Visible>
+                            <ReadOnly>False</ReadOnly>
+                        </Name>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <ReadOnly>True</ReadOnly>
+                        <VariableNaming>True</VariableNaming>
+                        <Note>False</Note>
+                    </Column>
+                    <Column>
+                        <Name>Value<Visible>False</Visible>
+                            <ReadOnly>False</ReadOnly>
+                        </Name>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <ReadOnly>False</ReadOnly>
+                        <VariableNaming>False</VariableNaming>
+                        <Note>False</Note>
+                    </Column>
+                    <Column>
+                        <Name>Unit<Visible>False</Visible>
+                            <ReadOnly>False</ReadOnly>
+                        </Name>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <ReadOnly>True</ReadOnly>
+                        <VariableNaming>False</VariableNaming>
+                        <Note>False</Note>
+                    </Column>
+                    <Column>
+                        <Name>Description<Visible>False</Visible>
+                            <ReadOnly>False</ReadOnly>
+                        </Name>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <ReadOnly>True</ReadOnly>
+                        <VariableNaming>False</VariableNaming>
+                        <Note>False</Note>
+                    </Column>
+                    <Column>
+                        <Name>Note<Visible>False</Visible>
+                            <ReadOnly>False</ReadOnly>
+                        </Name>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <ReadOnly>False</ReadOnly>
+                        <VariableNaming>False</VariableNaming>
+                        <Note>True</Note>
+                    </Column>
+                </Columns>
+                <Records>
+                    <Record>
+                        <ID><![CDATA[2024-03-14T8:24:33100]]></ID>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <Cell><![CDATA[Cement::Figures::pH]]></Cell>
+                        <Cell>
+                            <Check>True</Check>
+                            <Default>True</Default>
+                        </Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell>
+                            <Text />
+                            <Default />
+                        </Cell>
+                    </Record>
+                    <Record>
+                        <ID><![CDATA[2024-03-17T9:10:19131]]></ID>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <Cell><![CDATA[Cement::Figures::Water::Elements]]></Cell>
+                        <Cell>
+                            <Check>True</Check>
+                            <Default>True</Default>
+                        </Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell>
+                            <Text />
+                            <Default />
+                        </Cell>
+                    </Record>
+                    <Record>
+                        <ID><![CDATA[2024-03-17T8:58:5871]]></ID>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <Cell><![CDATA[Cement::Figures::Water::Elements::Unit$]]></Cell>
+                        <Cell>
+                            <Text>
+                                <List>
+                                    <Item>Moles<Visible>True</Visible>
+                                        <ReadOnly>True</ReadOnly>
+                                        <Tag0 />
+                                    </Item>
+                                    <Item>Milligrams<Visible>True</Visible>
+                                        <ReadOnly>True</ReadOnly>
+                                        <Tag0 />
+                                    </Item>
+                                    <Item>Both<Visible>True</Visible>
+                                        <ReadOnly>True</ReadOnly>
+                                        <Tag0 />
+                                    </Item>
+                                    <Default>0</Default>
+                                    <Dynamic>False</Dynamic>
+                                </List>
+                            </Text>
+                        </Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell>
+                            <Text />
+                            <Default />
+                        </Cell>
+                    </Record>
+                    <Record>
+                        <ID><![CDATA[2024-03-18T21:56:3214]]></ID>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <Cell><![CDATA[Cement::Figures::Water::Elements::ShowZero]]></Cell>
+                        <Cell>
+                            <Check>False</Check>
+                            <Default>False</Default>
+                        </Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell>
+                            <Text />
+                            <Default />
+                        </Cell>
+                    </Record>
+                    <Record>
+                        <ID><![CDATA[2024-03-17T16:53:1154]]></ID>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <Cell><![CDATA[Cement::Figures::Solids]]></Cell>
+                        <Cell>
+                            <Check>True</Check>
+                            <Default>True</Default>
+                        </Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell>
+                            <Text />
+                            <Default />
+                        </Cell>
+                    </Record>
+                    <Record>
+                        <ID><![CDATA[2024-03-18T21:56:50111]]></ID>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <Cell><![CDATA[Cement::Figures::Solids::ShowZero]]></Cell>
+                        <Cell>
+                            <Check>False</Check>
+                            <Default>False</Default>
+                        </Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell>
+                            <Text />
+                            <Default />
+                        </Cell>
+                    </Record>
+                    <Record>
+                        <ID><![CDATA[2025-11-07T10:09:50111]]></ID>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <Cell><![CDATA[Cement::Figures::Summary]]></Cell>
+                        <Cell>
+                            <Check>True</Check>
+                            <Default>True</Default>
+                        </Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell><![CDATA[Summary of volumes of clinkers, hydrates and water]]></Cell>
+                        <Cell>
+                            <Text />
+                            <Default />
+                        </Cell>
+                    </Record>
+                    <Record>
+                        <ID><![CDATA[2025-11-07T10:11:50111]]></ID>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <Cell><![CDATA[Cement::Figures::Summary::ShowZero]]></Cell>
+                        <Cell>
+                            <Check>False</Check>
+                            <Default>False</Default>
+                        </Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell><![CDATA[]]></Cell>
+                        <Cell>
+                            <Text />
+                            <Default />
+                        </Cell>
+                    </Record>
+                    
+                </Records>
+            </Group>
+            <Group>
+                        <Name>Output - Figures - Ternary Diagrams<Visible>True</Visible>
+                            <ReadOnly>False</ReadOnly>
+                        </Name>
+                        <Heading>
+                            <Visible>False</Visible>
+                            <ReadOnly>False</ReadOnly>
+                        </Heading>
+                        <ToolTip>
+                            <Visible>False</Visible>
+                            <ReadOnly>False</ReadOnly>
+                        </ToolTip>
+                        <Visible>True</Visible>
+                        <Export>True</Export>
+                        <Columns>
+                            <Column>
+                                <Name>Name<Visible>False</Visible>
+                                    <ReadOnly>False</ReadOnly>
+                                </Name>
+                                <ToolTip>
+                                    <Visible>False</Visible>
+                                    <ReadOnly>False</ReadOnly>
+                                </ToolTip>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <ReadOnly>True</ReadOnly>
+                                <VariableNaming>True</VariableNaming>
+                                <Note>False</Note>
+                            </Column>
+                            <Column>
+                                <Name>Value<Visible>False</Visible>
+                                    <ReadOnly>False</ReadOnly>
+                                </Name>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <ReadOnly>False</ReadOnly>
+                                <VariableNaming>False</VariableNaming>
+                                <Note>False</Note>
+                            </Column>
+                            <Column>
+                                <Name>Unit<Visible>False</Visible>
+                                    <ReadOnly>False</ReadOnly>
+                                </Name>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <ReadOnly>True</ReadOnly>
+                                <VariableNaming>False</VariableNaming>
+                                <Note>False</Note>
+                            </Column>
+                            <Column>
+                                <Name>Description<Visible>False</Visible>
+                                    <ReadOnly>False</ReadOnly>
+                                </Name>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <ReadOnly>True</ReadOnly>
+                                <VariableNaming>False</VariableNaming>
+                                <Note>False</Note>
+                            </Column>
+                            <Column>
+                                <Name>Note<Visible>False</Visible>
+                                    <ReadOnly>False</ReadOnly>
+                                </Name>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <ReadOnly>False</ReadOnly>
+                                <VariableNaming>False</VariableNaming>
+                                <Note>True</Note>
+                            </Column>
+                        </Columns>
+                        <Records>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:24:2520]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary]]></Cell>
+                                <Cell>
+                                    <Check>False</Check>
+                                    <Default>False</Default>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:26:37111]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::X$]]></Cell>
+                                <Cell>
+                                    <Text>
+                                        <List>
+                                            <Folder>Modules</Folder>
+                                            <File>ModuleCementFigures\Ternary_01.xml</File>
+                                            <Default>0</Default>
+                                            <Dynamic>True</Dynamic>
+                                        </List>
+                                    </Text>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:27:53122]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::Y$]]></Cell>
+                                <Cell>
+                                    <Text>
+                                        <List>
+                                            <Folder>Modules</Folder>
+                                            <File>ModuleCementFigures\Ternary_01.xml</File>
+                                            <Default>1</Default>
+                                            <Dynamic>True</Dynamic>
+                                        </List>
+                                    </Text>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:27:53123]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::Z$]]></Cell>
+                                <Cell>
+                                    <Text>
+                                        <List>
+                                            <Folder>Modules</Folder>
+                                            <File>ModuleCementFigures\Ternary_01.xml</File>
+                                            <Default>2</Default>
+                                            <Dynamic>True</Dynamic>
+                                        </List>
+                                    </Text>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:24:5542]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::TitleX$]]></Cell>
+                                <Cell>
+                                    <Text>X [%]</Text>
+                                    <Default>X [%]</Default>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:30:23125]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::TitleY$]]></Cell>
+                                <Cell>
+                                    <Text>Y [%]</Text>
+                                    <Default>Y [%]</Default>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:30:49126]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::TitleZ$]]></Cell>
+                                <Cell>
+                                    <Text>Z [%]</Text>
+                                    <Default>Z [%]</Default>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:32:23127]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::Grid]]></Cell>
+                                <Cell>
+                                    <Check>True</Check>
+                                    <Default>True</Default>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:32:45128]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::pH]]></Cell>
+                                <Cell>
+                                    <Check>True</Check>
+                                    <Default>True</Default>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:25:3792]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::Water::Elements]]></Cell>
+                                <Cell>
+                                    <Check>True</Check>
+                                    <Default>True</Default>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2024-06-24T18:27:53127]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::Solids]]></Cell>
+                                <Cell>
+                                    <Check>True</Check>
+                                    <Default>True</Default>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                            <Record>
+                                <ID><![CDATA[2026-10-19T18:27:53145]]></ID>
+                                <Visible>True</Visible>
+                                <Export>True</Export>
+                                <Cell><![CDATA[Cement::Figures::Ternary::Summary]]></Cell>
+                                <Cell>
+                                    <Check>True</Check>
+                                    <Default>True</Default>
+                                </Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell><![CDATA[]]></Cell>
+                                <Cell>
+                                    <Text />
+                                    <Default />
+                                </Cell>
+                            </Record>
+                        </Records>
+                    </Group>
+        
+        
+			
+			
 		</Groups>
 	</Tab>
 </InputTable>

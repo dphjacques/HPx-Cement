@@ -1,11 +1,10 @@
-<?xml version="1.0"?>
+	<?xml version="1.0"?>
 <InputTable>
 	<Tab>
 		<Name>Leaching<Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
 		</Name>
-		<Heading>
-			<Visible>False</Visible>
+		<Heading>Leaching specifications - Leaching solution and amount<Visible>True</Visible>
 			<ReadOnly>False</ReadOnly>
 		</Heading>
 		<ToolTip>
@@ -13,14 +12,18 @@
 			<ReadOnly>False</ReadOnly>
 		</ToolTip>
 		<Visible>True</Visible>
-		<Export>True</Export>
+		<Export>True</Export>				
+		<Info><![CDATA[]]><Visible>False</Visible>
+			<ReadOnly>False</ReadOnly>
+			<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/TabInformation2.html</WebPage>
+		</Info>
 		<Groups>
 			<Group>
 				<Name>Leaching amounts<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Setting the amount of added water
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -28,7 +31,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>				
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-Recipe1.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -153,7 +160,7 @@
 						<Cell><![CDATA[Cement::Leaching::Step1]]></Cell>
 						<Cell>
 							<Text>90</Text>
-							<Default>9</Default>
+							<Default>90</Default>
 						</Cell>
 						<Cell><![CDATA[L]]></Cell>
 						<Cell><![CDATA[Volume of 1 l of the solution]]></Cell>
@@ -184,8 +191,8 @@
 				<Name>Components<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
-					<Visible>False</Visible>
+				<Heading>Define the solution in terms of concentration of the components (in mol/L)
+					<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
 				<ToolTip>
@@ -193,7 +200,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>				
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-Recipe1.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>
@@ -477,7 +488,7 @@
 				<Name>Solutions<Visible>True</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Name>
-				<Heading>
+				<Heading>Flexible way of defining the solution. Select definition type and solution.
 					<Visible>False</Visible>
 					<ReadOnly>False</ReadOnly>
 				</Heading>
@@ -486,7 +497,11 @@
 					<ReadOnly>False</ReadOnly>
 				</ToolTip>
 				<Visible>True</Visible>
-				<Export>True</Export>
+				<Export>True</Export>								
+				<Info><![CDATA[]]><Visible>False</Visible>
+					<ReadOnly>False</ReadOnly>
+					<WebPage>https://dphjacques.github.io/HPx-Cement-Documentation/Group-Recipe1.html</WebPage>
+				</Info>
 				<Columns>
 					<Column>
 						<Name>Name<Visible>False</Visible>

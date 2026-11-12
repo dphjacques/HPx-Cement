@@ -1,5 +1,27 @@
 <?xml version="1.0"?>
 <InputTable>
+	<List>
+		<Name>XVariable</Name>
+		<Option>null</Option>
+		<Option>Cement::Recipe::T</Option>
+		<Option>Cement::Recipe::w_c</Option>
+		<Option>Cement::Recipe::Amount</Option>
+		<Option>Aggregate::Volume</Option>
+		<Option>Aggregate::Weight</Option>
+		<Option>Aggregate::BulkDensity</Option>
+		<Option>Cement::Clinker::Amount</Option>
+		<Option>Cement::Clinker::ReactedAmount</Option>
+		<Option>GBFS::Amount</Option>
+		<Option>GBFS::ReactedAmount</Option>
+		<Option>SF::Amount</Option>
+		<Option>SF::ReactedAmount</Option>
+		<Option>FA::Amount</Option>
+		<Option>FA::ReactedAmount</Option>
+		<Option>LS::Amount</Option>
+		<Option>LS::ReactedAmount</Option>
+		<Option>MK::Amount</Option>
+		<Option>MK::ReactedAmount</Option>
+	</List>
 	<Tab>
 		<Name>Cement Recipe<Visible>False</Visible>
 			<ReadOnly>False</ReadOnly>
@@ -992,7 +1014,7 @@
 						<ID><![CDATA[2024-03-06T9:35:1992]]></ID>
 						<Visible>True</Visible>
 						<Export>True</Export>
-						<Cell><![CDATA[LS::AmountReacted]]></Cell>
+						<Cell><![CDATA[LS::ReactedAmount]]></Cell>
 						<Cell>
 							<Text>100</Text>
 							<Default>100</Default>

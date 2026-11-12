@@ -1,0 +1,539 @@
+USER_PUNCH 
+-mybasic
+-headings Amount OPC GBFS SF FA LS MK wc
+-headings @Output::Oxides 
+
+-headings Lead
+-headings water T pH mu
+-headings @Output::Elements
+include$ _txtheading._in
+-headings CSH_Ca CSH_Si GelPores
+-headings @Output::Zeolites
+-headings @Output::Kineticsh
+-headings @Output::HeatSums
+-headings AggVol IniCemVol CemVol HydratesVol ChemShrink
+-start
+		punch(  get_var("Cement::Recipe::Amount") )
+        punch( get_var("Cement::Clinker::Amount") )
+        bopc = 0
+        if(get_var("Cement::Clinker::Amount") > 1) then
+            bopc  =1
+        endif
+        bgbfs = 0
+        bsf = 0
+        bfa = 0
+        bls = 0
+        bmk = 0
+        if(get_varexist("GBFS::Amount") > -1) then
+            punch( get_var("GBFS::Amount") )
+            bgbfs = 1
+        else
+            punch(0)
+        endif 
+        if(get_varexist("SF::Amount") > -1) then
+            punch( get_var("SF::Amount") )
+            bfa = 1
+        else
+            punch(0)
+        endif 
+        if(get_varexist("FA::Amount") > -1) then
+            punch( get_var("FA::Amount") )
+            bls = 1
+        else
+            punch(0)
+        endif 
+        if(get_varexist("LS::Amount") > -1) then
+            punch( get_var("LS::Amount") )
+            bsf = 1
+        else
+            punch(0)
+        endif 
+        if(get_varexist("MK::Amount") > -1) then
+            punch( get_var("MK::Amount") )
+            bmk = 1
+        else
+            punch(0)
+        endif 
+        punch( get_var("Cement::Recipe::w_c") )
+        db = "Db_Elements"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            ox=get_def(db,i)
+            am = sys(ox)
+            if(ox="Al") then am=am/2 endif
+            if(ox="Fe") then am=am/2 endif
+            if(ox="Na") then am=am/2 endif
+            if(ox="K") then am=am/2 endif
+            punch(am)
+        next i 
+        timestep = 0
+        if(get_varexist("Cement::Leaching::Type$") = 0 ) then 
+            bhyd = 1
+            if(get_varexist("Cement::_hydration")=0) then 
+                if(get_var("Cement::_hydration") = 1) then
+                    bhyd = 0
+                    punch(total_time()) 
+                endif 
+            endif 
+            if(bhyd = 1) then 
+                if(get_varexist("Transport::Leaching::Hydration")=0) then 
+                    punch(total_time()) 
+                elseif(get_varexist("Leaching::Run::AddedWater")=0) then 
+                    addedwater = get_var("Leaching::Run::TotalAmountAddedWater") + get_var("Leaching::Run::AddedWater")
+                    punch(addedwater)
+                    put_var("Leaching::Run::TotalAmountAddedWater",addedwater )
+                else
+                  punch(0)
+                endif
+            endif
+        elseif(get_varexist("Cement::_hydration")=0) then 
+            if(get_var("Cement::_hydration") = 1) then
+                punch(total_time()) 
+            endif 
+        elseif (get_varexist("Cement::Ingress::Type$") = 0 ) then
+            _step = sys("[_step]")
+            if ( get_var("Cement::Figures::Lead$") <> "null" ) then
+                leadvar = get_var("Cement::Figures::Lead$")
+                if(get_varexist(leadvar) = 0) then
+                    punch( _step*get_var(leadvar))
+                else
+                    punch( _step)
+                endif
+            else
+                punch( _step)
+            endif
+            if(get_var("Cement::Ingress::Type$") = "Components" ) then
+                if(get_Var("Cement::Ingress::Components::Type$" )  = "Relative Moles" ) then
+                endif
+            endif
+        elseif ( get_var("Cement::Figures::Lead$") <> "null" ) then
+            leadvar = get_var("Cement::Figures::Lead$")
+            if(string.comparenocase(leadvar,"time") = 0) then
+                timestep= total_time() - get_var("_timestep")
+                put_var("_timestep",total_time())
+            elseif(get_varexist(leadvar) = 0) then
+                punch(get_var(leadvar))
+            else
+                punch(get_var("_leadnr"))
+                put_var("_leadnr",get_var("_leadnr")+1)
+            endif 
+        else
+            punch(get_var("_leadnr"))
+            put_var("_leadnr",get_var("_leadnr")+1) 
+        endif 
+        punch(tot("water"))
+        punch(tc())
+        punch(-la("H+"), mu())
+        db = "Db_Elements"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            punch(tot(get_def(db,i)))
+        next i
+        if( get_var("Cement::Output::Hydrates::Moles") = 1 ) then
+            db = "Db_Minerals"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                punch(equi(get_def(db,i)))
+            next i
+            db = "Db_SolidSolutions"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                punch(s_s(get_def(db,i)))
+            next i
+            db = "Db_SolidSolutions_Def"
+            dba = "Db_SolidSolutions_Comp"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                min = get_def(db,0,i)
+                nr = get_def(db,1,i)
+                am= 0
+                for j = 0 to nr-1
+                    am = am + s_s(get_def(dba,i,j))
+                next j
+                punch(am)
+            next i      
+        endif 
+        if(  get_var("Cement::Output::Hydrates::Volumes")  = 1 ) then
+            db = "Db_Minerals"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                punch(equi(get_def(db,i))*phase_vm(get_def(db,i)))
+            next i
+            db = "Db_SolidSolutions"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                punch(s_s(get_def(db,i))*phase_vm(get_def(db,i)))
+            next i
+            db = "Db_SolidSolutions_Def"
+            dba = "Db_SolidSolutions_Comp"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                min = get_def(db,0,i)
+                nr = get_def(db,1,i)
+                am= 0
+                for j = 0 to nr-1
+                am = am + s_s(get_def(dba,i,j))*phase_vm(get_def(dba,i,j))
+                next j
+                punch(am)
+            next i 
+        endif 
+        if( get_var("Cement::Output::Hydrates::Weights") = 1 ) then
+            db = "Db_Minerals"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                w= gfw(phase_formula(get_def(db,i)))
+                punch(equi(get_def(db,i))*w)
+            next i
+            db = "Db_SolidSolutions"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                w= gfw(phase_formula(get_def(db,i)))
+                punch(s_s(get_def(db,i))*w)
+            next i
+            db = "Db_SolidSolutions_Def"
+            dba = "Db_SolidSolutions_Comp"
+            count = get_defnrrec(db)-1
+            for i = 0 to count 
+                min = get_def(db,0,i)
+                nr = get_def(db,1,i)
+                am= 0
+                for j = 0 to nr-1
+                    w= gfw(phase_formula(get_def(dba,i,j)))
+                    am = am + s_s(get_def(dba,i,j))*w
+                next j
+                punch(am)
+            next i 
+        endif 
+        if(get_varexist("Cement::Output::Hydrates::SaturationIndex") = 0 ) then
+           if(get_var("Cement::Output::Hydrates::SaturationIndex") = 1 ) then   
+               db = "Db_Minerals"
+               count = get_defnrrec(db)-1
+                for i = 0 to count 
+                    punch(si(get_def(db,i)))
+                next i  
+           endif
+        endif
+        if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+            if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then 
+                db = "Db_Minerals"
+                count = get_defnrrec(db)-1
+                sumphases = 0
+                for i = 0 to count 
+                    phase = get_def(db,i)
+                    n = equi_delta(phase)
+                    dh = delta_h_phase(phase) 
+                    Q = n*dh
+                    sumphases = sumphases + Q
+                    if(get_varexist("cCumQ" + phase)=0) then
+                        cumq = get_var("cCumQ" + phase)+Q                    
+                    else
+                        cumq = Q
+                    endif
+                    put_var("cCumQ" + phase,cumq)
+                    if(timestep>0) then
+                        Q = Q /timestep
+                    endif
+                    punch(Q)
+                    if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+                       punch(cumq)
+                    endif
+                next i
+                db = "Db_SolidSolutions"
+                count = get_defnrrec(db)-1
+                sums_s = 0
+                for i = 0 to count 
+                    phase = get_def(db,i)
+                    n = s_s_delta(phase)
+                    dh = delta_h_phase(phase) 
+                    Q = n*dh
+                    sums_s = sums_s + Q
+                    if(get_varexist("cCumQ" + phase)=0) then
+                        cumq = get_var("cCumQ" + phase)+Q
+                    else
+                        cumq = Q
+                    endif
+                    put_var("cCumQ" + phase,cumq)
+                    if(timestep>0) then
+                        Q = Q /timestep
+                    endif
+                    punch(Q)
+                    if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+                       punch(cumq)
+                    endif
+                next i
+            endif
+         endif
+        ca = sum_s_s("CSH","Ca")
+        sil = sum_s_s("CSH","Si")
+        if(ca > 0 AND sil > 0) then
+            punch(ca,sil)
+            VolumeGelPores=calc_value("VolumeGelPores",1,ca,sil)
+        else
+            ca =1.6* equi("CSH1.6") + 1.2* equi("CSH1.2") +0.8* equi("CSH0.8")
+            sil = equi("CSH1.6") + equi("CSH1.2") + equi("CSH0.8")
+            punch(ca,sil)
+            VolumeGelPores = 0
+        endif
+        punch(VolumeGelPores) 
+        if (get_varexist("Cement::Model::Zeolites::Na") = 0) then
+           if (get_var("Cement::Model::Zeolites::Na") = 1) then
+               db = "Db_ZeolitesNa"
+               count = get_defnrrec(db)-1
+               nao = 0
+               ko = 0
+               cao = 0
+               sio = 0
+               alo = 0
+               for i = 0 to count 
+                   am = equi(get_def(db,0,i))
+                   nao = nao + get_def(db,1,i)*am 
+                   ko =  ko  + get_def(db,2,i)*am 
+                   cao = cao + get_def(db,3,i)*am 
+                   sio = sio + get_def(db,4,i)*am 
+                   alo = alo + get_def(db,5,i)*am 
+               next i
+               punch(nao, sio, alo)
+           endif
+        endif
+        if (get_varexist("Cement::Model::Zeolites::K") = 0) then
+            if (get_var("Cement::Model::Zeolites::K") = 1) then
+                db = "Db_ZeolitesK"
+                count = get_defnrrec(db)-1
+               nao = 0
+               ko = 0
+               cao = 0
+               sio = 0
+               alo = 0
+               for i = 0 to count 
+                   am = equi(get_def(db,0,i))
+                   nao = nao + get_def(db,1,i)*am 
+                   ko =  ko  + get_def(db,2,i)*am 
+                   cao = cao + get_def(db,3,i)*am 
+                   sio = sio + get_def(db,4,i)*am 
+                   alo = alo + get_def(db,5,i)*am 
+               next i
+               punch(ko, sio, alo)
+           endif
+        endif
+        if (get_varexist("Cement::Model::Zeolites::Ca") = 0) then
+            if (get_var("Cement::Model::Zeolites::Ca") = 1) then
+               db = "Db_ZeolitesCa"
+               count = get_defnrrec(db)-1
+               nao = 0
+               ko = 0
+               cao = 0
+               sio = 0
+               alo = 0
+               for i = 0 to count  
+                   am = equi(get_def(db,0,i))
+                   nao = nao + get_def(db,1,i)*am 
+                   ko =  ko  + get_def(db,2,i)*am 
+                   cao = cao + get_def(db,3,i)*am 
+                   sio = sio + get_def(db,4,i)*am 
+                   alo = alo + get_def(db,5,i)*am 
+               next i
+               punch(cao, sio, alo)
+           endif
+        endif
+        if (get_varexist("Cement::_hydration") = 0) then
+            db = "Db_Kinetics"
+            count = get_defnrrec(db)-1
+            if( get_var("Cement::Output::Hydrates::Moles") = 1 ) then
+                for i = 0 to count 
+                    if(total_time() = 0) then
+                        punch(get_def(db,"inimol",i))
+                    else
+                        punch(kin(get_def(db,"kin",i)))
+                    endif
+                next i
+            endif
+            if(  get_var("Cement::Output::Hydrates::Volumes")  = 1 ) then
+                for i = 0 to count
+                    if(total_time() = 0) then
+                        punch(get_def(db,"inivol",i))
+                    else            
+                        punch(kin(get_def(db,"kin",i))*get_def(db,"volume",i))
+                    endif
+                next i            
+            endif
+            if(  get_var("Cement::Output::Hydrates::Weights")  = 1 ) then
+                for i = 0 to count
+                    if(total_time() = 0) then
+                        punch(get_def(db,"iniweight",i))
+                    else         
+                        punch(kin(get_def(db,"kin",i))*get_def(db,"gfw",i))
+                    endif
+                next i            
+            endif
+            if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+                if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then 
+                    sumkin = 0
+                    for i = 0 to count 
+                        phase = get_def(db,"kin",i)
+                        n = kin_delta(phase)
+                        dh_t = get_def(db,"enthalpy",i)
+                        if(string.comparenocase("STRING",str(type(dh_t))) = 0) then
+                            dh= delta_h_phase(dh_t)
+                         else
+                            dh = dh_t/1000
+                        endif 
+                        Q = n*dh
+                        sumkin = sumkin + Q
+                        if(get_varexist("cCumQ" + phase)=0) then
+                            cumq = get_var("cCumQ" + phase)+Q
+                        else
+                            cumq = Q
+                        endif
+                        put_var("cCumQ" + phase,cumq)
+                        if(timestep>0) then
+                            Q = Q /timestep
+                        endif
+                        punch(dh)
+                        if(get_var("Cement::Output::Hydrates::CumHeat") = 1 ) then
+                           punch(cumq)
+                        endif
+                    next i
+                  endif
+               endif
+        endif
+        if(get_varexist("Cement::Output::Hydrates::Heat") = 0 ) then
+           if(get_var("Cement::Output::Hydrates::Heat") = 1 ) then 
+               if(get_varexist("cCumHydrates") = 0 ) then
+                   put_var("cCumHydrates",get_var("cCumHydrates")+sumphases+sums_s)
+               else
+                    put_var("cCumHydrates",sumphases+sums_s)
+               endif
+               if(get_varexist("cCumCement") = 0 ) then
+                   put_var("cCumCement",get_var("cCumCement")+sumkin)
+               else
+               put_var("cCumCement",sumkin)
+               endif 
+               if(timestep>0) then
+                   sumhydrates = (sumphases+sums_s)/timestep
+                   sumkin = sumkin / timestep
+               else
+                    put_var("_InitialHeatProduction",get_var("cCumHydrates")) 
+               endif
+               punch(sumhydrates,sumkin,sumhydrates+sumkin)
+               punch(get_var("cCumHydrates"),get_var("cCumCement"),get_var("cCumHydrates")+get_var("cCumCement"))
+           endif      
+        endif
+        if(get_varexist("Cement::Output::Hydration::HydrationDegree") = 0 ) then
+            if(get_var("Cement::Output::Hydration::HydrationDegree") = 1 ) then
+                if (get_varexist("Cement::_hydration") = 0) then
+                    db = "Db_Kinetics"
+                    count = get_defnrrec(db)-1
+                    for i = 0 to count 
+                        if(total_time() = 0 ) then
+                            punch(0)
+                        else 
+                            punch(calc_value("CalculateHydrationDegree",get_def(db,"inimol",i),kin(get_def(db,"kin",i))))
+                        endif
+                    next i
+                    if(total_time() = 0 ) then
+                        punch(0)
+                    else
+                        punch(calc_value("CalculateHydrationDegreeTotalOPC"))
+                    endif
+                endif
+            endif       
+        endif
+        AggVol = 0
+        if(get_varexist("Aggregates::Volume") = 0 ) then
+            AggVol = get_var("Aggregates::Volume")
+            if(AggVol < 0) then
+                AggVol = get_var("Aggregate::Weight")/get_var("Aggregate::BulkDensity")
+            endif
+        endif
+        punch(AggVol)
+        db = "Db_Minerals"
+        count = get_defnrrec(db)-1
+        volhyd = 0
+        for i = 0 to count 
+            volhyd = volhyd + equi(get_def(db,i))*phase_vm(get_def(db,i))
+        next i
+        db = "Db_SolidSolutions"
+        count = get_defnrrec(db)-1
+        for i = 0 to count 
+            volhyd = volhyd + s_s(get_def(db,i))*phase_vm(get_def(db,i))
+        next i
+        volhyd = volhyd - VolumeGelPores
+        if (get_varexist("Cement::_hydration") = 0) then
+            db = "Db_Kinetics"
+            count = get_defnrrec(db)-1
+            volclink = 0
+            for i = 0 to count
+                if(total_time() = 0) then
+                    volclink = volclink + get_def(db,"inivol",i)
+                else            
+                    volclink = volclink + kin(get_def(db,"kin",i))*get_def(db,"volume",i)
+                endif
+            next i    
+            punch(get_var("Cement::Composition::VolumeTot0"),volclink, volhyd) 
+            punch(get_var("Cement::Composition::VolumeTot0")-volclink-volhyd-VolumeGelPores-tot("water")*1000)      
+        elseif (get_varexist("Cement::_leaching") = 0) then
+			if (get_var("Cement::_leachinginivol") < 0 ) then
+				put_var("Cement::_leachinginivol",volhyd+ VolumeGelPores)
+				inivolume = volhyd + VolumeGelPores
+			else
+				inivolume = get_var("Cement::_leachinginivol")
+			endif
+			punch(inivolume, 0, volhyd) 
+			punch(inivolume -volhyd - VolumeGelPores)		
+		else
+			inivolume = 0
+            if(bopc=1) then
+                if(get_var("Cement::Clinker::BulkDensity") < 0) then bbulkdensity = 0
+                inivolume = inivolume + get_var("Cement::Clinker::Amount") / get_var("Cement::Clinker::BulkDensity") 
+            endif
+            if(bgbfs = 1) then
+                inivolume = inivolume +  get_var("GBFS::Amount") / get_var("GBFS::BulkDensity") 
+            endif
+            if(bsf = 1) then
+                inivolume = inivolume +  get_var("SF::Amount") / get_var("SF::BulkDensity") 
+            endif
+            if(bfa = 1) then
+                inivolume = inivolume +  get_var("FA::Amount") / get_var("FA::BulkDensity") 
+            endif
+            if(bls = 1) then
+                inivolume = inivolume +  get_var("LS::Amount") / get_var("LS::BulkDensity") 
+            endif
+            if(bmk = 1) then
+                inivolume = inivolume +  get_var("MK::Amount") / get_var("MK::BulkDensity") 
+            endif
+            inivolume = inivolume *  get_var("Cement::Recipe::Amount") /100
+            punch(inivolume, 0, volhyd) 
+			punch(inivolume+  get_var("Cement::Recipe::Amount") * get_var("Cement::Recipe::w_c") -volclink-volhyd-VolumeGelPores-tot("water")*1000)
+		endif
+		
+
+  
+-end
+
+Calculate_Values
+IndepVarSelOut
+-state Definition
+-mybasic
+-start 
+    txt = ""
+    if(get_varexist("_CalutationType::Parametric") = 0) then
+		if (get_varexist("Cement::_leaching") = 0 ) then
+			txt = "SELECTED_OUTPUT" + eol
+			txt = txt + "-independentvariable Lead " + eol
+			txt = txt + "-independentvariable Amount Cement::Recipe::Amount " + eol
+			txt = txt + "-independentvariable OPC Cement::Clinker::Amount " + eol
+			txt = txt + "-independentvariable GBFS GBFS::Amount " + eol
+			txt = txt + "-independentvariable SF SF::Amount " + eol
+			txt = txt + "-independentvariable FA FA::Amount " + eol
+			txt = txt + "-independentvariable LS LS::Amount " + eol
+			txt = txt + "-independentvariable MK MK::Amount " + eol
+			txt = txt + "-independentvariable wc Cement::Recipe::w_c " + eol
+			txt = txt + "-independentvariable T Cement::Recipe::T " + eol
+		endif
+	endif
+	openf("_selout._in")
+	writef(txt)
+	closef()
+-end
+include$ _selout._in	
+END 
